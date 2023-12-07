@@ -3,7 +3,7 @@
  */
 export default class Sprite {
   constructor(imgSrc = '', width = 0, height = 0, x = 0, y = 0) {
-    this.img = new Image()
+    this.img = tt.createImage()
     this.img.src = imgSrc
 
     this.width = width
@@ -21,13 +21,15 @@ export default class Sprite {
   drawToCanvas(ctx) {
     if (!this.visible) return
 
-    ctx.drawImage(
-      this.img,
-      this.x,
-      this.y,
-      this.width,
-      this.height
-    )
+    this.img.onload = () => {
+      ctx.drawImage(
+        this.img,
+        this.x,
+        this.y,
+        this.width,
+        this.height
+      )
+    }
   }
 
   /**
@@ -42,8 +44,8 @@ export default class Sprite {
     if (!this.visible || !sp.visible) return false
 
     return !!(spX >= this.x
-              && spX <= this.x + this.width
-              && spY >= this.y
-              && spY <= this.y + this.height)
+      && spX <= this.x + this.width
+      && spY >= this.y
+      && spY <= this.y + this.height)
   }
 }
