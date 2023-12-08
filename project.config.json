@@ -1,0 +1,21 @@
+{
+    "setting": {
+        "urlCheck": true,
+        "es6": true,
+        "postcss": true,
+        "minified": true,
+        "newFeature": true,
+        "autoCompile": true,
+        "compileHotReLoad": true,
+        "nativeCompile": true
+    },
+    "appid": "testAppId",
+    "projectname": "抖音象棋",
+    "douyinProjectType": "native",
+    "condition": {
+        "game": {
+            "current": -1,
+            "list": []
+        }
+    }
+}

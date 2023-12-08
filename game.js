@@ -17,6 +17,7 @@
 // }
 // draw()
 import './js/libs/symbol'
+import './js/libs/weapp-adapter'
 
 import Main from './js/main'
 

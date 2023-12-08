@@ -2,7 +2,7 @@
  * 游戏基础的精灵类
  */
 export default class Sprite {
-  constructor(imgSrc = '', width = 0, height = 0, x = 0, y = 0) {
+  constructor(imgSrc = '', width = 0, height = 0, x = 0, y = 0, sx, sy ,swidth, sheight) {
     this.img = tt.createImage()
     this.img.src = imgSrc
 
@@ -12,6 +12,11 @@ export default class Sprite {
     this.x = x
     this.y = y
 
+    this.sx = sx
+    this.sy = sy
+    this.swidth = swidth
+    this.sheight = sheight
+
     this.visible = true
   }
 
@@ -19,17 +24,34 @@ export default class Sprite {
    * 将精灵图绘制在canvas上
    */
   drawToCanvas(ctx) {
-    if (!this.visible) return
+    return new Promise((resolve, reject) => {
+      if (!this.visible) {
+        resolve()
+        return
+      }
 
-    this.img.onload = () => {
-      ctx.drawImage(
-        this.img,
-        this.x,
-        this.y,
-        this.width,
-        this.height
-      )
-    }
+      const drawImage = () => {
+        ctx.drawImage(
+          this.img,
+          this.sx || 0,
+          this.sy || 0,
+          this.swidth || this.img.width,
+          this.sheight || this.img.height,
+          this.x,
+          this.y,
+          this.width,
+          this.height
+        )
+        resolve(this.img)
+      }
+
+      if (this.img.complete) {
+        this.img.onload = drawImage
+      } else {
+        this.img.onload = drawImage
+        this.img.onerror = reject
+      }
+    })
   }
 
   /**

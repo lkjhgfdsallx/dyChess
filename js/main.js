@@ -1,6 +1,6 @@
 import BackGround from './runtime/background'
+import StartBtn from './botton/startBtn'
 
-let canvas = tt.createCanvas()
 const ctx = canvas.getContext('2d')
 ctx.fillStyle = '#000000'
 ctx.fillRect(0, 0, tt.getSystemInfoSync().windowWidth, tt.getSystemInfoSync().windowHeight)
@@ -14,34 +14,37 @@ export default class Main {
   }
   restart() {
     this.bg = new BackGround()
+    this.startBtn = new StartBtn()
     this.render()
+    this.touchEvent()
   }
-  render() {
-    this.bg.drawToCanvas(ctx)
+  async render() {
+    await this.bg.drawToCanvas(ctx)
+    await this.startBtn.drawToCanvas(ctx)
+    this.startBtn.drawText(ctx)
   }
+  touchEvent() {
+    const touchStartHandler = (e) => {
+      e.preventDefault()
+      const x = e.touches[0].clientX
+      const y = e.touches[0].clientY
 
-  // 重新开始按钮点击事件
-  // touchEvent() {
-  //   const touchStartHandler = (e) => {
-  //     if (this.gameinfo.clickEvent === true) {
-  //       e.preventDefault()
-  //       const x = e.touches[0].clientX
-  //       const y = e.touches[0].clientY
+      const area = this.startBtn.btnArea
 
-  //       const area = this.gameinfo.btnArea
-
-  //       if (x >= area.startX
-  //         && x <= area.endX
-  //         && y >= area.startY
-  //         && y <= area.endY) {
-  //         this.gameinfo.closeClick()
-  //         setTimeout(() => {
-  //           this.restart()
-  //         }, 300)
-  //         canvas.removeEventListener('touchstart', touchStartHandler)
-  //       }
-  //     }
-  //   }
-  //   canvas.addEventListener('touchstart', touchStartHandler)
-  // }
+      // if (x >= area.startX
+      //   && x <= area.endX
+      //   && y >= area.startY
+      //   && y <= area.endY) {
+      //   setTimeout(() => {
+      //     console.log('开始游戏')
+      //   }, 300)
+      //   canvas.removeEventListener('touchstart', touchStartHandler)
+      // }
+      console.log(x, y, area, x >= area.startX
+        && x <= area.endX
+        && y >= area.startY
+        && y <= area.endY)
+    }
+    canvas.addEventListener('touchstart', touchStartHandler)
+  }
 }
