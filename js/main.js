@@ -31,19 +31,17 @@ export default class Main {
 
       const area = this.startBtn.btnArea
 
-      // if (x >= area.startX
-      //   && x <= area.endX
-      //   && y >= area.startY
-      //   && y <= area.endY) {
-      //   setTimeout(() => {
-      //     console.log('开始游戏')
-      //   }, 300)
-      //   canvas.removeEventListener('touchstart', touchStartHandler)
-      // }
-      console.log(x, y, area, x >= area.startX
+      if (x >= area.startX
         && x <= area.endX
         && y >= area.startY
-        && y <= area.endY)
+        && y <= area.endY) {
+        setTimeout(() => {
+          play.isPlay = true;
+          var clasli = 1;
+          play.init(4, com.clasli[clasli].map)
+        }, 300)
+        canvas.removeEventListener('touchstart', touchStartHandler)
+      }
     }
     canvas.addEventListener('touchstart', touchStartHandler)
   }
