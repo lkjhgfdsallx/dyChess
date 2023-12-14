@@ -1,6 +1,8 @@
 import Music from "../runtime/music";
+import Checkpoint from '../base/checkpoint';
 
 var play = play || {};
+play.checkpoint1 = new Checkpoint(0);
 
 play.init = function (depth, map) {
 	var map = map || com.initMap;
@@ -129,7 +131,6 @@ play.clickMan = function (key, x, y) {
 			com.pane.isShow = false;
 			com.dot.dots = [];
 			com.show()
-			// com.get("clickAudio").play();
 			play.music.playClick()
 			setTimeout(play.AIPlay, 500);
 			if (key == "j0") play.showWin(-1);
@@ -145,7 +146,6 @@ play.clickMan = function (key, x, y) {
 			com.mans[key].ps = com.mans[key].bl(); //获得所有能着点
 			com.dot.dots = com.mans[key].ps
 			com.show();
-			// com.get("selectAudio").play();
 			play.music.playSelect()
 		}
 	}
@@ -168,7 +168,6 @@ play.clickPoint = function (x, y) {
 			play.nowManKey = false;
 			com.dot.dots = [];
 			com.show();
-			// com.get("clickAudio").play();
 			play.music.playClick()
 			setTimeout(play.AIPlay, 500);
 		} else {
@@ -196,10 +195,7 @@ play.AIPlay = function () {
 	} else {
 		play.AIclickPoint(pace[2], pace[3]);
 	}
-	// com.get("clickAudio").play();
 	play.music.playClick()
-
-
 }
 
 //检查是否长将
@@ -211,8 +207,6 @@ play.checkFoul = function () {
 	}
 	return false;
 }
-
-
 
 play.AIclickMan = function (key, x, y) {
 	var man = com.mans[key];
@@ -277,6 +271,8 @@ play.showWin = function (my) {
 	play.isPlay = false;
 	if (my === 1) {
 		alert("恭喜你，你赢了！");
+		play.checkpoint1.increase();
+		play.checkpoint1.nextPass();
 	} else {
 		alert("很遗憾，你输了！");
 	}

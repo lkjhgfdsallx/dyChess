@@ -36,9 +36,8 @@ export default class Main {
         && y >= area.startY
         && y <= area.endY) {
         setTimeout(() => {
-          play.isPlay = true;
-          var clasli = 1;
-          play.init(4, com.clasli[clasli].map)
+          play.isPlay = true
+          play.checkpoint1.nextPass()
         }, 300)
         canvas.removeEventListener('touchstart', touchStartHandler)
       }
