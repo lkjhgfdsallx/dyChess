@@ -5,8 +5,10 @@ com.init = function () {
 	com.height = canvas.height; 		//画布高度
 	com.spaceX = 35;		//着点X跨度
 	com.spaceY = 36;		//着点Y跨度
-	com.pointStartX = 5;	//第一个着点X坐标;
-	com.pointStartY = 20;	//第一个着点Y坐标;
+	com.centreX = (canvas.width - 325) / 2
+	com.centreY = (canvas.height - 403) / 2
+	com.pointStartX = 5 + com.centreX;	//第一个着点X坐标;
+	com.pointStartY = 20 + com.centreY;	//第一个着点Y坐标;
 	com.page = "stype";			//图片目录
 
 	com.canvas = canvas; //画布
@@ -41,7 +43,8 @@ com.loadImages = function (stype) {
 	com.paneImg = new Image();
 	com.paneImg.src = "images/" + stype + "/r_box.png";
 
-	document.getElementsByTagName("body")[0].style.background = "url(images/" + stype + "/bg.jpg)";
+	com.background = new Image();
+	com.background.src = "images/" + stype + "/bg.jpg";
 
 }
 
@@ -625,9 +628,13 @@ com.class.Bg = function (images, x, y) {
 	this.isShow = true;
 
 	this.show = function () {
-		if (this.isShow) com.ct.drawImage(com.bgImg, com.spaceX * this.x, com.spaceY * this.y);
+		if (this.isShow) {
+			com.ct.drawImage(com.background, 0, 0, canvas.width, canvas.height);
+			com.ct.drawImage(com.bgImg, com.spaceX * this.x + com.centreX, com.spaceY * this.y + com.centreY);
+		}
 	}
 }
+
 com.class.Pane = function (images, x, y) {
 	this.x = x || 0;
 	this.y = y || 0;

@@ -1,8 +1,11 @@
+import Music from "../runtime/music";
+
 var play = play || {};
 
 play.init = function (depth, map) {
 	var map = map || com.initMap;
 	var depth = depth || 3
+	play.music = new Music();
 	play.my = 1;				//玩家方
 	play.nowMap = map;
 	play.map = com.arr2Clone(map);		//初始化棋盘
@@ -127,6 +130,7 @@ play.clickMan = function (key, x, y) {
 			com.dot.dots = [];
 			com.show()
 			// com.get("clickAudio").play();
+			play.music.playClick()
 			setTimeout(play.AIPlay, 500);
 			if (key == "j0") play.showWin(-1);
 			if (key == "J0") play.showWin(1);
@@ -142,6 +146,7 @@ play.clickMan = function (key, x, y) {
 			com.dot.dots = com.mans[key].ps
 			com.show();
 			// com.get("selectAudio").play();
+			play.music.playSelect()
 		}
 	}
 }
@@ -164,6 +169,7 @@ play.clickPoint = function (x, y) {
 			com.dot.dots = [];
 			com.show();
 			// com.get("clickAudio").play();
+			play.music.playClick()
 			setTimeout(play.AIPlay, 500);
 		} else {
 			//alert("不能这么走哦！")
@@ -191,6 +197,7 @@ play.AIPlay = function () {
 		play.AIclickPoint(pace[2], pace[3]);
 	}
 	// com.get("clickAudio").play();
+	play.music.playClick()
 
 
 }
