@@ -4,17 +4,15 @@ const screenWidth = tt.getSystemInfoSync().windowWidth
 const screenHeight = tt.getSystemInfoSync().windowHeight
 
 // 相关常量设置
-const IMG_SRC = 'images/startBtn.png'
-const WIDTH = screenWidth / 2
+const IMG_SRC = 'images/withdrawBtn.png'
+const WIDTH = screenWidth / 4
 const HEIGHT = WIDTH / 2.5
 
-export default class StartBtn extends Sprite {
+export default class WithdrawBtn extends Sprite {
   constructor() {
     super(IMG_SRC, WIDTH, HEIGHT)
-    this.x = screenWidth / 2 - this.width / 2
-    this.y = screenHeight / 2 - this.height / 2
-    this.swidth = 214
-    this.sheight = 46
+    this.x = com.centreX
+    this.y = com.centreY + 25
 
     /**
     * 按钮区域
@@ -30,6 +28,6 @@ export default class StartBtn extends Sprite {
   drawText(ctx) {
     ctx.fillStyle = '#ffffff'
     ctx.font = `${parseInt(WIDTH / 6)}px Arial`
-    ctx.fillText('开始游戏', this.x + (WIDTH - parseInt(screenWidth / 3)) / 2, this.y + HEIGHT - parseInt(screenWidth / 12))
+    ctx.fillText('悔棋', this.x + (WIDTH - parseInt(screenWidth / 3)) / 2, this.y + HEIGHT - parseInt(screenWidth / 12))
   }
 }

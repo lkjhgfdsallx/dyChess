@@ -7,7 +7,6 @@ export default class Checkpoint {
      * 进入下一关
      */
     nextPass() {
-        console.log(this.clasli)
         play.init(4, com.clasli[this.clasli].map)
     }
     increase() {
