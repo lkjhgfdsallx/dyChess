@@ -519,7 +519,7 @@ com.value = {
 		[0, 0, 0, 20, 0, 20, 0, 0, 0]
 	],
 
-	//奖价值
+	//将价值
 	j: [
 		[0, 0, 0, 8888, 8888, 8888, 0, 0, 0],
 		[0, 0, 0, 8888, 8888, 8888, 0, 0, 0],
@@ -671,9 +671,6 @@ com.class.Main = function (images, x, y) {
 			&& y >= com.centreY + com.bgImg.height + 20
 			&& y <= com.centreY + com.bgImg.height + 20 + withdrawBtnHeight) {
 			setTimeout(() => {
-				// const val1 = AI.getAlphaBeta(-99999, 99999, 4, com.arr2Clone(play.map), 1)
-				// const map1 = play.mans[val1.key]
-				// console.log('最佳着法：' + com.createMove(com.arr2Clone(play.map), map1.x, map1.y, val1.x, val1.y))
 				play.regret()
 			}, 300)
 		}
@@ -752,41 +749,6 @@ com.pane.isShow = false;
 
 com.childList = [com.bg, com.dot, com.pane];
 com.mans = {};		//棋子集合
-
-// //开始对弈
-// com.get("playBtn").addEventListener("click", function (e) {
-// 	play.isPlay = true;
-// 	var depth = parseInt(getRadioValue("depth"), 10) || 3;
-
-// 	play.init(depth);
-// 	com.get("chessBox").style.display = "block";
-// 	com.get("menuBox").style.display = "none";
-// })
-
-// //开始挑战
-// com.get("clasliBtn").addEventListener("click", function (e) {
-// 	play.isPlay = true;
-// 	var clasli = parseInt(getRadioValue("clasli"), 10) || 0;
-// 	play.init(4, com.clasli[clasli].map);
-// 	com.get("chessBox").style.display = "block";
-// 	com.get("menuBox").style.display = "none";
-// })
-
-// // 悔棋
-// com.get("regretBtn").addEventListener("click", function (e) {
-// 	play.regret();
-// })
-
-// //获取单选框选择的值
-// function getRadioValue(name) {
-// 	var obj = document.getElementsByName(name);
-// 	//var obj = document.getElementsByTagName("input");
-// 	for (var i = 0; i < obj.length; i++) {
-// 		if (obj[i].checked) {
-// 			return obj[i].value;
-// 		}
-// 	}
-// }
 
 com.init();
 
