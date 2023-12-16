@@ -51,12 +51,20 @@ play.init = function (depth, map) {
 
 //悔棋
 play.regret = function () {
-	var map = com.arr2Clone(com.initMap);
+	if (this.lastCollisionTime === undefined) {
+		this.lastCollisionTime = Date.now()
+	} else {
+		if (Date.now() - this.lastCollisionTime < 500) {
+			return
+		}
+		this.lastCollisionTime = Date.now()
+	}
+	var map = com.arr2Clone(com.clasli[play.checkpoint1.clasli].map);
 	//初始化所有棋子
 	for (var i = 0; i < map.length; i++) {
 		for (var n = 0; n < map[i].length; n++) {
 			var key = map[i][n];
-			if (key) {
+			if (key && com.mans[key]) {
 				com.mans[key].x = n;
 				com.mans[key].y = i;
 				com.mans[key].isShow = true;

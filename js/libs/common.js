@@ -637,16 +637,19 @@ com.class.Main = function (images, x, y) {
 		if (this.isShow) {
 			com.ct.drawImage(com.background, 0, 0, canvas.width, canvas.height);
 			com.ct.drawImage(com.bgImg, com.spaceX * this.x + com.centreX, com.spaceY * this.y + com.centreY);
-			com.ct.drawImage(com.withdrawBtn, com.spaceX * this.x + com.centreX + 5, com.spaceY * this.y + com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
+			com.ct.drawImage(com.withdrawBtn, com.centreX + 5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
+			com.ct.drawImage(com.withdrawBtn, com.bgImg.width - com.centreX - 5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
 			this.withdrawText(com.ct)
+			this.promptText(com.ct)
 			canvas.addEventListener('touchstart', this.withdrawTouchEvent)
+			canvas.addEventListener('touchstart', this.promptTouchEvent)
 		}
 	}
 
 	this.withdrawText = function (ctx) {
 		ctx.fillStyle = '#ffffff'
 		ctx.font = `${parseInt(withdrawBtnWidth / 4)}px Arial`
-		ctx.fillText('提示', com.spaceX * this.x + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.spaceY * this.y + com.centreY + com.bgImg.height + 20 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 7))
+		ctx.fillText('悔棋', com.spaceX * this.x + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.spaceY * this.y + com.centreY + com.bgImg.height + 20 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 7))
 	}
 
 	this.withdrawTouchEvent = function (e) {
@@ -654,12 +657,54 @@ com.class.Main = function (images, x, y) {
 		const x = e.touches[0].clientX
 		const y = e.touches[0].clientY
 
+		if (this.lastCollisionTime === undefined) {
+			this.lastCollisionTime = Date.now()
+		} else {
+			if (Date.now() - this.lastCollisionTime < 500) {
+				return
+			}
+			this.lastCollisionTime = Date.now()
+		}
+
 		if (x >= com.centreX + 5
 			&& x <= com.centreX + 5 + withdrawBtnWidth
 			&& y >= com.centreY + com.bgImg.height + 20
 			&& y <= com.centreY + com.bgImg.height + 20 + withdrawBtnHeight) {
 			setTimeout(() => {
-				const val1 = AI.getAlphaBeta(-99999, 99999, AI.treeDepth, com.arr2Clone(play.map), 1)
+				// const val1 = AI.getAlphaBeta(-99999, 99999, 4, com.arr2Clone(play.map), 1)
+				// const map1 = play.mans[val1.key]
+				// console.log('最佳着法：' + com.createMove(com.arr2Clone(play.map), map1.x, map1.y, val1.x, val1.y))
+				play.regret()
+			}, 300)
+		}
+	}
+
+	this.promptText = function (ctx) {
+		ctx.fillStyle = '#ffffff'
+		ctx.font = `${parseInt(withdrawBtnWidth / 4)}px Arial`
+		ctx.fillText('提示', com.bgImg.width - com.centreX - 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.bgImg.height + 20 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 7))
+	}
+
+	this.promptTouchEvent = function (e) {
+		e.preventDefault()
+		const x = e.touches[0].clientX
+		const y = e.touches[0].clientY
+
+		if (this.lastCollisionTime1 === undefined) {
+			this.lastCollisionTime1 = Date.now()
+		} else {
+			if (Date.now() - this.lastCollisionTime1 < 500) {
+				return
+			}
+			this.lastCollisionTime1 = Date.now()
+		}
+
+		if (x >= com.bgImg.width - com.centreX - 5
+			&& x <= com.bgImg.width - com.centreX - 5 + withdrawBtnWidth
+			&& y >= com.centreY + com.bgImg.height + 20
+			&& y <= com.centreY + com.bgImg.height + 20 + withdrawBtnHeight) {
+			setTimeout(() => {
+				const val1 = AI.getAlphaBeta(-99999, 99999, 4, com.arr2Clone(play.map), 1)
 				const map1 = play.mans[val1.key]
 				console.log('最佳着法：' + com.createMove(com.arr2Clone(play.map), map1.x, map1.y, val1.x, val1.y))
 			}, 300)
