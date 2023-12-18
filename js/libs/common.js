@@ -536,7 +536,6 @@ com.value = {
 
 	//炮价值
 	p: [
-
 		[100, 100, 96, 91, 90, 91, 96, 100, 100],
 		[98, 98, 96, 92, 89, 92, 96, 98, 98],
 		[97, 97, 96, 91, 92, 91, 96, 97, 97],
@@ -742,12 +741,12 @@ com.get = function (id) {
 	return document.getElementById(id)
 }
 
-com.bg = new com.class.Main();
+com.main = new com.class.Main();
 com.dot = new com.class.Dot();
 com.pane = new com.class.Pane();
 com.pane.isShow = false;
 
-com.childList = [com.bg, com.dot, com.pane];
+com.childList = [com.main, com.dot, com.pane];
 com.mans = {};		//棋子集合
 
 com.init();

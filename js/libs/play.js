@@ -28,7 +28,7 @@ play.init = function (depth, map) {
 
 	com.childList.length = 3
 	com.createMans(map)		//生成棋子
-	com.bg.show();
+	com.main.show();
 
 	//初始化棋子
 	for (var i = 0; i < play.map.length; i++) {
@@ -278,9 +278,20 @@ play.getClickMan = function (e) {
 play.showWin = function (my) {
 	play.isPlay = false;
 	if (my === 1) {
-		alert("恭喜你，你赢了！");
-		play.checkpoint1.increase();
-		play.checkpoint1.nextPass();
+		tt.showModal({
+			title: "胜利",
+			content: "恭喜你，你赢了！",
+			confirmText: "下一关",
+			cancelText: "重新开始",
+			success(res) {
+				if (res.confirm) {
+					play.checkpoint1.increase();
+					play.checkpoint1.nextPass();
+				} else if (res.cancel) {
+					play.init(4, play.nowMap)
+				}
+			},
+		});
 	} else {
 		alert("很遗憾，你输了！");
 	}

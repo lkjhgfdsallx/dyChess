@@ -9,8 +9,8 @@
         "compileHotReLoad": true,
         "nativeCompile": true
     },
-    "appid": "testAppId",
-    "projectname": "抖音象棋",
+    "appid": "tt5e5928e4c169a38502",
+    "projectname": "kk象棋残局",
     "douyinProjectType": "native",
     "condition": {
         "game": {

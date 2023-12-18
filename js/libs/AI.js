@@ -39,15 +39,15 @@ AI.init = function (pace) {
 	if (val && val.value != -8888) {
 		var man = play.mans[val.key];
 		var nowTime = new Date().getTime();
-		console.log('最佳着法：' +
-			com.createMove(com.arr2Clone(play.map), man.x, man.y, val.x, val.y)
+		// console.log('最佳着法：' +
+		// 	com.createMove(com.arr2Clone(play.map), man.x, man.y, val.x, val.y)
 			// +
 			// ' 搜索深度：' + AI.treeDepth + ' 搜索分支：' +
 			// AI.number + '个  最佳着法评估：' +
 			// val.value + '分' +
 			// ' 搜索用时：' +
 			// (nowTime - initTime) + '毫秒'
-			)
+			// )
 		return [man.x, man.y, val.x, val.y]
 	} else {
 		return false;
