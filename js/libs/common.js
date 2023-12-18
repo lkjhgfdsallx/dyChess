@@ -638,7 +638,7 @@ com.class.Main = function (images, x, y) {
 			com.ct.drawImage(com.background, 0, 0, canvas.width, canvas.height);
 			com.ct.drawImage(com.bgImg, com.spaceX * this.x + com.centreX, com.spaceY * this.y + com.centreY);
 			com.ct.drawImage(com.withdrawBtn, com.centreX + 5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
-			com.ct.drawImage(com.withdrawBtn, com.bgImg.width - com.centreX - 5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
+			com.ct.drawImage(com.withdrawBtn, com.bgImg.width - withdrawBtnWidth + com.centreX + 5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
 			this.withdrawText(com.ct)
 			this.promptText(com.ct)
 			canvas.addEventListener('touchstart', this.withdrawTouchEvent)
@@ -679,7 +679,7 @@ com.class.Main = function (images, x, y) {
 	this.promptText = function (ctx) {
 		ctx.fillStyle = '#ffffff'
 		ctx.font = `${parseInt(withdrawBtnWidth / 4)}px Arial`
-		ctx.fillText('提示', com.bgImg.width - com.centreX - 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.bgImg.height + 20 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 7))
+		ctx.fillText('提示', com.bgImg.width - withdrawBtnWidth + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.bgImg.height + 20 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 7))
 	}
 
 	this.promptTouchEvent = function (e) {
@@ -696,8 +696,8 @@ com.class.Main = function (images, x, y) {
 			this.lastCollisionTime1 = Date.now()
 		}
 
-		if (x >= com.bgImg.width - com.centreX - 5
-			&& x <= com.bgImg.width - com.centreX - 5 + withdrawBtnWidth
+		if (x >= com.bgImg.width - withdrawBtnWidth + com.centreX + 5
+			&& x <= com.bgImg.width + com.centreX + 5
 			&& y >= com.centreY + com.bgImg.height + 20
 			&& y <= com.centreY + com.bgImg.height + 20 + withdrawBtnHeight) {
 			setTimeout(() => {
