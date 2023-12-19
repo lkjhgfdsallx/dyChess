@@ -282,7 +282,7 @@ play.showWin = function (my) {
 			title: "胜利",
 			content: "恭喜你，你赢了！",
 			confirmText: "下一关",
-			cancelText: "重新开始",
+			cancelText: "返回首页",
 			success(res) {
 				if (res.confirm) {
 					play.checkpoint1.increase();
@@ -293,7 +293,19 @@ play.showWin = function (my) {
 			},
 		});
 	} else {
-		alert("很遗憾，你输了！");
+		tt.showModal({
+			title: "失败",
+			content: "很遗憾，你输了！",
+			confirmText: "我要悔棋",
+			cancelText: "返回首页",
+			success(res) {
+				if (res.confirm) {
+					play.regret()
+				} else if (res.cancel) {
+					play.init(4, play.nowMap)
+				}
+			},
+		});
 	}
 }
 
