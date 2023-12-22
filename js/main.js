@@ -37,7 +37,7 @@ export default class Main {
         && y <= area.endY) {
         setTimeout(() => {
           play.isPlay = true
-          play.checkpoint1.nextPass()
+          play.checkpoint1.playGame()
         }, 300)
         canvas.removeEventListener('touchstart', touchStartHandler)
       }

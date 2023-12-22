@@ -1,12 +1,15 @@
 import Music from "../runtime/music";
 import Checkpoint from '../base/checkpoint';
+import Stamina from '../base/stamina';
 
 var play = play || {};
+
 play.checkpoint1 = new Checkpoint(0);
+play.stamina = new Stamina();
 
 play.init = function (depth, map) {
 	var map = map || com.initMap;
-	var depth = depth || 3
+	var depth = depth || 4
 	play.music = new Music();
 	play.my = 1;				//玩家方
 	play.nowMap = map;
@@ -46,8 +49,6 @@ play.init = function (depth, map) {
 	//绑定点击事件
 	com.canvas.addEventListener("touchstart", play.clickCanvas)
 }
-
-
 
 //悔棋
 play.regret = function () {
@@ -286,7 +287,7 @@ play.showWin = function (my) {
 			success(res) {
 				if (res.confirm) {
 					play.checkpoint1.increase();
-					play.checkpoint1.nextPass();
+					play.checkpoint1.playGame();
 				} else if (res.cancel) {
 					play.init(4, play.nowMap)
 				}
