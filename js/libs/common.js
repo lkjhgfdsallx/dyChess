@@ -49,6 +49,9 @@ com.loadImages = function (stype) {
 	com.withdrawBtn = new Image();
 	com.withdrawBtn.src = "images/withdrawBtn.png";
 
+	com.staminaIcon = new Image();
+	com.staminaIcon.src = "images/staminaIcon.png";
+
 }
 
 //显示列表
@@ -586,8 +589,8 @@ com.args = {
 	'z': { text: "兵", images: 'r_z', my: 1, bl: "z", value: com.value.z },
 
 	//蓝子
-	'C': { text: "车（jv）", images: 'b_c', my: -1, bl: "c", value: com.value.C },
-	'M': { text: "🐎", images: 'b_m', my: -1, bl: "m", value: com.value.M },
+	'C': { text: "車", images: 'b_c', my: -1, bl: "c", value: com.value.C },
+	'M': { text: "馬", images: 'b_m', my: -1, bl: "m", value: com.value.M },
 	'X': { text: "象", images: 'b_x', my: -1, bl: "x", value: com.value.X },
 	'S': { text: "士", images: 'b_s', my: -1, bl: "s", value: com.value.S },
 	'J': { text: "帅", images: 'b_j', my: -1, bl: "j", value: com.value.J },
@@ -638,8 +641,10 @@ com.class.Main = function (images, x, y) {
 			com.ct.drawImage(com.bgImg, com.spaceX * this.x + com.centreX, com.spaceY * this.y + com.centreY);
 			com.ct.drawImage(com.withdrawBtn, com.centreX + 5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
 			com.ct.drawImage(com.withdrawBtn, com.bgImg.width - withdrawBtnWidth + com.centreX + 5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
+			com.ct.drawImage(com.staminaIcon, com.bgImg.width - withdrawBtnWidth + com.centreX + 5, com.centreY - 100, withdrawBtnWidth, withdrawBtnHeight)
 			this.withdrawText(com.ct)
 			this.promptText(com.ct)
+			this.staminaIconNum(com.ct)
 			canvas.addEventListener('touchstart', this.withdrawTouchEvent)
 			canvas.addEventListener('touchstart', this.promptTouchEvent)
 		}
@@ -678,7 +683,13 @@ com.class.Main = function (images, x, y) {
 	this.promptText = function (ctx) {
 		ctx.fillStyle = '#ffffff'
 		ctx.font = `${parseInt(withdrawBtnWidth / 4)}px Arial`
-		ctx.fillText('提示', com.bgImg.width - withdrawBtnWidth + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.bgImg.height + 20 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 7))
+		ctx.fillText('支招', com.bgImg.width - withdrawBtnWidth + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.bgImg.height + 20 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 7))
+	}
+
+	this.staminaIconNum = function (ctx) {
+		ctx.fillStyle = '#dcdcaa'
+		ctx.font = `${parseInt(withdrawBtnWidth / 3)}px Arial`
+		ctx.fillText(`${play.stamina.stamina} +`, com.bgImg.width + com.centreX - 30 - ((play.stamina.stamina.toString().split('').length + 1) * (withdrawBtnWidth / 3)) / 2 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 1.5)) / 2, com.centreY - 100 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 7))
 	}
 
 	this.promptTouchEvent = function (e) {
@@ -699,11 +710,27 @@ com.class.Main = function (images, x, y) {
 			&& x <= com.bgImg.width + com.centreX + 5
 			&& y >= com.centreY + com.bgImg.height + 20
 			&& y <= com.centreY + com.bgImg.height + 20 + withdrawBtnHeight) {
-			setTimeout(() => {
-				const val1 = AI.getAlphaBeta(-99999, 99999, 4, com.arr2Clone(play.map), 1)
-				const map1 = play.mans[val1.key]
-				console.log('最佳着法：' + com.createMove(com.arr2Clone(play.map), map1.x, map1.y, val1.x, val1.y))
-			}, 300)
+			if (play.stamina.stamina <= 1) {
+				tt.showModal({
+					title: "体力不足",
+					content: "是否观看广告，获取体力值",
+					confirmText: "确定",
+					success(res) {
+						if (res.confirm) {
+							play.stamina.staminaAdd(6)
+							play.stamina.setStorage()
+						}
+					},
+				});
+			} else {
+				play.stamina.staminaLow(2)
+				play.stamina.setStorage()
+				setTimeout(() => {
+					const val1 = AI.getAlphaBeta(-99999, 99999, 4, com.arr2Clone(play.map), 1)
+					const map1 = play.mans[val1.key]
+					console.log('最佳着法：' + com.createMove(com.arr2Clone(play.map), map1.x, map1.y, val1.x, val1.y))
+				}, 300)
+			}
 		}
 	}
 }
