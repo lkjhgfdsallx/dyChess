@@ -641,7 +641,7 @@ com.class.Main = function (images, x, y) {
 			com.ct.drawImage(com.bgImg, com.spaceX * this.x + com.centreX, com.spaceY * this.y + com.centreY);
 			com.ct.drawImage(com.withdrawBtn, com.centreX + 5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
 			com.ct.drawImage(com.withdrawBtn, com.bgImg.width - withdrawBtnWidth + com.centreX + 5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
-			com.ct.drawImage(com.staminaIcon, com.bgImg.width - withdrawBtnWidth + com.centreX + 5, com.centreY - 100, withdrawBtnWidth, withdrawBtnHeight)
+
 			this.withdrawText(com.ct)
 			this.promptText(com.ct)
 			this.staminaIconNum(com.ct)
@@ -675,7 +675,27 @@ com.class.Main = function (images, x, y) {
 			&& y >= com.centreY + com.bgImg.height + 20
 			&& y <= com.centreY + com.bgImg.height + 20 + withdrawBtnHeight) {
 			setTimeout(() => {
-				play.regret()
+				if (play.stamina.stamina <= 1) {
+					tt.showModal({
+						title: "体力不足",
+						content: "是否观看广告，获取体力值",
+						confirmText: "确定",
+						success(res) {
+							if (res.confirm) {
+								play.stamina.staminaAdd(6)
+								play.stamina.setStorage()
+								updateStaminaText(com.ct)
+							}
+						},
+					});
+				} else {
+					play.stamina.staminaLow(2)
+					play.stamina.setStorage()
+					updateStaminaText(com.ct)
+					setTimeout(() => {
+						play.regret()
+					}, 300)
+				}
 			}, 300)
 		}
 	}
@@ -686,10 +706,20 @@ com.class.Main = function (images, x, y) {
 		ctx.fillText('支招', com.bgImg.width - withdrawBtnWidth + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.bgImg.height + 20 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 7))
 	}
 
+	const updateStaminaText = (ctx) => {
+		com.ct.drawImage(com.staminaIcon, com.bgImg.width - withdrawBtnWidth + com.centreX + 5, com.centreY - 100, withdrawBtnWidth, withdrawBtnHeight)
+		const text = `${play.stamina.stamina} +`;
+		ctx.fillText(
+			text,
+			com.bgImg.width + com.centreX - 30 - ((play.stamina.stamina.toString().split('').length + 1) * (withdrawBtnWidth / 3)) / 2 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 1.5)) / 2,
+			com.centreY - 100 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 7)
+		);
+	};
+
 	this.staminaIconNum = function (ctx) {
-		ctx.fillStyle = '#dcdcaa'
-		ctx.font = `${parseInt(withdrawBtnWidth / 3)}px Arial`
-		ctx.fillText(`${play.stamina.stamina} +`, com.bgImg.width + com.centreX - 30 - ((play.stamina.stamina.toString().split('').length + 1) * (withdrawBtnWidth / 3)) / 2 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 1.5)) / 2, com.centreY - 100 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 7))
+		ctx.fillStyle = '#dcdcaa';
+		ctx.font = `${parseInt(withdrawBtnWidth / 3)}px Arial`;
+		updateStaminaText(ctx);
 	}
 
 	this.promptTouchEvent = function (e) {
@@ -719,16 +749,24 @@ com.class.Main = function (images, x, y) {
 						if (res.confirm) {
 							play.stamina.staminaAdd(6)
 							play.stamina.setStorage()
+							updateStaminaText(com.ct)
 						}
 					},
 				});
 			} else {
 				play.stamina.staminaLow(2)
 				play.stamina.setStorage()
+				updateStaminaText(com.ct)
 				setTimeout(() => {
 					const val1 = AI.getAlphaBeta(-99999, 99999, 4, com.arr2Clone(play.map), 1)
 					const map1 = play.mans[val1.key]
 					console.log('最佳着法：' + com.createMove(com.arr2Clone(play.map), map1.x, map1.y, val1.x, val1.y))
+					tt.showModal({
+						title: "最佳着法",
+						content: com.createMove(com.arr2Clone(play.map), map1.x, map1.y, val1.x, val1.y),
+						confirmText: "确定",
+						showCancel: false
+					});
 				}, 300)
 			}
 		}
