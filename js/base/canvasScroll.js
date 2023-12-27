@@ -9,7 +9,7 @@ export default class CanvasScroll {
         this.scrollArea.onload = () => {
             // 创建离屏画布和上下文
             this.offscreenCanvas = tt.createCanvas();
-            this.offscreenCanvas.width = canvas.width / 2;
+            this.offscreenCanvas.width = canvas.width / 1.5;
             this.offscreenCanvas.height = canvas.height / 2;
             this.offscreenCtx = this.offscreenCanvas.getContext('2d');
             this.init();
@@ -50,7 +50,7 @@ export default class CanvasScroll {
 
     render() {
         // 清除离屏画布的内容
-        this.offscreenCtx.fillStyle = '#000000'; // 设置清除颜色为白色
+        this.offscreenCtx.fillStyle = '#996d3c'; // 设置清除颜色为白色
         this.offscreenCtx.fillRect(0, 0, this.offscreenCanvas.width, this.offscreenCanvas.height);
 
         // 绘制新的滚动区域
@@ -67,8 +67,8 @@ export default class CanvasScroll {
         );
 
         // 在主画布上绘制离屏画布的内容
-        this.ctx.drawImage(this.offscreenCanvas, canvas.width / 4, canvas.height / 2);
-        console.log(this.offscreenCanvas)
+        this.ctx.drawImage(this.offscreenCanvas, (canvas.width - canvas.width / 1.5) / 2, canvas.height / 2);
+        console.log(this.scrollY)
     }
 }
 
