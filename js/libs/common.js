@@ -584,7 +584,7 @@ com.args = {
 	'm': { text: "马", images: 'r_m', my: 1, bl: "m", value: com.value.m },
 	'x': { text: "相", images: 'r_x', my: 1, bl: "x", value: com.value.x },
 	's': { text: "仕", images: 'r_s', my: 1, bl: "s", value: com.value.s },
-	'j': { text: "将", images: 'r_j', my: 1, bl: "j", value: com.value.j },
+	'j': { text: "帅", images: 'r_j', my: 1, bl: "j", value: com.value.j },
 	'p': { text: "炮", images: 'r_p', my: 1, bl: "p", value: com.value.p },
 	'z': { text: "兵", images: 'r_z', my: 1, bl: "z", value: com.value.z },
 
@@ -593,7 +593,7 @@ com.args = {
 	'M': { text: "馬", images: 'b_m', my: -1, bl: "m", value: com.value.M },
 	'X': { text: "象", images: 'b_x', my: -1, bl: "x", value: com.value.X },
 	'S': { text: "士", images: 'b_s', my: -1, bl: "s", value: com.value.S },
-	'J': { text: "帅", images: 'b_j', my: -1, bl: "j", value: com.value.J },
+	'J': { text: "将", images: 'b_j', my: -1, bl: "j", value: com.value.J },
 	'P': { text: "炮", images: 'b_p', my: -1, bl: "p", value: com.value.P },
 	'Z': { text: "卒", images: 'b_z', my: -1, bl: "z", value: com.value.Z }
 };

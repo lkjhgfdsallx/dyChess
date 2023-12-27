@@ -1,5 +1,6 @@
 import BackGround from './runtime/background'
 import StartBtn from './botton/startBtn'
+import CanvasScroll from './base/canvasScroll'
 
 const ctx = canvas.getContext('2d')
 ctx.fillStyle = '#000000'
@@ -17,6 +18,7 @@ export default class Main {
     this.startBtn = new StartBtn()
     this.render()
     this.touchEvent()
+    this.myCanvas = new CanvasScroll(ctx, 1000, 800, 'images/over.png')
   }
   async render() {
     await this.bg.drawToCanvas(ctx)

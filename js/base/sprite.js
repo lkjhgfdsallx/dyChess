@@ -3,7 +3,7 @@
  */
 export default class Sprite {
   constructor(imgSrc = '', width = 0, height = 0, x = 0, y = 0, sx, sy ,swidth, sheight) {
-    this.img = tt.createImage()
+    this.img = new Image()
     this.img.src = imgSrc
 
     this.width = width
