@@ -43,12 +43,15 @@ com.loadImages = function (stype) {
 	com.paneImg = new Image();
 	com.paneImg.src = "images/" + stype + "/r_box.png";
 
+	//背景
 	com.background = new Image();
 	com.background.src = "images/" + stype + "/bg.jpg";
 
+	//悔棋按钮
 	com.withdrawBtn = new Image();
 	com.withdrawBtn.src = "images/withdrawBtn.png";
 
+	//体力图标
 	com.staminaIcon = new Image();
 	com.staminaIcon.src = "images/staminaIcon.png";
 
@@ -632,8 +635,11 @@ com.class.Main = function (images, x, y) {
 	this.y = y || 0;
 	this.isShow = true;
 
-	const withdrawBtnWidth = tt.getSystemInfoSync().windowWidth / 4
-	const withdrawBtnHeight = withdrawBtnWidth / 2.5
+	const withdrawBtnWidth = tt.getSystemInfoSync().windowWidth / 8
+	const withdrawBtnHeight = withdrawBtnWidth
+
+	const staminaWidth = tt.getSystemInfoSync().windowWidth / 4
+	const staminaHeight = withdrawBtnWidth / 1.5
 
 	this.show = function () {
 		if (this.isShow) {
@@ -651,9 +657,9 @@ com.class.Main = function (images, x, y) {
 	}
 
 	this.withdrawText = function (ctx) {
-		ctx.fillStyle = '#ffffff'
+		ctx.fillStyle = '#F9D195'
 		ctx.font = `${parseInt(withdrawBtnWidth / 4)}px Arial`
-		ctx.fillText('悔棋', com.spaceX * this.x + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.spaceY * this.y + com.centreY + com.bgImg.height + 20 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 7))
+		ctx.fillText('悔棋', com.bgImg.width - withdrawBtnWidth + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.spaceY * this.y + com.centreY + com.bgImg.height + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
 	}
 
 	this.withdrawTouchEvent = function (e) {
@@ -670,8 +676,8 @@ com.class.Main = function (images, x, y) {
 			this.lastCollisionTime = Date.now()
 		}
 
-		if (x >= com.centreX + 5
-			&& x <= com.centreX + 5 + withdrawBtnWidth
+		if (x >= com.bgImg.width - withdrawBtnWidth + com.centreX + 5
+			&& x <= com.bgImg.width + com.centreX + 5
 			&& y >= com.centreY + com.bgImg.height + 20
 			&& y <= com.centreY + com.bgImg.height + 20 + withdrawBtnHeight) {
 			setTimeout(() => {
@@ -701,24 +707,24 @@ com.class.Main = function (images, x, y) {
 	}
 
 	this.promptText = function (ctx) {
-		ctx.fillStyle = '#ffffff'
+		ctx.fillStyle = '#F9D195'
 		ctx.font = `${parseInt(withdrawBtnWidth / 4)}px Arial`
-		ctx.fillText('支招', com.bgImg.width - withdrawBtnWidth + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.bgImg.height + 20 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 7))
+		ctx.fillText('支招', com.spaceX * this.x + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.bgImg.height + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
 	}
 
 	const updateStaminaText = (ctx) => {
-		com.ct.drawImage(com.staminaIcon, com.bgImg.width - withdrawBtnWidth + com.centreX + 5, com.centreY - 100, withdrawBtnWidth, withdrawBtnHeight)
+		com.ct.drawImage(com.staminaIcon, com.bgImg.width - staminaWidth + com.centreX + 5, com.centreY - staminaHeight, staminaWidth, staminaHeight)
 		const text = `${play.stamina.stamina} +`;
 		ctx.fillText(
 			text,
-			com.bgImg.width + com.centreX - 30 - ((play.stamina.stamina.toString().split('').length + 1) * (withdrawBtnWidth / 3)) / 2 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 1.5)) / 2,
-			com.centreY - 100 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 7)
+			com.bgImg.width + com.centreX - 30 - ((play.stamina.stamina.toString().split('').length + 1) * (staminaWidth / 3)) / 2 + (staminaWidth - parseInt(staminaWidth / 1.5)) / 2,
+			com.centreY - parseInt(staminaWidth / 7)
 		);
 	};
 
 	this.staminaIconNum = function (ctx) {
 		ctx.fillStyle = '#dcdcaa';
-		ctx.font = `${parseInt(withdrawBtnWidth / 3)}px Arial`;
+		ctx.font = `${parseInt(staminaWidth / 3)}px Arial`;
 		updateStaminaText(ctx);
 	}
 
@@ -736,8 +742,8 @@ com.class.Main = function (images, x, y) {
 			this.lastCollisionTime1 = Date.now()
 		}
 
-		if (x >= com.bgImg.width - withdrawBtnWidth + com.centreX + 5
-			&& x <= com.bgImg.width + com.centreX + 5
+		if (x >= com.centreX + 5
+			&& x <= com.centreX + 5 + withdrawBtnWidth
 			&& y >= com.centreY + com.bgImg.height + 20
 			&& y <= com.centreY + com.bgImg.height + 20 + withdrawBtnHeight) {
 			if (play.stamina.stamina <= 1) {

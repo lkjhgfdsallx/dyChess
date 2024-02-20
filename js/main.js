@@ -1,6 +1,7 @@
 import BackGround from './runtime/background'
 import StartBtn from './botton/startBtn'
 import CanvasScroll from './base/canvasScroll'
+import AvatarTags from './botton/avatarTags'
 
 const ctx = canvas.getContext('2d')
 
@@ -10,7 +11,48 @@ const ctx = canvas.getContext('2d')
 export default class Main {
   constructor() {
     // this.restart()
+    this.login()
     this.startPage()
+  }
+  login() {
+    tt.checkSession({
+      success() {
+        console.log(`session 未过期`)
+      },
+      fail() {
+        console.log(`session 已过期，需要重新登录`)
+        tt.login({
+          success: (res) => {
+            console.log("登录成功", res)
+            tt.getUserInfo({
+              // withCredentials: true,
+              // withRealNameAuthenticationInfo: true,
+              success(res) {
+                const userInfo = res.userInfo
+                console.log(`getUserInfo 调用成功`, res.userInfo)
+                tt.setStorage({
+                  key: "userInfo",
+                  data: userInfo,
+                  success(res) {
+                    console.log(`set seen ad flag`, res)
+                  },
+                  fail(res) {
+                    console.log(`setStorage调用失败`)
+                  },
+                })
+              },
+              fail(res) {
+                console.log(`getUserInfo 调用失败`, res.errMsg)
+              },
+            })
+
+          },
+          fail: (err) => {
+            console.log("登录失败", err)
+          },
+        })
+      },
+    })
   }
   startPage() {
     const that = this
@@ -25,6 +67,7 @@ export default class Main {
 
     // 绘制开始页面
     const startButton = new StartBtn(ctx)
+    const avatarTags = new AvatarTags(ctx)
     // const startTitle = new StartTitle(ctx)
 
     // 开始按钮点击事件处理逻辑
@@ -53,6 +96,7 @@ export default class Main {
 
       that.bg.render(ctx)
       startButton.drawToCanvas(ctx)
+      avatarTags.drawToCanvas(ctx)
       // startTitle.drawToCanvas(ctx)
     }
 
@@ -67,38 +111,5 @@ export default class Main {
     }
 
     startPageLoop()
-  }
-  restart() {
-    this.bg = new BackGround()
-    this.startBtn = new StartBtn()
-    this.render()
-    this.touchEvent()
-    this.myCanvas = new CanvasScroll(ctx, 0, 0, 'images/canvasScroll.png')
-  }
-  async render() {
-    await this.bg.drawToCanvas(ctx)
-    await this.startBtn.drawToCanvas(ctx)
-    this.startBtn.drawText(ctx)
-  }
-  touchEvent() {
-    const touchStartHandler = (e) => {
-      e.preventDefault()
-      const x = e.touches[0].clientX
-      const y = e.touches[0].clientY
-
-      const area = this.startBtn.btnArea
-
-      if (x >= area.startX
-        && x <= area.endX
-        && y >= area.startY
-        && y <= area.endY) {
-        setTimeout(() => {
-          play.isPlay = true
-          play.checkpoint1.playGame()
-        }, 300)
-        canvas.removeEventListener('touchstart', touchStartHandler)
-      }
-    }
-    canvas.addEventListener('touchstart', touchStartHandler)
   }
 }
