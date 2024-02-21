@@ -646,64 +646,21 @@ com.class.Main = function (images, x, y) {
 			com.ct.drawImage(com.background, 0, 0, canvas.width, canvas.height);
 			com.ct.drawImage(com.bgImg, com.spaceX * this.x + com.centreX, com.spaceY * this.y + com.centreY);
 			com.ct.drawImage(com.withdrawBtn, com.centreX + 5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
+			com.ct.drawImage(com.withdrawBtn, com.centreX + 10 + (com.withdrawBtn.width) * 0.5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
 			com.ct.drawImage(com.withdrawBtn, com.bgImg.width - withdrawBtnWidth + com.centreX + 5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
 
 			this.withdrawText(com.ct)
 			this.promptText(com.ct)
+			this.revisitText(com.ct)
 			this.staminaIconNum(com.ct)
-			canvas.addEventListener('touchstart', this.withdrawTouchEvent)
-			canvas.addEventListener('touchstart', this.promptTouchEvent)
+			canvas.addEventListener('touchstart', this.touchEvent)
 		}
 	}
 
 	this.withdrawText = function (ctx) {
 		ctx.fillStyle = '#F9D195'
 		ctx.font = `${parseInt(withdrawBtnWidth / 4)}px Arial`
-		ctx.fillText('悔棋', com.bgImg.width - withdrawBtnWidth + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.spaceY * this.y + com.centreY + com.bgImg.height + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
-	}
-
-	this.withdrawTouchEvent = function (e) {
-		e.preventDefault()
-		const x = e.touches[0].clientX
-		const y = e.touches[0].clientY
-
-		if (this.lastCollisionTime === undefined) {
-			this.lastCollisionTime = Date.now()
-		} else {
-			if (Date.now() - this.lastCollisionTime < 500) {
-				return
-			}
-			this.lastCollisionTime = Date.now()
-		}
-
-		if (x >= com.bgImg.width - withdrawBtnWidth + com.centreX + 5
-			&& x <= com.bgImg.width + com.centreX + 5
-			&& y >= com.centreY + com.bgImg.height + 20
-			&& y <= com.centreY + com.bgImg.height + 20 + withdrawBtnHeight) {
-			setTimeout(() => {
-				if (play.stamina.stamina <= 1) {
-					tt.showModal({
-						title: "体力不足",
-						content: "是否观看广告，获取体力值",
-						confirmText: "确定",
-						success(res) {
-							if (res.confirm) {
-								play.stamina.staminaAdd(6)
-								play.stamina.setStorage()
-								updateStaminaText(com.ct)
-							}
-						},
-					});
-				} else {
-					play.stamina.staminaLow(2)
-					play.stamina.setStorage()
-					updateStaminaText(com.ct)
-					setTimeout(() => {
-						play.regret()
-					}, 300)
-				}
-			}, 300)
-		}
+		ctx.fillText('悔棋', com.centreX + 10 + (com.withdrawBtn.width) * 0.5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.spaceY * this.y + com.centreY + com.bgImg.height + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
 	}
 
 	this.promptText = function (ctx) {
@@ -712,23 +669,13 @@ com.class.Main = function (images, x, y) {
 		ctx.fillText('支招', com.spaceX * this.x + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.bgImg.height + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
 	}
 
-	const updateStaminaText = (ctx) => {
-		com.ct.drawImage(com.staminaIcon, com.bgImg.width - staminaWidth + com.centreX + 5, com.centreY - staminaHeight, staminaWidth, staminaHeight)
-		const text = `${play.stamina.stamina} +`;
-		ctx.fillText(
-			text,
-			com.bgImg.width + com.centreX - 30 - ((play.stamina.stamina.toString().split('').length + 1) * (staminaWidth / 3)) / 2 + (staminaWidth - parseInt(staminaWidth / 1.5)) / 2,
-			com.centreY - parseInt(staminaWidth / 7)
-		);
-	};
-
-	this.staminaIconNum = function (ctx) {
-		ctx.fillStyle = '#dcdcaa';
-		ctx.font = `${parseInt(staminaWidth / 3)}px Arial`;
-		updateStaminaText(ctx);
+	this.revisitText = function (ctx) {
+		ctx.fillStyle = '#F9D195'
+		ctx.font = `${parseInt(withdrawBtnWidth / 4)}px Arial`
+		ctx.fillText('重来', com.bgImg.width - withdrawBtnWidth + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.bgImg.height + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
 	}
 
-	this.promptTouchEvent = function (e) {
+	this.touchEvent = function (e) {
 		e.preventDefault()
 		const x = e.touches[0].clientX
 		const y = e.touches[0].clientY
@@ -776,7 +723,60 @@ com.class.Main = function (images, x, y) {
 				}, 300)
 			}
 		}
+
+		if (x >= com.bgImg.width - withdrawBtnWidth + com.centreX + 5
+			&& x <= com.bgImg.width + com.centreX + 5
+			&& y >= com.centreY + com.bgImg.height + 20
+			&& y <= com.centreY + com.bgImg.height + 20 + withdrawBtnHeight) {
+			play.init(4, play.nowMap)
+		}
+
+		if (x >= com.centreX + 10 + (com.withdrawBtn.width) * 0.5
+			&& x <= com.centreX + 10 + (com.withdrawBtn.width) * 0.5 + withdrawBtnWidth
+			&& y >= com.centreY + com.bgImg.height + 20
+			&& y <= com.centreY + com.bgImg.height + 20 + withdrawBtnHeight) {
+			setTimeout(() => {
+				if (play.stamina.stamina <= 1) {
+					tt.showModal({
+						title: "体力不足",
+						content: "是否观看广告，获取体力值",
+						confirmText: "确定",
+						success(res) {
+							if (res.confirm) {
+								play.stamina.staminaAdd(6)
+								play.stamina.setStorage()
+								updateStaminaText(com.ct)
+							}
+						},
+					});
+				} else {
+					play.stamina.staminaLow(2)
+					play.stamina.setStorage()
+					updateStaminaText(com.ct)
+					setTimeout(() => {
+						play.regret()
+					}, 300)
+				}
+			}, 300)
+		}
 	}
+
+	const updateStaminaText = (ctx) => {
+		com.ct.drawImage(com.staminaIcon, com.bgImg.width - staminaWidth + com.centreX + 5, com.centreY - staminaHeight, staminaWidth, staminaHeight)
+		const text = `${play.stamina.stamina}`;
+		ctx.fillText(
+			text,
+			com.bgImg.width + com.centreX - staminaWidth / 3 - ((play.stamina.stamina.toString().split('').length + 1) * (staminaWidth / 5)) / 2 + (staminaWidth - parseInt(staminaWidth / 1.5)) / 2,
+			com.centreY - parseInt(staminaWidth / 9)
+		);
+	};
+
+	this.staminaIconNum = function (ctx) {
+		ctx.fillStyle = '#FFFFFF';
+		ctx.font = `${parseInt(staminaWidth / 5)}px Arial`;
+		updateStaminaText(ctx);
+	}
+
 }
 
 com.class.Pane = function (images, x, y) {
