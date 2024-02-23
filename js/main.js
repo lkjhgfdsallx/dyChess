@@ -1,6 +1,6 @@
 import BackGround from './runtime/background'
 import StartBtn from './botton/startBtn'
-import CanvasScroll from './base/canvasScroll'
+// import CanvasScroll from './base/canvasScroll'
 import AvatarTags from './botton/avatarTags'
 
 const ctx = canvas.getContext('2d')
@@ -38,6 +38,17 @@ export default class Main {
                   },
                   fail(res) {
                     console.log(`setStorage调用失败`)
+                    tt.navigateToScene({
+                      scene: "sidebar",
+                      success: (res) => {
+                        console.log("navigate to scene success");
+                        // 跳转成功回调逻辑
+                      },
+                      fail: (res) => {
+                        console.log("navigate to scene fail: ", res);
+                        // 跳转失败回调逻辑
+                      },
+                    })
                   },
                 })
               },

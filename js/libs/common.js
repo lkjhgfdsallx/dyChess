@@ -55,6 +55,22 @@ com.loadImages = function (stype) {
 	com.staminaIcon = new Image();
 	com.staminaIcon.src = "images/staminaIcon.png";
 
+	//体力图标2
+	com.staminaIcon2 = new Image();
+	com.staminaIcon2.src = "images/staminaIcon1.png";
+
+	//体力图标3
+	com.staminaIcon3 = new Image();
+	com.staminaIcon3.src = "images/staminaIcon2.png";
+
+	//关卡底图
+	com.checkpoint = new Image();
+	com.checkpoint.src = "images/checkpoint.png";
+
+	//返回首页
+	com.backToHomepage = new Image();
+	com.backToHomepage.src = "images/backToHomepage.png";
+
 }
 
 //显示列表
@@ -643,18 +659,36 @@ com.class.Main = function (images, x, y) {
 
 	this.show = function () {
 		if (this.isShow) {
-			com.ct.drawImage(com.background, 0, 0, canvas.width, canvas.height);
-			com.ct.drawImage(com.bgImg, com.spaceX * this.x + com.centreX, com.spaceY * this.y + com.centreY);
+			com.ct.drawImage(com.background, 0, 0, canvas.width, canvas.height)
+			com.ct.drawImage(com.bgImg, com.spaceX * this.x + com.centreX, com.spaceY * this.y + com.centreY)
 			com.ct.drawImage(com.withdrawBtn, com.centreX + 5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
 			com.ct.drawImage(com.withdrawBtn, com.centreX + 10 + (com.withdrawBtn.width) * 0.5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
 			com.ct.drawImage(com.withdrawBtn, com.bgImg.width - withdrawBtnWidth + com.centreX + 5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
+			com.ct.drawImage(com.checkpoint, com.centreX + 5, com.centreY - staminaHeight * 2.25, staminaWidth * 0.75, staminaHeight)
+			com.ct.drawImage(com.backToHomepage, com.centreX - 5, com.centreY - staminaHeight * 4, staminaWidth * 0.55, staminaWidth * 0.55)
 
+			this.levelName(com.ct)
 			this.withdrawText(com.ct)
 			this.promptText(com.ct)
 			this.revisitText(com.ct)
 			this.staminaIconNum(com.ct)
 			canvas.addEventListener('touchstart', this.touchEvent)
 		}
+	}
+
+	this.levelName = function (ctx) {
+		const levelNameText = com.clasli[play.checkpoint1.clasli].name
+		const firstPart = levelNameText.split("：")[0]
+		const secondPart = levelNameText.split("：")[1]
+		ctx.fillStyle = '#DED1B4'
+
+		ctx.font = `${parseInt(withdrawBtnWidth / 4)}px Arial`
+		ctx.fillText(`${firstPart}`, com.centreX + 3 + (staminaWidth * 0.75 - parseInt(withdrawBtnWidth / 4) * 3) / 2, com.centreY - staminaHeight * 2.25 + (staminaHeight + parseInt(withdrawBtnWidth / 4)) * 0.45)
+
+		ctx.fillStyle = '#E9D9B4'
+		ctx.font = `${parseInt(withdrawBtnWidth / 2.2)}px Arial`
+		ctx.fillText(`${secondPart}`, com.centreX + 5, com.centreY - staminaHeight * 0.3)
+
 	}
 
 	this.withdrawText = function (ctx) {
@@ -762,12 +796,14 @@ com.class.Main = function (images, x, y) {
 	}
 
 	const updateStaminaText = (ctx) => {
-		com.ct.drawImage(com.staminaIcon, com.bgImg.width - staminaWidth + com.centreX + 5, com.centreY - staminaHeight, staminaWidth, staminaHeight)
+		com.ct.drawImage(com.staminaIcon, com.bgImg.width - staminaWidth + com.centreX + 5, com.centreY - staminaHeight * 2, staminaWidth, staminaHeight)
+		com.ct.drawImage(com.staminaIcon2, com.bgImg.width - staminaWidth + com.centreX, com.centreY - staminaHeight * 2.2, staminaHeight, staminaHeight * 1.49)
+		com.ct.drawImage(com.staminaIcon3, com.bgImg.width - staminaHeight + com.centreX + 5, com.centreY - staminaHeight * 2.1, staminaHeight * 1.1, staminaHeight * 1.1)
 		const text = `${play.stamina.stamina}`;
 		ctx.fillText(
 			text,
-			com.bgImg.width + com.centreX - staminaWidth / 3 - ((play.stamina.stamina.toString().split('').length + 1) * (staminaWidth / 5)) / 2 + (staminaWidth - parseInt(staminaWidth / 1.5)) / 2,
-			com.centreY - parseInt(staminaWidth / 9)
+			com.bgImg.width + com.centreX - staminaWidth / 2 - ((play.stamina.stamina.toString().split('').length + 1) * (staminaWidth / 5)) / 2 + (staminaWidth - parseInt(staminaWidth / 1.5)) / 2,
+			com.centreY - parseInt(staminaWidth / 2.3)
 		);
 	};
 
