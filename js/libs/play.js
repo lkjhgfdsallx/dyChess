@@ -1,11 +1,13 @@
 import Music from "../runtime/music";
 import Checkpoint from '../base/checkpoint';
 import Stamina from '../base/stamina';
+import Main from "../main";
 
 var play = play || {};
 
 play.checkpoint1 = new Checkpoint(0);
 play.stamina = new Stamina();
+play.main = Object.create(Main)
 
 play.init = function (depth, map) {
 	var map = map || com.initMap;

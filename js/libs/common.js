@@ -765,6 +765,14 @@ com.class.Main = function (images, x, y) {
 			play.init(4, play.nowMap)
 		}
 
+		if (x >= com.centreX - 5
+			&& x <= com.centreX - 5 + staminaWidth * 0.55
+			&& y >= com.centreY - staminaHeight * 4
+			&& y <= com.centreY - staminaHeight * 4 + staminaWidth * 0.55) {
+			play.isPlay = false
+			play.main.prototype.startPage()
+		}
+
 		if (x >= com.centreX + 10 + (com.withdrawBtn.width) * 0.5
 			&& x <= com.centreX + 10 + (com.withdrawBtn.width) * 0.5 + withdrawBtnWidth
 			&& y >= com.centreY + com.bgImg.height + 20
@@ -799,18 +807,18 @@ com.class.Main = function (images, x, y) {
 		com.ct.drawImage(com.staminaIcon, com.bgImg.width - staminaWidth + com.centreX + 5, com.centreY - staminaHeight * 2, staminaWidth, staminaHeight)
 		com.ct.drawImage(com.staminaIcon2, com.bgImg.width - staminaWidth + com.centreX, com.centreY - staminaHeight * 2.2, staminaHeight, staminaHeight * 1.49)
 		com.ct.drawImage(com.staminaIcon3, com.bgImg.width - staminaHeight + com.centreX + 5, com.centreY - staminaHeight * 2.1, staminaHeight * 1.1, staminaHeight * 1.1)
-		const text = `${play.stamina.stamina}`;
+		const text = `${play.stamina.stamina}`
 		ctx.fillText(
 			text,
 			com.bgImg.width + com.centreX - staminaWidth / 2 - ((play.stamina.stamina.toString().split('').length + 1) * (staminaWidth / 5)) / 2 + (staminaWidth - parseInt(staminaWidth / 1.5)) / 2,
 			com.centreY - parseInt(staminaWidth / 2.3)
-		);
-	};
+		)
+	}
 
 	this.staminaIconNum = function (ctx) {
-		ctx.fillStyle = '#FFFFFF';
-		ctx.font = `${parseInt(staminaWidth / 5)}px Arial`;
-		updateStaminaText(ctx);
+		ctx.fillStyle = '#FFFFFF'
+		ctx.font = `${parseInt(staminaWidth / 5)}px Arial`
+		updateStaminaText(ctx)
 	}
 
 }

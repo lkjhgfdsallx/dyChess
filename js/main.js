@@ -2,6 +2,7 @@ import BackGround from './runtime/background'
 import StartBtn from './botton/startBtn'
 // import CanvasScroll from './base/canvasScroll'
 import AvatarTags from './botton/avatarTags'
+import StaminaBtn from './botton/staminaBtn'
 
 const ctx = canvas.getContext('2d')
 
@@ -79,6 +80,7 @@ export default class Main {
     // 绘制开始页面
     const startButton = new StartBtn(ctx)
     const avatarTags = new AvatarTags(ctx)
+    const staminaBtn = new StaminaBtn(ctx)
     // const startTitle = new StartTitle(ctx)
 
     // 开始按钮点击事件处理逻辑
@@ -108,7 +110,7 @@ export default class Main {
       that.bg.render(ctx)
       startButton.drawToCanvas(ctx)
       avatarTags.drawToCanvas(ctx)
-      // startTitle.drawToCanvas(ctx)
+      staminaBtn.drawToCanvas(ctx)
     }
 
     // 设置开始页面的帧循环
