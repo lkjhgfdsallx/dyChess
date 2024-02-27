@@ -5,7 +5,7 @@ import Main from "../main";
 
 var play = play || {};
 
-play.checkpoint1 = new Checkpoint(0);
+play.checkpoint1 = new Checkpoint();
 play.stamina = new Stamina();
 play.main = Object.create(Main)
 
@@ -288,8 +288,9 @@ play.showWin = function (my) {
 			cancelText: "重新开始",
 			success(res) {
 				if (res.confirm) {
-					play.checkpoint1.increase();
-					play.checkpoint1.playGame();
+					play.checkpoint1.increase()
+					play.checkpoint1.saveLevelNum()
+					play.checkpoint1.playGame()
 				} else if (res.cancel) {
 					play.init(4, play.nowMap)
 				}

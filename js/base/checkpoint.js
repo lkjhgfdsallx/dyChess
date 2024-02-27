@@ -1,6 +1,6 @@
 export default class Checkpoint {
     constructor() {
-        this.clasli = 0
+        this.clasli = tt.getStorageSync("clasli") || 0
     }
 
     /**
@@ -18,5 +18,12 @@ export default class Checkpoint {
     */
     increase() {
         this.clasli = this.clasli + 1
+    }
+
+    /**
+    * 保存当前关卡数
+    */
+    saveLevelNum() {
+		tt.setStorageSync("clasli", this.clasli)
     }
 }

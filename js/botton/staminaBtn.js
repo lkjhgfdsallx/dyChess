@@ -35,11 +35,11 @@ export default class staminaBtn {
         ctx.fillStyle = '#FFFFFF' // 文字颜色
         ctx.font = `${setFontSize}px Arial`
         const text = `${play.stamina.stamina}`
-		ctx.fillText(
-			text,
-			com.bgImg.width + com.centreX - staminaWidth / 2 - ((play.stamina.stamina.toString().split('').length + 1) * (staminaWidth / 5)) / 2 + (staminaWidth - parseInt(staminaWidth / 1.5)) / 2,
-			com.centreY - parseInt(staminaWidth / 2.3)
-		) // 文字内容、位置
+        ctx.fillText(
+            text,
+            com.bgImg.width + com.centreX - staminaWidth / 2 - ((play.stamina.stamina.toString().split('').length + 1) * (staminaWidth / 5)) / 2 + (staminaWidth - parseInt(staminaWidth / 1.5)) / 2,
+            com.centreY - parseInt(staminaWidth / 2.3)
+        ) // 文字内容、位置
     }
 
     // 添加事件监听
