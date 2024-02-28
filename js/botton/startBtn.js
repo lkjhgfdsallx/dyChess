@@ -21,6 +21,9 @@ export default class StartButton {
         this.img3 = new Image()
         this.img3.src = 'images/levelNotSelected.png'
 
+        this.img4 = new Image()
+        this.img4.src = 'images/levelSelectedduigou.png'
+
         this.checkpoint()
 
         // 定义按钮的点击区域
@@ -34,22 +37,32 @@ export default class StartButton {
 
     checkpoint() {
         this.img2.onload = () => {
-            const subArray = com.clasli.slice(play.checkpoint1.clasli)
             this.offscreenCtx.drawImage(this.img2, this.offscreenCanvas.width * 0.05, this.offscreenCanvas.height / 12, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 6)
             this.offscreenCtx.fillStyle = '#DED1B4'
             this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.height / 32)}px Arial`
             const text = `${com.clasli[play.checkpoint1.clasli].name.split("：")[0]}`
             this.offscreenCtx.fillText(text, this.offscreenCanvas.width * 0.16, this.offscreenCanvas.height / 12 + parseInt(this.offscreenCanvas.height / 11))
             this.offscreenCtx.fillStyle = '#7C622D'
-            this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.height / 18)}px Arial`
+            this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 18)}px Arial`
             const text2 = `${com.clasli[play.checkpoint1.clasli].name.split("：")[1]}`
-            this.offscreenCtx.fillText(text2, this.offscreenCanvas.width * 0.38, this.offscreenCanvas.height / 12 + parseInt(this.offscreenCanvas.height / 6))
+            this.offscreenCtx.fillText(text2, this.offscreenCanvas.width * 0.34, this.offscreenCanvas.height / 12 + parseInt(this.offscreenCanvas.height / 11))
+            this.img4.onload = () => {
+                this.offscreenCtx.drawImage(this.img4, this.offscreenCanvas.width * 0.77, this.offscreenCanvas.height / 10, this.offscreenCanvas.height / 8, this.offscreenCanvas.height / 8)
+            }
         }
         this.img3.onload = () => {
             const subArray = com.clasli.slice(play.checkpoint1.clasli)
             for (let i = 1; i < 5; i++) {
                 console.log(`Index: ${i}, Item: ${subArray[i]}`)
                 this.offscreenCtx.drawImage(this.img3, this.offscreenCanvas.width * 0.05, this.offscreenCanvas.height / 12 + i * this.offscreenCanvas.height / 6, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 6)
+                this.offscreenCtx.fillStyle = '#DED1B4'
+                this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.height / 32)}px Arial`
+                const text = `${subArray[i].name.split("：")[0]}`
+                this.offscreenCtx.fillText(text, this.offscreenCanvas.width * 0.16, this.offscreenCanvas.height / 12 + parseInt(this.offscreenCanvas.height / 11) + i * this.offscreenCanvas.height / 6)
+                this.offscreenCtx.fillStyle = '#7C622D'
+                this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 18)}px Arial`
+                const text2 = `${subArray[i].name.split("：")[1]}`
+                this.offscreenCtx.fillText(text2, this.offscreenCanvas.width * 0.38, this.offscreenCanvas.height / 12 + parseInt(this.offscreenCanvas.height / 11) + i * this.offscreenCanvas.height / 6)
             }
         }
     }
