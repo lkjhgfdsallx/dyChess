@@ -14,16 +14,17 @@ export default class Checkpoint {
     }
 
     /**
-    * 进入下一关
-    */
-    increase() {
-        this.clasli = this.clasli + 1
-    }
-
-    /**
     * 保存当前关卡数
     */
     saveLevelNum() {
 		tt.setStorageSync("clasli", this.clasli)
+    }
+
+    /**
+    * 进入下一关
+    */
+    increase() {
+        this.clasli = this.clasli + 1
+        this.saveLevelNum()
     }
 }

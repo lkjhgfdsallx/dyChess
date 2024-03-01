@@ -289,7 +289,6 @@ play.showWin = function (my) {
 			success(res) {
 				if (res.confirm) {
 					play.checkpoint1.increase()
-					play.checkpoint1.saveLevelNum()
 					play.checkpoint1.playGame()
 				} else if (res.cancel) {
 					play.init(4, play.nowMap)

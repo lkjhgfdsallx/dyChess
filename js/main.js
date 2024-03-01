@@ -87,13 +87,13 @@ export default class Main {
     const startButtonHandler = function (e) {
       e.preventDefault()
 
-      const x = e.touches[0].clientX
-      const y = e.touches[0].clientY
+      const x = e.changedTouches[0].clientX
+      const y = e.changedTouches[0].clientY
 
       const buttonArea = startButton.btnArea
 
       if (x >= buttonArea.startX && x <= buttonArea.endX && y >= buttonArea.startY && y <= buttonArea.endY) {
-        startButton.removeEventListener('touchstart', startButtonHandler)
+        startButton.removeEventListener('touchend', startButtonHandler)
         setTimeout(() => {
           play.isPlay = true
           play.checkpoint1.playGame()
@@ -101,7 +101,7 @@ export default class Main {
       }
     }
 
-    startButton.addEventListener('touchstart', startButtonHandler)
+    startButton.addEventListener('touchend', startButtonHandler)
 
     // 渲染开始页面
     const renderStartPage = function () {
