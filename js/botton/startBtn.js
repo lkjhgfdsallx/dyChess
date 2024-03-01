@@ -28,10 +28,10 @@ export default class StartButton {
 
         // 定义按钮的点击区域
         this.btnArea = {
-            startX: this.x,
-            startY: this.y,
-            endX: this.x + this.width,
-            endY: this.y + this.height,
+            startX: this.x + (this.width - this.offscreenCanvas.width) * 0.5,
+            startY: this.y + (this.height - this.offscreenCanvas.height) * 0.55,
+            endX: this.x + (this.width - this.offscreenCanvas.width) * 0.5 + this.offscreenCanvas.width,
+            endY: this.y + (this.height - this.offscreenCanvas.height) * 0.55 + this.offscreenCanvas.height,
         }
 
         this.currentTouchY = 0
