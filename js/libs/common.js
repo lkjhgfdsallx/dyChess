@@ -1,20 +1,18 @@
 var com = com || {};
 
 com.init = function () {
-	com.width = canvas.width;		//画布宽度
-	com.height = canvas.height; 		//画布高度
+	com.width = tt.getSystemInfoSync().windowWidth;		//画布宽度
+	com.height = tt.getSystemInfoSync().windowHeight; 		//画布高度
 	com.spaceX = 35;		//着点X跨度
 	com.spaceY = 36;		//着点Y跨度
-	com.centreX = (canvas.width - 325) / 2
-	com.centreY = (canvas.height - 403) / 2
+	com.centreX = (tt.getSystemInfoSync().windowWidth - 325) / 2
+	com.centreY = (tt.getSystemInfoSync().windowHeight - 403) / 2
 	com.pointStartX = 5 + com.centreX;	//第一个着点X坐标;
 	com.pointStartY = 20 + com.centreY;	//第一个着点Y坐标;
 	com.page = "stype";			//图片目录
 
 	com.canvas = canvas; //画布
 	com.ct = com.canvas.getContext("2d");
-	com.canvas.width = com.width;
-	com.canvas.height = com.height;
 
 	com.childList = com.childList || [];
 
@@ -659,7 +657,7 @@ com.class.Main = function (images, x, y) {
 
 	this.show = function () {
 		if (this.isShow) {
-			com.ct.drawImage(com.background, 0, 0, canvas.width, canvas.height)
+			com.ct.drawImage(com.background, 0, 0, tt.getSystemInfoSync().windowWidth, tt.getSystemInfoSync().windowHeight)
 			com.ct.drawImage(com.bgImg, com.spaceX * this.x + com.centreX, com.spaceY * this.y + com.centreY)
 			com.ct.drawImage(com.withdrawBtn, com.centreX + 5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
 			com.ct.drawImage(com.withdrawBtn, com.centreX + 10 + (com.withdrawBtn.width) * 0.5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)

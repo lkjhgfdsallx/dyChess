@@ -1,10 +1,10 @@
 export default class StartButton {
     constructor(ctx) {
         this.ctx = ctx
-        this.width = canvas.width * 0.89
-        this.height = canvas.height * 0.72
-        this.x = (canvas.width - this.width) / 2
-        this.y = (canvas.height - this.height) / 1.5
+        this.width = tt.getSystemInfoSync().windowWidth * 0.89
+        this.height = tt.getSystemInfoSync().windowHeight * 0.72
+        this.x = (tt.getSystemInfoSync().windowWidth - this.width) / 2
+        this.y = (tt.getSystemInfoSync().windowHeight - this.height) / 1.5
 
         // 创建离屏 Canvas 并设置其宽高
         this.offscreenCanvas = tt.createCanvas()

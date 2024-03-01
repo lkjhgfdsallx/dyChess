@@ -5,8 +5,8 @@ export default class avatarTags {
         this.getUserInfo()
 
         this.ctx = ctx
-        this.width = canvas.width * 0.44
-        this.height = canvas.height * 0.076
+        this.width = tt.getSystemInfoSync().windowWidth * 0.44
+        this.height = tt.getSystemInfoSync().windowHeight * 0.076
         this.x = 0
         this.y = this.height
   
@@ -50,7 +50,7 @@ export default class avatarTags {
     draw() {
         const ctx = this.ctx
 
-        const setFontSize = canvas.width * 0.036
+        const setFontSize = tt.getSystemInfoSync().windowWidth * 0.036
         const setFontText = this.userInfo.nickName
 
         ctx.fillStyle = '#FFFFFF' // 文字颜色

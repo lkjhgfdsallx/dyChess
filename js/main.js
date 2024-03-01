@@ -97,6 +97,8 @@ export default class Main {
         setTimeout(() => {
           play.isPlay = true
           play.checkpoint1.playGame()
+          console.log(tt.getSystemInfoSync())
+          console.log(canvas.width, canvas.height)
         }, 300)
       }
     }
@@ -105,7 +107,7 @@ export default class Main {
 
     // 渲染开始页面
     const renderStartPage = function () {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, tt.getSystemInfoSync().windowWidth, tt.getSystemInfoSync().windowHeight);
 
       that.bg.render(ctx)
       startButton.drawToCanvas(ctx)

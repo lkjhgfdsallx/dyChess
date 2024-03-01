@@ -2843,3 +2843,6 @@ com.clasli = [
 			[, , , , , "j0", , ,],
 		]
 	},]
+
+window.canvas.width = tt.getSystemInfoSync().windowWidth
+window.canvas.height = tt.getSystemInfoSync().windowHeight

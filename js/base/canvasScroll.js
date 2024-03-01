@@ -9,8 +9,8 @@ export default class CanvasScroll {
         this.scrollArea.onload = () => {
             // 创建离屏画布和上下文
             this.offscreenCanvas = tt.createCanvas()
-            this.offscreenCanvas.width = canvas.width
-            this.offscreenCanvas.height = canvas.height * 0.67
+            this.offscreenCanvas.width = tt.getSystemInfoSync().windowWidth
+            this.offscreenCanvas.height = tt.getSystemInfoSync().windowHeight * 0.67
             this.offscreenCtx = this.offscreenCanvas.getContext('2d')
             this.init()
             this.render()
@@ -58,12 +58,12 @@ export default class CanvasScroll {
             this.scrollArea,
             0,
             this.scrollY,
-            canvas.width,
-            canvas.height,
+            tt.getSystemInfoSync().windowWidth,
+            tt.getSystemInfoSync().windowHeight,
             0,
             0,
-            canvas.width,
-            canvas.height
+            tt.getSystemInfoSync().windowWidth,
+            tt.getSystemInfoSync().windowHeight
         )
 
         // 在主画布上绘制离屏画布的内容
