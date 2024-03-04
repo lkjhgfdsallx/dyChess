@@ -24,7 +24,7 @@ export default class Checkpoint {
     * 进入下一关
     */
     increase() {
-        this.clasli = this.clasli + 1
+        this.clasli = parseInt(this.clasli) + 1
         this.saveLevelNum()
     }
 }

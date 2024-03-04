@@ -679,8 +679,14 @@ com.class.Main = function (images, x, y) {
 		const firstPart = levelNameText.split("：")[0]
 		const secondPart = levelNameText.split("：")[1]
 		ctx.fillStyle = '#DED1B4'
+		
+        let fontSize = parseInt(withdrawBtnWidth / 4)
+        let wordCount = firstPart.length
+        if (wordCount > 3) {
+            fontSize *= Math.pow(0.85, (wordCount - 3))
+        }
 
-		ctx.font = `${parseInt(withdrawBtnWidth / 4)}px Arial`
+		ctx.font = `${fontSize}px Arial`
 		ctx.fillText(`${firstPart}`, com.centreX + 3 + (staminaWidth * 0.75 - parseInt(withdrawBtnWidth / 4) * 3) / 2, com.centreY - staminaHeight * 2.25 + (staminaHeight + parseInt(withdrawBtnWidth / 4)) * 0.45)
 
 		ctx.fillStyle = '#E9D9B4'

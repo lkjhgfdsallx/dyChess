@@ -60,10 +60,10 @@ export default class StartButton {
 
         // 添加限制，防止内容偏移过多
         if (play.checkpoint1.clasli > 0) {
-            this.contentOffsetY = Math.max(this.contentOffsetY, -(this.offscreenCanvas.height))
+            this.contentOffsetY = Math.max(this.contentOffsetY, -(this.offscreenCanvas.height * 10))
             this.contentOffsetY = Math.min(this.contentOffsetY, this.offscreenCanvas.height / 5)
         } else {
-            this.contentOffsetY = Math.max(this.contentOffsetY, -(this.offscreenCanvas.height))
+            this.contentOffsetY = Math.max(this.contentOffsetY, -(this.offscreenCanvas.height * 10))
             this.contentOffsetY = Math.min(this.contentOffsetY, 0)
         }
 
@@ -80,8 +80,13 @@ export default class StartButton {
             const subArrayB = com.clasli[play.checkpoint1.clasli - 1]
             this.offscreenCtx.drawImage(this.img3, this.offscreenCanvas.width * 0.05, this.contentOffsetY - this.offscreenCanvas.height / 5, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
             this.offscreenCtx.fillStyle = '#DED1B4'
-            this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.height / 30)}px Arial`
             const text = `${subArrayB.name.split("：")[0]}`
+            let fontSize = parseInt(this.offscreenCanvas.height / 30)
+            let wordCount = text.length
+            if (wordCount > 3) {
+                fontSize *= Math.pow(0.8, (wordCount - 3))
+            }
+            this.offscreenCtx.font = `${fontSize}px Arial`
             this.offscreenCtx.fillText(text, this.offscreenCanvas.width * 0.16, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 10) - this.offscreenCanvas.height / 5)
             this.offscreenCtx.fillStyle = '#7C622D'
             this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 16)}px Arial`
@@ -91,8 +96,13 @@ export default class StartButton {
 
         this.offscreenCtx.drawImage(this.img2, this.offscreenCanvas.width * 0.05, this.contentOffsetY, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
         this.offscreenCtx.fillStyle = '#DED1B4'
-        this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.height / 30)}px Arial`
         const text = `${com.clasli[play.checkpoint1.clasli].name.split("：")[0]}`
+        let fontSize = parseInt(this.offscreenCanvas.height / 30)
+        let wordCount = text.length
+        if (wordCount > 3) {
+            fontSize *= Math.pow(0.8, (wordCount - 3))
+        }
+        this.offscreenCtx.font = `${fontSize}px Arial`
         this.offscreenCtx.fillText(text, this.offscreenCanvas.width * 0.16, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 10))
         this.offscreenCtx.fillStyle = '#7C622D'
         this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 16)}px Arial`
@@ -103,11 +113,17 @@ export default class StartButton {
 
 
         const subArray = com.clasli.slice(play.checkpoint1.clasli)
-        for (let i = 1; i < 12; i++) {
+        const listNum = subArray.length > 75 ? 75 : subArray.length
+        for (let i = 1; i < listNum; i++) {
             this.offscreenCtx.drawImage(this.img3, this.offscreenCanvas.width * 0.05, this.contentOffsetY + i * this.offscreenCanvas.height / 5, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
             this.offscreenCtx.fillStyle = '#DED1B4'
-            this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.height / 30)}px Arial`
             const text = `${subArray[i].name.split("：")[0]}`
+            let fontSize = parseInt(this.offscreenCanvas.height / 30)
+            let wordCount = text.length
+            if (wordCount > 3) {
+                fontSize *= Math.pow(0.8, (wordCount - 3))
+            }
+            this.offscreenCtx.font = `${fontSize}px Arial`
             this.offscreenCtx.fillText(text, this.offscreenCanvas.width * 0.16, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 10) + i * this.offscreenCanvas.height / 5)
             this.offscreenCtx.fillStyle = '#7C622D'
             this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 16)}px Arial`
@@ -131,12 +147,8 @@ export default class StartButton {
         // 清除离屏 Canvas
         this.offscreenCtx.clearRect(0, 0, this.offscreenCanvas.width, this.offscreenCanvas.height)
 
-        // 假设你有一个方法来重新绘制离屏 Canvas 的内容
-        // 确保在绘制内容时，Y坐标加上 this.contentOffsetY
-        // 例如: this.offscreenCtx.drawImage(img, x, y + this.contentOffsetY, width, height)
-
         // 重新绘制或更新内容
-        this.checkpoint() // 假设这个方法会根据 this.contentOffsetY 来更新绘制位置
+        this.checkpoint()
     }
 
     // 将按钮绘制到 Canvas 上

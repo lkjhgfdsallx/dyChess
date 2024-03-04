@@ -97,8 +97,6 @@ export default class Main {
         setTimeout(() => {
           play.isPlay = true
           play.checkpoint1.playGame()
-          console.log(tt.getSystemInfoSync())
-          console.log(canvas.width, canvas.height)
         }, 300)
       }
     }

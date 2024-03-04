@@ -24,7 +24,7 @@ export default class avatarTags {
 
         // 用户信息头像
         this.img4 = new Image()
-        this.img4.src = 'images/avatarPattern.png'
+        this.img4.src = 'images/mrtx.png'
 
         // 用户信息昵称
   
@@ -42,7 +42,7 @@ export default class avatarTags {
             key: "userInfo",
             success: (res) => {
               this.userInfo = res.data
-              this.img4.src = this.userInfo.avatarUrl
+              this.img4.src = this.userInfo.avatarUrl || 'images/mrtx.png'
             }
         })
     }
@@ -51,7 +51,7 @@ export default class avatarTags {
         const ctx = this.ctx
 
         const setFontSize = tt.getSystemInfoSync().windowWidth * 0.036
-        const setFontText = this.userInfo.nickName
+        const setFontText = this.userInfo.nickName ? this.userInfo.nickName.slice(0, 9) : '用户昵称'
 
         ctx.fillStyle = '#FFFFFF' // 文字颜色
         ctx.font = `${setFontSize}px Arial`
