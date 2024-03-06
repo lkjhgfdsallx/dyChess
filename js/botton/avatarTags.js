@@ -26,14 +26,16 @@ export default class avatarTags {
         this.img4 = new Image()
         this.img4.src = 'images/mrtx.png'
 
-        // 用户信息昵称
+        // 入口有奖
+        this.img5 = new Image()
+        this.img5.src = 'images/rukoyoujiang.png'
   
         // 定义按钮的点击区域
         this.btnArea = {
-            startX: this.x,
-            startY: this.y,
-            endX: this.x + this.width,
-            endY: this.y + this.height,
+            startX: this.x + this.width * 0.06,
+            startY: this.y + this.height * 1.1,
+            endX: this.x + this.width * 0.06 + this.width * 0.23,
+            endY: this.y + this.height * 1.1 + this.width * 0.23,
         }
     }
 
@@ -76,6 +78,11 @@ export default class avatarTags {
         ctx.drawImage(this.img2, this.x + this.width * 0.06, this.y, this.width * 0.32, this.width * 0.32)
         ctx.drawImage(this.img4, this.x + this.width * 0.115, this.y * 1.15, this.width * 0.2, this.width * 0.2)
         this.draw()
+    }
+
+    // 绘制侧边栏领奖
+    drawRuKoYouJiang(ctx) {
+        ctx.drawImage(this.img5, this.x + this.width * 0.06, this.y + this.height * 1.1, this.width * 0.23, this.width * 0.23)
     }
   }
   

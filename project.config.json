@@ -14,8 +14,27 @@
     "douyinProjectType": "native",
     "condition": {
         "game": {
-            "current": -1,
-            "list": []
+            "current": 1709708514235,
+            "list": [
+                {
+                    "id": 1709708514235,
+                    "name": "021002",
+                    "query": "",
+                    "scene": "021002",
+                    "launchFrom": "scan",
+                    "location": "",
+                    "mockUpdateType": "Noupdate"
+                },
+                {
+                    "id": 1709717706927,
+                    "name": "021001",
+                    "query": "",
+                    "scene": "021001",
+                    "launchFrom": "setting_page",
+                    "location": "recently",
+                    "mockUpdateType": "Noupdate"
+                }
+            ]
         }
     }
 }

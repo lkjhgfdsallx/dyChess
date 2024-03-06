@@ -284,7 +284,7 @@ play.showWin = function (my) {
 		tt.showModal({
 			title: "胜利",
 			content: "恭喜你，你赢了！",
-			confirmText: "下一关",
+			confirmText: "继续挑战",
 			cancelText: "重新开始",
 			success(res) {
 				if (res.confirm) {
@@ -299,12 +299,10 @@ play.showWin = function (my) {
 		tt.showModal({
 			title: "失败",
 			content: "很遗憾，你输了！",
-			confirmText: "我要悔棋",
-			cancelText: "重新开始",
+			showCancel: false,
+			confirmText: "重新开始",
 			success(res) {
 				if (res.confirm) {
-					play.regret()
-				} else if (res.cancel) {
 					play.init(4, play.nowMap)
 				}
 			},

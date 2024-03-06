@@ -1474,3 +1474,6 @@
     exports.default = location
     /***/ })
 /** *** */ ]))
+
+window.canvas.width = tt.getSystemInfoSync().windowWidth
+window.canvas.height = tt.getSystemInfoSync().windowHeight

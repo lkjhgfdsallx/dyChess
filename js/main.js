@@ -11,8 +11,9 @@ const ctx = canvas.getContext('2d')
  */
 export default class Main {
   constructor() {
-    // this.restart()
+    this.isExist = false
     this.login()
+    this.navigateToScene()
     this.startPage()
   }
   login() {
@@ -39,17 +40,6 @@ export default class Main {
                   },
                   fail(res) {
                     console.log(`setStorage调用失败`)
-                    tt.navigateToScene({
-                      scene: "sidebar",
-                      success: (res) => {
-                        console.log("navigate to scene success");
-                        // 跳转成功回调逻辑
-                      },
-                      fail: (res) => {
-                        console.log("navigate to scene fail: ", res);
-                        // 跳转失败回调逻辑
-                      },
-                    })
                   },
                 })
               },
@@ -64,6 +54,23 @@ export default class Main {
           },
         })
       },
+    })
+  }
+  navigateToScene() {
+    tt.onShow((res) => {
+      if ((res.scene != '021001' && res.scene != '021036' && res.scene != '101001' && res.scene != '101036') || !res.scene) {
+        tt.checkScene({
+          scene: "sidebar",
+          success: (res) => {
+            console.log(res)
+            if ((res.isExist && res.isExist === true) || !res.isExist) {
+              this.isExist = true
+            }
+          }
+        })
+      } else {
+        this.isExist = false
+      }
     })
   }
   startPage() {
@@ -111,6 +118,36 @@ export default class Main {
       startButton.drawToCanvas(ctx)
       avatarTags.drawToCanvas(ctx)
       staminaBtn.drawToCanvas(ctx)
+      if (that.isExist === true) {
+        avatarTags.drawRuKoYouJiang(ctx)
+        const navigateToSceneHandler = function (e) {
+          e.preventDefault()
+
+          const x = e.changedTouches[0].clientX
+          const y = e.changedTouches[0].clientY
+
+          const buttonArea = avatarTags.btnArea
+
+          if (x >= buttonArea.startX && x <= buttonArea.endX && y >= buttonArea.startY && y <= buttonArea.endY) {
+            avatarTags.removeEventListener('touchend', navigateToSceneHandler)
+            setTimeout(() => {
+              tt.navigateToScene({
+                scene: "sidebar",
+                success: (res) => {
+                  console.log("navigate to scene success");
+                  // 跳转成功回调逻辑
+                },
+                fail: (res) => {
+                  console.log("navigate to scene fail: ", res);
+                  // 跳转失败回调逻辑
+                },
+              })
+            })
+          }
+        }
+
+        avatarTags.addEventListener('touchend', navigateToSceneHandler)
+      }
     }
 
     // 设置开始页面的帧循环
