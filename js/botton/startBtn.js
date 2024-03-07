@@ -58,15 +58,12 @@ export default class StartButton {
         this.currentTouchY = touchY
         this.contentOffsetY += deltaY
 
-        const subArray = com.clasli.slice(play.checkpoint1.clasli)
-        const listNum = subArray.length
-
         // 添加限制，防止内容偏移过多
         if (play.checkpoint1.clasli > 0) {
-            this.contentOffsetY = Math.max(this.contentOffsetY, -((this.offscreenCanvas.height / 5.145) * listNum))
+            this.contentOffsetY = Math.max(this.contentOffsetY, -(this.offscreenCanvas.height * 10))
             this.contentOffsetY = Math.min(this.contentOffsetY, this.offscreenCanvas.height / 5)
         } else {
-            this.contentOffsetY = Math.max(this.contentOffsetY, -((this.offscreenCanvas.height / 5.145) * listNum))
+            this.contentOffsetY = Math.max(this.contentOffsetY, -(this.offscreenCanvas.height * 10))
             this.contentOffsetY = Math.min(this.contentOffsetY, 0)
         }
 
@@ -116,7 +113,7 @@ export default class StartButton {
 
 
         const subArray = com.clasli.slice(play.checkpoint1.clasli)
-        const listNum = subArray.length
+        const listNum = subArray.length > 60 ? 60 : subArray.length
         for (let i = 1; i < listNum; i++) {
             this.offscreenCtx.drawImage(this.img3, this.offscreenCanvas.width * 0.05, this.contentOffsetY + i * this.offscreenCanvas.height / 5, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
             this.offscreenCtx.fillStyle = '#DED1B4'

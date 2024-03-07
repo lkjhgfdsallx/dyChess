@@ -679,12 +679,12 @@ com.class.Main = function (images, x, y) {
 		const firstPart = levelNameText.split("：")[0]
 		const secondPart = levelNameText.split("：")[1]
 		ctx.fillStyle = '#DED1B4'
-		
-        let fontSize = parseInt(withdrawBtnWidth / 4)
-        let wordCount = firstPart.length
-        if (wordCount > 3) {
-            fontSize *= Math.pow(0.85, (wordCount - 3))
-        }
+
+		let fontSize = parseInt(withdrawBtnWidth / 4)
+		let wordCount = firstPart.length
+		if (wordCount > 3) {
+			fontSize *= Math.pow(0.85, (wordCount - 3))
+		}
 
 		ctx.font = `${fontSize}px Arial`
 		ctx.fillText(`${firstPart}`, com.centreX + 3 + (staminaWidth * 0.75 - parseInt(withdrawBtnWidth / 4) * 3) / 2, com.centreY - staminaHeight * 2.25 + (staminaHeight + parseInt(withdrawBtnWidth / 4)) * 0.45)
@@ -738,9 +738,18 @@ com.class.Main = function (images, x, y) {
 					confirmText: "确定",
 					success(res) {
 						if (res.confirm) {
-							play.stamina.staminaAdd(6)
-							play.stamina.setStorage()
-							updateStaminaText(com.ct)
+							const rewardedVideoAd = tt.createRewardedVideoAd({
+								adUnitId: '21o0p96tp0u95im7qf'
+							})
+							rewardedVideoAd.show()
+							rewardedVideoAd.onClose((res) => {
+								if (res && res.isEnded) {
+									console.log(res)
+									play.stamina.staminaAdd(6)
+									play.stamina.setStorage()
+									updateStaminaText(com.ct)
+								}
+							})
 						}
 					},
 				});
@@ -789,9 +798,20 @@ com.class.Main = function (images, x, y) {
 						confirmText: "确定",
 						success(res) {
 							if (res.confirm) {
-								play.stamina.staminaAdd(6)
-								play.stamina.setStorage()
-								updateStaminaText(com.ct)
+								if (res.confirm) {
+									const rewardedVideoAd = tt.createRewardedVideoAd({
+										adUnitId: '21o0p96tp0u95im7qf'
+									})
+									rewardedVideoAd.show()
+									rewardedVideoAd.onClose((res) => {
+										if (res && res.isEnded) {
+											console.log(res)
+											play.stamina.staminaAdd(6)
+											play.stamina.setStorage()
+											updateStaminaText(com.ct)
+										}
+									})
+								}
 							}
 						},
 					});

@@ -1,10 +1,11 @@
 import BackGround from './runtime/background'
 import StartBtn from './botton/startBtn'
-// import CanvasScroll from './base/canvasScroll'
+import Popup from './base/popup'
 import AvatarTags from './botton/avatarTags'
 import StaminaBtn from './botton/staminaBtn'
 
 const ctx = canvas.getContext('2d')
+ctx.imageSmoothingQuality = 'high'
 
 /**
  * 游戏主函数
@@ -58,18 +59,16 @@ export default class Main {
   }
   navigateToScene() {
     tt.onShow((res) => {
+      console.log(res)
       if ((res.scene != '021001' && res.scene != '021036' && res.scene != '101001' && res.scene != '101036') || !res.scene) {
         tt.checkScene({
           scene: "sidebar",
           success: (res) => {
-            console.log(res)
             if ((res.isExist && res.isExist === true) || !res.isExist) {
               this.isExist = true
             }
           }
         })
-      } else {
-        this.isExist = false
       }
     })
   }
@@ -77,6 +76,14 @@ export default class Main {
     const that = this
 
     that.bg = new BackGround(ctx)
+    that.popup = new Popup({
+      x: tt.getSystemInfoSync().windowWidth * 0.085,
+      y: tt.getSystemInfoSync().windowHeight * 0.135,
+      width: tt.getSystemInfoSync().windowWidth * 0.83,
+      height: tt.getSystemInfoSync().windowHeight * 0.73,
+      text: '',
+      image: 'images/screenshot.png'
+    })
 
     // 清除上一局的动画
     window.cancelAnimationFrame(this.aniId)
@@ -88,7 +95,6 @@ export default class Main {
     const startButton = new StartBtn(ctx)
     const avatarTags = new AvatarTags(ctx)
     const staminaBtn = new StaminaBtn(ctx)
-    // const startTitle = new StartTitle(ctx)
 
     // 开始按钮点击事件处理逻辑
     const startButtonHandler = function (e) {
@@ -118,6 +124,7 @@ export default class Main {
       startButton.drawToCanvas(ctx)
       avatarTags.drawToCanvas(ctx)
       staminaBtn.drawToCanvas(ctx)
+      that.popup.renderOnCanvas(ctx)
       if (that.isExist === true) {
         avatarTags.drawRuKoYouJiang(ctx)
         const navigateToSceneHandler = function (e) {
@@ -130,24 +137,29 @@ export default class Main {
 
           if (x >= buttonArea.startX && x <= buttonArea.endX && y >= buttonArea.startY && y <= buttonArea.endY) {
             avatarTags.removeEventListener('touchend', navigateToSceneHandler)
-            setTimeout(() => {
-              tt.navigateToScene({
-                scene: "sidebar",
-                success: (res) => {
-                  console.log("navigate to scene success");
-                  // 跳转成功回调逻辑
-                },
-                fail: (res) => {
-                  console.log("navigate to scene fail: ", res);
-                  // 跳转失败回调逻辑
-                },
-              })
-            })
+            // tt.navigateToScene({
+            //   scene: "sidebar",
+            //   success: (res) => {
+            //     console.log("navigate to scene success");
+            //     // 跳转成功回调逻辑
+            //   },
+            //   fail: (res) => {
+            //     console.log("navigate to scene fail: ", res);
+            //     // 跳转失败回调逻辑
+            //   },
+            // })
+            that.popup.show()
           }
         }
 
         avatarTags.addEventListener('touchend', navigateToSceneHandler)
       }
+      if (that.popup.visible) {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
+        ctx.fillRect(0, 0, tt.getSystemInfoSync().windowWidth, tt.getSystemInfoSync().windowHeight)
+        startButton.removeEventListener('touchend', startButtonHandler)
+      }
+      that.popup.renderOnCanvas(ctx)
     }
 
     // 设置开始页面的帧循环
