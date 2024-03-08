@@ -17,7 +17,7 @@ export default class Popup {
 
     isInside(x, y) {
         return x >= this.x && x <= this.x + this.width &&
-            y >= this.y && y <= this.y + this.height
+            y >= this.y + this.height * 0.11 && y <= this.y + this.height
     }
 
     draw() {

@@ -59,7 +59,6 @@ export default class Main {
   }
   navigateToScene() {
     tt.onShow((res) => {
-      console.log(res)
       if ((res.scene != '021001' && res.scene != '021036' && res.scene != '101001' && res.scene != '101036') || !res.scene) {
         tt.checkScene({
           scene: "sidebar",
@@ -67,8 +66,11 @@ export default class Main {
             if ((res.isExist && res.isExist === true) || !res.isExist) {
               this.isExist = true
             }
+            console.log(this.isExist)
           }
         })
+      } else {
+        this.isExist = false
       }
     })
   }
@@ -105,13 +107,14 @@ export default class Main {
 
       const buttonArea = startButton.btnArea
 
-      if (x >= buttonArea.startX && x <= buttonArea.endX && y >= buttonArea.startY && y <= buttonArea.endY) {
+      if (x >= buttonArea.startX && x <= buttonArea.endX && y >= buttonArea.startY && y <= buttonArea.endY && startButton.isDragging === false) {
         startButton.removeEventListener('touchend', startButtonHandler)
         setTimeout(() => {
           play.isPlay = true
           play.checkpoint1.playGame()
         }, 300)
       }
+
     }
 
     startButton.addEventListener('touchend', startButtonHandler)
@@ -128,6 +131,14 @@ export default class Main {
       if (that.isExist === true) {
         avatarTags.drawRuKoYouJiang(ctx)
         const navigateToSceneHandler = function (e) {
+          if (this.lastCollisionTime === undefined) {
+            this.lastCollisionTime = Date.now()
+          } else {
+            if (Date.now() - this.lastCollisionTime < 500) {
+              return
+            }
+            this.lastCollisionTime = Date.now()
+          }
           e.preventDefault()
 
           const x = e.changedTouches[0].clientX
@@ -135,20 +146,33 @@ export default class Main {
 
           const buttonArea = avatarTags.btnArea
 
-          if (x >= buttonArea.startX && x <= buttonArea.endX && y >= buttonArea.startY && y <= buttonArea.endY) {
+          if (!that.popup.visible && x >= buttonArea.startX && x <= buttonArea.endX && y >= buttonArea.startY && y <= buttonArea.endY) {
             avatarTags.removeEventListener('touchend', navigateToSceneHandler)
-            // tt.navigateToScene({
-            //   scene: "sidebar",
-            //   success: (res) => {
-            //     console.log("navigate to scene success");
-            //     // 跳转成功回调逻辑
-            //   },
-            //   fail: (res) => {
-            //     console.log("navigate to scene fail: ", res);
-            //     // 跳转失败回调逻辑
-            //   },
-            // })
+
             that.popup.show()
+            return
+          }
+
+          if (that.popup.visible && !that.popup.isInside(x, y)) {
+            that.popup.hide()
+            startButton.addEventListener('touchend', startButtonHandler)
+          }
+
+          if (that.popup.visible && that.popup.isInside(x, y)) {
+            that.popup.hide()
+            tt.navigateToScene({
+              scene: "sidebar",
+              success: (res) => {
+                play.stamina.staminaAdd(10)
+                play.stamina.setStorage()
+                startButton.addEventListener('touchend', startButtonHandler)
+                // 跳转成功回调逻辑
+              },
+              fail: (res) => {
+                console.log("navigate to scene fail: ", res);
+                // 跳转失败回调逻辑
+              },
+            })
           }
         }
 

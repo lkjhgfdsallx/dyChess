@@ -42,12 +42,16 @@ export default class StartButton {
         this.addEventListener('touchstart', this.handleTouchStart.bind(this))
         this.addEventListener('touchmove', this.handleTouchMove.bind(this))
         this.addEventListener('touchend', this.handleTouchEnd.bind(this))
+
+        this.isDragging = false // 标记是否正在拖动
+        this.dragThreshold = 15 // 拖动的阈值，超过该值则认为是滑动而不是点击
     }
 
     handleTouchStart(event) {
         // 记录触摸开始的Y坐标
         this.touchStartY = event.touches[0].clientY
         this.currentTouchY = this.touchStartY
+        this.isDragging = false
     }
 
     handleTouchMove(event) {
@@ -57,6 +61,11 @@ export default class StartButton {
         const deltaY = touchY - this.currentTouchY
         this.currentTouchY = touchY
         this.contentOffsetY += deltaY
+
+        // 判断是否超过了拖动阈值
+        if (!this.isDragging && Math.abs(touchY - this.touchStartY) > this.dragThreshold) {
+            this.isDragging = true // 如果超过阈值，则标记为正在拖动
+        }
 
         // 添加限制，防止内容偏移过多
         if (play.checkpoint1.clasli > 0) {
@@ -71,9 +80,8 @@ export default class StartButton {
         this.updateOffscreenCanvas()
     }
 
-    handleTouchEnd(event) {
-        // 触摸结束处理，这里可以添加一些回弹效果或者重置位置的逻辑
-    }
+    handleTouchEnd(event) {}
+
 
     checkpoint() {
         if (play.checkpoint1.clasli > 0) {
