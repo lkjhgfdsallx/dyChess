@@ -29,7 +29,7 @@ export default class avatarTags {
         // 入口有奖
         this.img5 = new Image()
         this.img5.src = 'images/rukoyoujiang.png'
-  
+
         // 定义按钮的点击区域
         this.btnArea = {
             startX: this.x + this.width * 0.06,
@@ -60,7 +60,7 @@ export default class avatarTags {
         ctx.letterSpacing = '1px'
         ctx.fillText(`${setFontText}`, this.x + this.width * 0.42, this.y + (this.height - setFontSize) / 2) // 文字内容、位置
     }
-  
+
     // 添加事件监听
     addEventListener(event, handler) {
         canvas.addEventListener(event, handler)

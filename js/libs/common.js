@@ -714,6 +714,14 @@ com.class.Main = function (images, x, y) {
 	}
 
 	this.touchEvent = function (e) {
+		if (this.lastCollisionTime === undefined) {
+			this.lastCollisionTime = Date.now()
+		} else {
+			if (Date.now() - this.lastCollisionTime < 600) {
+				return
+			}
+			this.lastCollisionTime = Date.now()
+		}
 		e.preventDefault()
 		const x = e.touches[0].clientX
 		const y = e.touches[0].clientY
@@ -782,8 +790,10 @@ com.class.Main = function (images, x, y) {
 			&& x <= com.centreX - 5 + staminaWidth * 0.55
 			&& y >= com.centreY - staminaHeight * 4
 			&& y <= com.centreY - staminaHeight * 4 + staminaWidth * 0.55) {
-			play.isPlay = false
-			play.main.prototype.startPage()
+			setTimeout(() => {
+				play.isPlay = false
+				play.main.prototype.startPage()
+			}, 300)
 		}
 
 		if (x >= com.centreX + 10 + (com.withdrawBtn.width) * 0.5

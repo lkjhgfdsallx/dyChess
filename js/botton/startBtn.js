@@ -1,4 +1,4 @@
-export default class StartButton {
+class StartButton {
     constructor(ctx) {
         this.ctx = ctx
         this.width = tt.getSystemInfoSync().windowWidth * 0.89
@@ -80,8 +80,37 @@ export default class StartButton {
         this.updateOffscreenCanvas()
     }
 
-    handleTouchEnd(event) {}
+    handleTouchEnd(event) {
+        if (!this.touchEndHandled) {
+            // 设置标志，表示事件已经处理过
 
+            // 获取触摸结束时的坐标
+            const touchX = event.changedTouches[0].clientX
+            const touchY = event.changedTouches[0].clientY
+
+            // 计算实际的离屏 Canvas 位置，考虑滑动的偏移量
+            const offsetX = this.x + (this.width - this.offscreenCanvas.width) * 0.5
+            const offsetY = this.y + (this.height - this.offscreenCanvas.height) * 0.55 + this.contentOffsetY
+
+            // 判断触摸位置是否在按钮区域内
+            if (touchX >= offsetX && touchX <= offsetX + this.offscreenCanvas.width && this.isDragging === false) {
+                this.touchEndHandled = true
+                // 计算相对于按钮区域的相对位置，考虑滑动的偏移量
+                const relativeX = touchX - offsetX
+                const relativeY = touchY - offsetY
+
+                // 计算触摸的关卡序号
+                const checkpointIndex = Math.floor(relativeY / (this.offscreenCanvas.height / 5))
+
+                // 获取关卡信息并打印
+                const checkpointInfo = this.getCheckpointInfo(checkpointIndex)
+                console.log(checkpointInfo.name)
+                play.isPlay = true
+                play.checkpoint1.playGame(checkpointInfo)
+
+            }
+        }
+    }
 
     checkpoint() {
         if (play.checkpoint1.clasli > 0) {
@@ -121,7 +150,7 @@ export default class StartButton {
 
 
         const subArray = com.clasli.slice(play.checkpoint1.clasli)
-        const listNum = subArray.length > 60 ? 60 : subArray.length
+        const listNum = subArray.length > 55 ? 55 : subArray.length
         for (let i = 1; i < listNum; i++) {
             this.offscreenCtx.drawImage(this.img3, this.offscreenCanvas.width * 0.05, this.contentOffsetY + i * this.offscreenCanvas.height / 5, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
             this.offscreenCtx.fillStyle = '#DED1B4'
@@ -139,6 +168,15 @@ export default class StartButton {
             this.offscreenCtx.fillText(text2, this.offscreenCanvas.width * 0.38, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 9) + i * this.offscreenCanvas.height / 5)
         }
 
+    }
+
+    getCheckpointInfo(index) {
+        const checkpoint = com.clasli[parseInt(play.checkpoint1.clasli) + index]
+        if (checkpoint) {
+            return parseInt(play.checkpoint1.clasli) + index
+        } else {
+            return "关卡信息未找到"
+        }
     }
 
     // 添加事件监听
@@ -166,3 +204,5 @@ export default class StartButton {
         ctx.drawImage(this.offscreenCanvas, this.x + (this.width - this.offscreenCanvas.width) * 0.5, this.y + (this.height - this.offscreenCanvas.height) * 0.55)
     }
 }
+
+window.StartBtn = StartButton

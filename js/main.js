@@ -1,5 +1,4 @@
 import BackGround from './runtime/background'
-import StartBtn from './botton/startBtn'
 import Popup from './base/popup'
 import AvatarTags from './botton/avatarTags'
 import StaminaBtn from './botton/staminaBtn'
@@ -66,7 +65,6 @@ export default class Main {
             if ((res.isExist && res.isExist === true) || !res.isExist) {
               this.isExist = true
             }
-            console.log(this.isExist)
           }
         })
       } else {
@@ -97,27 +95,6 @@ export default class Main {
     const startButton = new StartBtn(ctx)
     const avatarTags = new AvatarTags(ctx)
     const staminaBtn = new StaminaBtn(ctx)
-
-    // 开始按钮点击事件处理逻辑
-    const startButtonHandler = function (e) {
-      e.preventDefault()
-
-      const x = e.changedTouches[0].clientX
-      const y = e.changedTouches[0].clientY
-
-      const buttonArea = startButton.btnArea
-
-      if (x >= buttonArea.startX && x <= buttonArea.endX && y >= buttonArea.startY && y <= buttonArea.endY && startButton.isDragging === false) {
-        startButton.removeEventListener('touchend', startButtonHandler)
-        setTimeout(() => {
-          play.isPlay = true
-          play.checkpoint1.playGame()
-        }, 300)
-      }
-
-    }
-
-    startButton.addEventListener('touchend', startButtonHandler)
 
     // 渲染开始页面
     const renderStartPage = function () {
