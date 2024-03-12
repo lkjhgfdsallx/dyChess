@@ -80,7 +80,7 @@ export default class Main {
       x: tt.getSystemInfoSync().windowWidth * 0.085,
       y: tt.getSystemInfoSync().windowHeight * 0.135,
       width: tt.getSystemInfoSync().windowWidth * 0.83,
-      height: tt.getSystemInfoSync().windowHeight * 0.73,
+      height: tt.getSystemInfoSync().windowWidth * 0.83 * 1.566,
       text: '',
       image: 'images/screenshot.png'
     })
