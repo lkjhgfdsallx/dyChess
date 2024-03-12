@@ -1474,5 +1474,14 @@
     exports.default = location
     /***/ })
 /** *** */ ]))
-window.canvas.width = tt.getSystemInfoSync().windowWidth
-window.canvas.height = tt.getSystemInfoSync().windowHeight
+
+function createHDCanvas (canvas, w, h) {
+	const ratio = window.devicePixelRatio || 1;
+	canvas.width = w * ratio; // 实际渲染像素
+	canvas.height = h * ratio; // 实际渲染像素
+	const ctx = canvas.getContext('2d');
+	ctx.scale(ratio, ratio);
+	// canvas 绘制
+	return canvas;
+  }
+  createHDCanvas(canvas, tt.getSystemInfoSync().windowWidth, tt.getSystemInfoSync().windowHeight)

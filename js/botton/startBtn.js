@@ -105,9 +105,8 @@ class StartButton {
 
                 // 获取关卡信息并打印
                 const checkpointInfo = this.getCheckpointInfo(checkpointIndex)
-                if (checkpointInfo) {
+                if (checkpointInfo != null) {
                     this.touchEndHandled = true
-                    console.log(checkpointInfo.name)
                     play.isPlay = true
                     play.checkpoint1.playGame(checkpointInfo)
                 }

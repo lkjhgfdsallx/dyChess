@@ -123,19 +123,19 @@ export default class Main {
 
           const buttonArea = avatarTags.btnArea
 
-          if (!that.popup.visible && x >= buttonArea.startX && x <= buttonArea.endX && y >= buttonArea.startY && y <= buttonArea.endY) {
+          if (that.isExist === true && !that.popup.visible && x >= buttonArea.startX && x <= buttonArea.endX && y >= buttonArea.startY && y <= buttonArea.endY) {
             avatarTags.removeEventListener('touchend', navigateToSceneHandler)
 
             that.popup.show()
             return
           }
 
-          if (that.popup.visible && !that.popup.isInside(x, y)) {
+          if (that.isExist === true && that.popup.visible && !that.popup.isInside(x, y)) {
             that.popup.hide()
             startButton.touchEndHandled = false
           }
 
-          if (that.popup.visible && that.popup.isInside(x, y)) {
+          if (that.isExist === true && that.popup.visible && that.popup.isInside(x, y)) {
             that.popup.hide()
             tt.navigateToScene({
               scene: "sidebar",
@@ -145,7 +145,7 @@ export default class Main {
                 startButton.touchEndHandled = false
               },
               fail: (res) => {
-                console.log("navigate to scene fail: ", res);
+                console.log("navigate to scene fail: ", res)
                 // 跳转失败回调逻辑
               },
             })
@@ -154,7 +154,7 @@ export default class Main {
 
         avatarTags.addEventListener('touchend', navigateToSceneHandler)
       }
-      if (that.popup.visible) {
+      if (that.isExist === true && that.popup.visible) {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
         ctx.fillRect(0, 0, tt.getSystemInfoSync().windowWidth, tt.getSystemInfoSync().windowHeight)
         startButton.touchEndHandled = true

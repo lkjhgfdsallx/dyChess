@@ -7,7 +7,7 @@ export default class Checkpoint {
     * 进行游戏
     */
     playGame(num) {
-        if (num) {
+        if (num !== null || undefined) {
             this.clasli = num
         }
         play.init(4, com.clasli[this.clasli].map)
@@ -17,7 +17,7 @@ export default class Checkpoint {
     * 保存当前关卡数
     */
     saveLevelNum() {
-		tt.setStorageSync("clasli", this.clasli)
+        tt.setStorageSync("clasli", this.clasli)
     }
 
     /**
