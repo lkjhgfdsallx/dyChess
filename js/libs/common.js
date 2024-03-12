@@ -726,15 +726,6 @@ com.class.Main = function (images, x, y) {
 		const x = e.touches[0].clientX
 		const y = e.touches[0].clientY
 
-		if (this.lastCollisionTime1 === undefined) {
-			this.lastCollisionTime1 = Date.now()
-		} else {
-			if (Date.now() - this.lastCollisionTime1 < 500) {
-				return
-			}
-			this.lastCollisionTime1 = Date.now()
-		}
-
 		if (x >= com.centreX + 5
 			&& x <= com.centreX + 5 + withdrawBtnWidth
 			&& y >= com.centreY + com.bgImg.height + 20
