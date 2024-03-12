@@ -132,7 +132,7 @@ export default class Main {
 
           if (that.popup.visible && !that.popup.isInside(x, y)) {
             that.popup.hide()
-            startButton.addEventListener('touchend', startButtonHandler)
+            startButton.touchEndHandled = false
           }
 
           if (that.popup.visible && that.popup.isInside(x, y)) {
@@ -142,8 +142,7 @@ export default class Main {
               success: (res) => {
                 play.stamina.staminaAdd(10)
                 play.stamina.setStorage()
-                startButton.addEventListener('touchend', startButtonHandler)
-                // 跳转成功回调逻辑
+                startButton.touchEndHandled = false
               },
               fail: (res) => {
                 console.log("navigate to scene fail: ", res);
@@ -158,7 +157,7 @@ export default class Main {
       if (that.popup.visible) {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
         ctx.fillRect(0, 0, tt.getSystemInfoSync().windowWidth, tt.getSystemInfoSync().windowHeight)
-        startButton.removeEventListener('touchend', startButtonHandler)
+        startButton.touchEndHandled = true
       }
       that.popup.renderOnCanvas(ctx)
     }

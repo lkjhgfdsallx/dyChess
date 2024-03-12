@@ -45,6 +45,8 @@ class StartButton {
 
         this.isDragging = false // 标记是否正在拖动
         this.dragThreshold = 15 // 拖动的阈值，超过该值则认为是滑动而不是点击
+
+        this.touchEndHandled = false
     }
 
     handleTouchStart(event) {
@@ -93,8 +95,7 @@ class StartButton {
             const offsetY = this.y + (this.height - this.offscreenCanvas.height) * 0.55 + this.contentOffsetY
 
             // 判断触摸位置是否在按钮区域内
-            if (touchX >= offsetX && touchX <= offsetX + this.offscreenCanvas.width && this.isDragging === false) {
-                this.touchEndHandled = true
+            if (touchX >= offsetX && touchX <= offsetX + this.offscreenCanvas.width && touchY > this.y + (this.height - this.offscreenCanvas.height) * 0.55 && this.isDragging === false) {
                 // 计算相对于按钮区域的相对位置，考虑滑动的偏移量
                 const relativeX = touchX - offsetX
                 const relativeY = touchY - offsetY
@@ -104,9 +105,12 @@ class StartButton {
 
                 // 获取关卡信息并打印
                 const checkpointInfo = this.getCheckpointInfo(checkpointIndex)
-                console.log(checkpointInfo.name)
-                play.isPlay = true
-                play.checkpoint1.playGame(checkpointInfo)
+                if (checkpointInfo) {
+                    this.touchEndHandled = true
+                    console.log(checkpointInfo.name)
+                    play.isPlay = true
+                    play.checkpoint1.playGame(checkpointInfo)
+                }
 
             }
         }
@@ -175,7 +179,7 @@ class StartButton {
         if (checkpoint) {
             return parseInt(play.checkpoint1.clasli) + index
         } else {
-            return "关卡信息未找到"
+            return null
         }
     }
 
