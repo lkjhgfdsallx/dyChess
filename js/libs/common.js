@@ -757,10 +757,19 @@ com.class.Main = function (images, x, y) {
 				play.stamina.setStorage()
 				updateStaminaText(com.ct)
 				setTimeout(() => {
+					if (AI.treeDepth == undefined) {
+						AI.treeDepth = play.depth
+						AI.number = 0
+						AI.setHistoryTable.lenght = 0
+					}
 					const val1 = AI.getAlphaBeta(-99999, 99999, 4, com.arr2Clone(play.map), 1)
 					const map1 = play.mans[val1.key]
-					console.log(val1, map1)
-					console.log('最佳着法：' + com.createMove(com.arr2Clone(play.map), map1.x, map1.y, val1.x, val1.y))
+					console.log(AI.treeDepth)
+					console.log('最佳着法：' + com.createMove(com.arr2Clone(play.map), map1.x, map1.y, val1.x, val1.y)
+						+
+						' 搜索深度：' + AI.treeDepth + ' 搜索分支：' +
+						AI.number + '个  最佳着法评估：' +
+						val1.value + '分')
 					tt.showModal({
 						title: "最佳着法",
 						content: com.createMove(com.arr2Clone(play.map), map1.x, map1.y, val1.x, val1.y),
