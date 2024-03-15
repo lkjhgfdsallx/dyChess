@@ -96,6 +96,45 @@ export default class Main {
     const avatarTags = new AvatarTags(ctx)
     const staminaBtn = new StaminaBtn(ctx)
 
+    const startButtonHandler = function (e) {
+      e.preventDefault()
+
+      const x = e.changedTouches[0].clientX
+      const y = e.changedTouches[0].clientY
+
+      const buttonArea = staminaBtn.btnArea
+
+      if (x >= buttonArea.startX && x <= buttonArea.endX && y >= buttonArea.startY && y <= buttonArea.endY) {
+        staminaBtn.removeEventListener('touchend', startButtonHandler)
+        setTimeout(() => {
+          
+				tt.showModal({
+					title: "获取体力",
+					content: "是否观看广告，获取体力值",
+					confirmText: "确定",
+					success(res) {
+						if (res.confirm) {
+							const rewardedVideoAd = tt.createRewardedVideoAd({
+								adUnitId: '21o0p96tp0u95im7qf'
+							})
+							rewardedVideoAd.show()
+							rewardedVideoAd.onClose((res) => {
+								if (res && res.isEnded) {
+									console.log(res)
+									play.stamina.staminaAdd(6)
+									play.stamina.setStorage()
+									updateStaminaText(com.ct)
+								}
+							})
+						}
+					},
+				});
+        }, 300)
+      }
+    }
+
+    staminaBtn.addEventListener('touchend', startButtonHandler)
+
     // 渲染开始页面
     const renderStartPage = function () {
       ctx.clearRect(0, 0, tt.getSystemInfoSync().windowWidth, tt.getSystemInfoSync().windowHeight);
@@ -125,6 +164,7 @@ export default class Main {
 
           if (that.isExist === true && !that.popup.visible && x >= buttonArea.startX && x <= buttonArea.endX && y >= buttonArea.startY && y <= buttonArea.endY) {
             avatarTags.removeEventListener('touchend', navigateToSceneHandler)
+            staminaBtn.removeEventListener('touchend', startButtonHandler)
 
             that.popup.show()
             return
@@ -133,10 +173,12 @@ export default class Main {
           if (that.isExist === true && that.popup.visible && !that.popup.isInside(x, y)) {
             that.popup.hide()
             startButton.touchEndHandled = false
+            staminaBtn.addEventListener('touchend', startButtonHandler)
           }
 
           if (that.isExist === true && that.popup.visible && that.popup.isInside(x, y)) {
             that.popup.hide()
+            staminaBtn.addEventListener('touchend', startButtonHandler)
             tt.navigateToScene({
               scene: "sidebar",
               success: (res) => {

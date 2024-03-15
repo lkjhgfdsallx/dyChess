@@ -19,10 +19,10 @@ export default class staminaBtn {
 
         // 定义按钮的点击区域
         this.btnArea = {
-            startX: this.x,
-            startY: this.y,
-            endX: this.x + this.width,
-            endY: this.y + this.height,
+            startX: tt.getSystemInfoSync().windowWidth - tt.getSystemInfoSync().windowWidth / 12 - this.centreX + 5,
+            startY: tt.getSystemInfoSync().windowHeight * 0.075,
+            endX: tt.getSystemInfoSync().windowWidth - tt.getSystemInfoSync().windowWidth / 12 - this.centreX + 5 + tt.getSystemInfoSync().windowWidth / 12 * 1.1,
+            endY: tt.getSystemInfoSync().windowHeight * 0.075 + tt.getSystemInfoSync().windowWidth / 12 * 1.1,
         }
     }
 

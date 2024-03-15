@@ -58,6 +58,9 @@ class StartButton {
 
     handleTouchMove(event) {
         event.preventDefault() // 阻止默认滚动行为
+        const subArrayB = com.clasli.slice(0, play.checkpoint1.clasli).reverse()
+        const listNumB = subArrayB.length > 12 ? 12 : subArrayB.length
+
         const touchY = event.touches[0].clientY
         // 更新内容的Y轴偏移量
         const deltaY = touchY - this.currentTouchY
@@ -72,7 +75,7 @@ class StartButton {
         // 添加限制，防止内容偏移过多
         if (play.checkpoint1.clasli > 0) {
             this.contentOffsetY = Math.max(this.contentOffsetY, -(this.offscreenCanvas.height * 10))
-            this.contentOffsetY = Math.min(this.contentOffsetY, this.offscreenCanvas.height / 5)
+            this.contentOffsetY = Math.min(this.contentOffsetY, listNumB * this.offscreenCanvas.height / 5)
         } else {
             this.contentOffsetY = Math.max(this.contentOffsetY, -(this.offscreenCanvas.height * 10))
             this.contentOffsetY = Math.min(this.contentOffsetY, 0)
@@ -103,7 +106,7 @@ class StartButton {
                 // 计算触摸的关卡序号
                 const checkpointIndex = Math.floor(relativeY / (this.offscreenCanvas.height / 5))
 
-                // 获取关卡信息并打印
+                // 获取关卡信息
                 const checkpointInfo = this.getCheckpointInfo(checkpointIndex)
                 if (checkpointInfo != null) {
                     this.touchEndHandled = true
@@ -117,21 +120,24 @@ class StartButton {
 
     checkpoint() {
         if (play.checkpoint1.clasli > 0) {
-            const subArrayB = com.clasli[play.checkpoint1.clasli - 1]
-            this.offscreenCtx.drawImage(this.img3, this.offscreenCanvas.width * 0.05, this.contentOffsetY - this.offscreenCanvas.height / 5, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
-            this.offscreenCtx.fillStyle = '#DED1B4'
-            const text = `${subArrayB.name.split("：")[0]}`
-            let fontSize = parseInt(this.offscreenCanvas.height / 30)
-            let wordCount = text.length
-            if (wordCount > 3) {
-                fontSize *= Math.pow(0.8, (wordCount - 3))
+            const subArrayB = com.clasli.slice(0, play.checkpoint1.clasli).reverse()
+            const listNumB = subArrayB.length > 12 ? 12 : subArrayB.length
+            for (let i = 0; i < listNumB; i++) {
+                this.offscreenCtx.drawImage(this.img3, this.offscreenCanvas.width * 0.05, this.contentOffsetY - (i + 1) * this.offscreenCanvas.height / 5, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
+                this.offscreenCtx.fillStyle = '#DED1B4'
+                const text = `${subArrayB[i].name.split("：")[0]}`
+                let fontSize = parseInt(this.offscreenCanvas.height / 30)
+                let wordCount = text.length
+                if (wordCount > 3) {
+                    fontSize *= Math.pow(0.8, (wordCount - 3))
+                }
+                this.offscreenCtx.font = `${fontSize}px Arial`
+                this.offscreenCtx.fillText(text, this.offscreenCanvas.width * 0.16, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 10) - (i + 1) * this.offscreenCanvas.height / 5)
+                this.offscreenCtx.fillStyle = '#7C622D'
+                this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 16)}px Arial`
+                const text2 = `${subArrayB[i].name.split("：")[1]}`
+                this.offscreenCtx.fillText(text2, this.offscreenCanvas.width * 0.38, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 9) - (i + 1) * this.offscreenCanvas.height / 5)
             }
-            this.offscreenCtx.font = `${fontSize}px Arial`
-            this.offscreenCtx.fillText(text, this.offscreenCanvas.width * 0.16, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 10) - this.offscreenCanvas.height / 5)
-            this.offscreenCtx.fillStyle = '#7C622D'
-            this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 16)}px Arial`
-            const text2 = `${subArrayB.name.split("：")[1]}`
-            this.offscreenCtx.fillText(text2, this.offscreenCanvas.width * 0.38, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 9) - this.offscreenCanvas.height / 5)
         }
 
         this.offscreenCtx.drawImage(this.img2, this.offscreenCanvas.width * 0.05, this.contentOffsetY, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
