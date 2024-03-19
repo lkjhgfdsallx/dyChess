@@ -37,7 +37,7 @@ export default class staminaBtn {
         const text = `${play.stamina.stamina}`
         ctx.fillText(
             text,
-            com.bgImg.width + com.centreX - staminaWidth / 2 - ((play.stamina.stamina.toString().split('').length + 1) * (staminaWidth / 5)) / 2 + (staminaWidth - parseInt(staminaWidth / 1.5)) / 2,
+            325 + this.centreX - staminaWidth / 2 - ((play.stamina.stamina.toString().split('').length + 1) * (staminaWidth / 5)) / 2 + (staminaWidth - parseInt(staminaWidth / 1.5)) / 2,
             tt.getSystemInfoSync().windowHeight * 0.076 + (staminaWidth - setFontSize) * 0.3
         ) // 文字内容、位置
     }

@@ -107,28 +107,27 @@ export default class Main {
       if (x >= buttonArea.startX && x <= buttonArea.endX && y >= buttonArea.startY && y <= buttonArea.endY) {
         staminaBtn.removeEventListener('touchend', startButtonHandler)
         setTimeout(() => {
-          
-				tt.showModal({
-					title: "获取体力",
-					content: "是否观看广告，获取体力值",
-					confirmText: "确定",
-					success(res) {
-						if (res.confirm) {
-							const rewardedVideoAd = tt.createRewardedVideoAd({
-								adUnitId: '21o0p96tp0u95im7qf'
-							})
-							rewardedVideoAd.show()
-							rewardedVideoAd.onClose((res) => {
-								if (res && res.isEnded) {
-									console.log(res)
-									play.stamina.staminaAdd(6)
-									play.stamina.setStorage()
-									updateStaminaText(com.ct)
-								}
-							})
-						}
-					},
-				});
+          tt.showModal({
+            title: "获取体力",
+            content: "是否观看广告，获取体力值",
+            confirmText: "确定",
+            success(res) {
+              if (res.confirm) {
+                const rewardedVideoAd = tt.createRewardedVideoAd({
+                  adUnitId: '21o0p96tp0u95im7qf'
+                })
+                rewardedVideoAd.show()
+                rewardedVideoAd.onClose((res) => {
+                  if (res && res.isEnded) {
+                    console.log(res)
+                    play.stamina.staminaAdd(6)
+                    play.stamina.setStorage()
+                    updateStaminaText(com.ct)
+                  }
+                })
+              }
+            },
+          })
         }, 300)
       }
     }

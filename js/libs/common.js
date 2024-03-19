@@ -3,12 +3,12 @@ var com = com || {};
 com.init = function () {
 	com.width = tt.getSystemInfoSync().windowWidth;		//画布宽度
 	com.height = tt.getSystemInfoSync().windowHeight; 		//画布高度
-	com.spaceX = 35;		//着点X跨度
-	com.spaceY = 36;		//着点Y跨度
-	com.centreX = (tt.getSystemInfoSync().windowWidth - 325) / 2
-	com.centreY = (tt.getSystemInfoSync().windowHeight - 403) / 2
-	com.pointStartX = 5 + com.centreX;	//第一个着点X坐标;
-	com.pointStartY = 20 + com.centreY;	//第一个着点Y坐标;
+	com.spaceX = tt.getSystemInfoSync().windowWidth / 9.35;		//着点X跨度
+	com.spaceY = tt.getSystemInfoSync().windowWidth * 1.34 / 12.6;		//着点Y跨度
+	com.centreX = 0
+	com.centreY = (tt.getSystemInfoSync().windowHeight - tt.getSystemInfoSync().windowWidth * 1.34) / 2
+	com.pointStartX = tt.getSystemInfoSync().windowWidth / 40 + com.centreX;	//第一个着点X坐标;
+	com.pointStartY = tt.getSystemInfoSync().windowWidth / 7.12 + com.centreY;	//第一个着点Y坐标;
 	com.page = "stype";			//图片目录
 
 	com.canvas = canvas; //画布
@@ -658,10 +658,10 @@ com.class.Main = function (images, x, y) {
 	this.show = function () {
 		if (this.isShow) {
 			com.ct.drawImage(com.background, 0, 0, tt.getSystemInfoSync().windowWidth, tt.getSystemInfoSync().windowHeight)
-			com.ct.drawImage(com.bgImg, com.spaceX * this.x + com.centreX, com.spaceY * this.y + com.centreY)
-			com.ct.drawImage(com.withdrawBtn, com.centreX + 5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
-			com.ct.drawImage(com.withdrawBtn, com.centreX + 10 + (com.withdrawBtn.width) * 0.5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
-			com.ct.drawImage(com.withdrawBtn, com.bgImg.width - withdrawBtnWidth + com.centreX + 5, com.centreY + com.bgImg.height + 20, withdrawBtnWidth, withdrawBtnHeight)
+			com.ct.drawImage(com.bgImg, 0, com.spaceY * this.y + com.centreY, com.width, com.width * 1.34333)
+			com.ct.drawImage(com.withdrawBtn, com.centreX + 5, com.centreY + com.width * 1.34333 + 20, withdrawBtnWidth, withdrawBtnHeight)
+			com.ct.drawImage(com.withdrawBtn, com.centreX + 10 + (com.withdrawBtn.width) * 0.5, com.centreY + com.width * 1.34333 + 20, withdrawBtnWidth, withdrawBtnHeight)
+			com.ct.drawImage(com.withdrawBtn, com.width - 10 - withdrawBtnWidth + com.centreX + 5, com.centreY + com.width * 1.34333 + 20, withdrawBtnWidth, withdrawBtnHeight)
 			com.ct.drawImage(com.checkpoint, com.centreX + 5, com.centreY - staminaHeight * 2.25, staminaWidth * 0.75, staminaHeight)
 			com.ct.drawImage(com.backToHomepage, com.centreX - 5, com.centreY - staminaHeight * 4, staminaWidth * 0.55, staminaWidth * 0.55)
 
@@ -698,19 +698,19 @@ com.class.Main = function (images, x, y) {
 	this.withdrawText = function (ctx) {
 		ctx.fillStyle = '#F9D195'
 		ctx.font = `${parseInt(withdrawBtnWidth / 4)}px Arial`
-		ctx.fillText('悔棋', com.centreX + 10 + (com.withdrawBtn.width) * 0.5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.spaceY * this.y + com.centreY + com.bgImg.height + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
+		ctx.fillText('悔棋', com.centreX + 10 + (com.withdrawBtn.width) * 0.5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.spaceY * this.y + com.centreY + com.width * 1.34333  + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
 	}
 
 	this.promptText = function (ctx) {
 		ctx.fillStyle = '#F9D195'
 		ctx.font = `${parseInt(withdrawBtnWidth / 4)}px Arial`
-		ctx.fillText('支招', com.spaceX * this.x + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.bgImg.height + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
+		ctx.fillText('支招', com.spaceX * this.x + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.width * 1.34333  + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
 	}
 
 	this.revisitText = function (ctx) {
 		ctx.fillStyle = '#F9D195'
 		ctx.font = `${parseInt(withdrawBtnWidth / 4)}px Arial`
-		ctx.fillText('重来', com.bgImg.width - withdrawBtnWidth + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.bgImg.height + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
+		ctx.fillText('重来', com.width - 10 - withdrawBtnWidth + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.width * 1.34333  + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
 	}
 
 	this.touchEvent = function (e) {
@@ -728,8 +728,8 @@ com.class.Main = function (images, x, y) {
 
 		if (x >= com.centreX + 5
 			&& x <= com.centreX + 5 + withdrawBtnWidth
-			&& y >= com.centreY + com.bgImg.height + 20
-			&& y <= com.centreY + com.bgImg.height + 20 + withdrawBtnHeight) {
+			&& y >= com.centreY + com.width * 1.34333 + 20
+			&& y <= com.centreY + com.width * 1.34333 + 20 + withdrawBtnHeight) {
 			if (play.stamina.stamina <= 1) {
 				tt.showModal({
 					title: "体力不足",
@@ -780,10 +780,10 @@ com.class.Main = function (images, x, y) {
 			}
 		}
 
-		if (x >= com.bgImg.width - withdrawBtnWidth + com.centreX + 5
-			&& x <= com.bgImg.width + com.centreX + 5
-			&& y >= com.centreY + com.bgImg.height + 20
-			&& y <= com.centreY + com.bgImg.height + 20 + withdrawBtnHeight) {
+		if (x >= com.width - 10 - withdrawBtnWidth + com.centreX + 5
+			&& x <= com.width - 10 + com.centreX + 5
+			&& y >= com.centreY + com.width * 1.34333 + 20
+			&& y <= com.centreY + com.width * 1.34333 + 20 + withdrawBtnHeight) {
 			play.init(4, play.nowMap)
 		}
 
@@ -799,8 +799,8 @@ com.class.Main = function (images, x, y) {
 
 		if (x >= com.centreX + 10 + (com.withdrawBtn.width) * 0.5
 			&& x <= com.centreX + 10 + (com.withdrawBtn.width) * 0.5 + withdrawBtnWidth
-			&& y >= com.centreY + com.bgImg.height + 20
-			&& y <= com.centreY + com.bgImg.height + 20 + withdrawBtnHeight) {
+			&& y >= com.centreY + com.width * 1.34333 + 20
+			&& y <= com.centreY + com.width * 1.34333 + 20 + withdrawBtnHeight) {
 			setTimeout(() => {
 				if (play.stamina.stamina <= 1) {
 					tt.showModal({
@@ -839,13 +839,13 @@ com.class.Main = function (images, x, y) {
 	}
 
 	const updateStaminaText = (ctx) => {
-		com.ct.drawImage(com.staminaIcon, com.bgImg.width - staminaWidth + com.centreX + 5, com.centreY - staminaHeight * 2, staminaWidth, staminaHeight)
-		com.ct.drawImage(com.staminaIcon2, com.bgImg.width - staminaWidth + com.centreX, com.centreY - staminaHeight * 2.2, staminaHeight, staminaHeight * 1.49)
-		com.ct.drawImage(com.staminaIcon3, com.bgImg.width - staminaHeight + com.centreX + 5, com.centreY - staminaHeight * 2.1, staminaHeight * 1.1, staminaHeight * 1.1)
+		com.ct.drawImage(com.staminaIcon, com.width - 10 - staminaWidth + com.centreX + 5, com.centreY - staminaHeight * 2, staminaWidth, staminaHeight)
+		com.ct.drawImage(com.staminaIcon2, com.width - 10 - staminaWidth + com.centreX, com.centreY - staminaHeight * 2.2, staminaHeight, staminaHeight * 1.49)
+		com.ct.drawImage(com.staminaIcon3, com.width - 10 - staminaHeight + com.centreX + 5, com.centreY - staminaHeight * 2.1, staminaHeight * 1.1, staminaHeight * 1.1)
 		const text = `${play.stamina.stamina}`
 		ctx.fillText(
 			text,
-			com.bgImg.width + com.centreX - staminaWidth / 2 - ((play.stamina.stamina.toString().split('').length + 1) * (staminaWidth / 5)) / 2 + (staminaWidth - parseInt(staminaWidth / 1.5)) / 2,
+			com.width - 10 + com.centreX - staminaWidth / 2 - ((play.stamina.stamina.toString().split('').length + 1) * (staminaWidth / 5)) / 2 + (staminaWidth - parseInt(staminaWidth / 1.5)) / 2,
 			com.centreY - parseInt(staminaWidth / 2.3)
 		)
 	}
