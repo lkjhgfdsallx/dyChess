@@ -14,7 +14,7 @@
     "douyinProjectType": "native",
     "condition": {
         "game": {
-            "current": 1709708514235,
+            "current": 1710913178569,
             "list": [
                 {
                     "id": 1709708514235,
@@ -32,6 +32,15 @@
                     "scene": "021001",
                     "launchFrom": "setting_page",
                     "location": "recently",
+                    "mockUpdateType": "Noupdate"
+                },
+                {
+                    "id": 1710913178569,
+                    "name": "我的小程序侧边栏",
+                    "query": "",
+                    "scene": "021036",
+                    "launchFrom": "game_room",
+                    "location": "game_list",
                     "mockUpdateType": "Noupdate"
                 }
             ]

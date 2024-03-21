@@ -24,7 +24,11 @@ export default class Checkpoint {
     * 进入下一关
     */
     increase() {
-        this.clasli = parseInt(this.clasli) + 1
+        if (this.clasli >= com.clasli.length - 1) {
+            this.clasli = 0
+        } else {
+            this.clasli = parseInt(this.clasli) + 1
+        }
         this.saveLevelNum()
         play.init(4, com.clasli[this.clasli].map)
     }
