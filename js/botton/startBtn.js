@@ -113,7 +113,6 @@ class StartButton {
                     play.isPlay = true
                     play.checkpoint1.playGame(checkpointInfo)
                 }
-
             }
         }
     }

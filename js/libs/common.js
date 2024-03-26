@@ -698,19 +698,19 @@ com.class.Main = function (images, x, y) {
 	this.withdrawText = function (ctx) {
 		ctx.fillStyle = '#F9D195'
 		ctx.font = `${parseInt(withdrawBtnWidth / 4)}px Arial`
-		ctx.fillText('悔棋', com.centreX + 10 + (com.withdrawBtn.width) * 0.5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.spaceY * this.y + com.centreY + com.width * 1.34333  + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
+		ctx.fillText('悔棋', com.centreX + 10 + (com.withdrawBtn.width) * 0.5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.spaceY * this.y + com.centreY + com.width * 1.34333 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
 	}
 
 	this.promptText = function (ctx) {
 		ctx.fillStyle = '#F9D195'
 		ctx.font = `${parseInt(withdrawBtnWidth / 4)}px Arial`
-		ctx.fillText('支招', com.spaceX * this.x + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.width * 1.34333  + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
+		ctx.fillText('支招', com.spaceX * this.x + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.width * 1.34333 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
 	}
 
 	this.revisitText = function (ctx) {
 		ctx.fillStyle = '#F9D195'
 		ctx.font = `${parseInt(withdrawBtnWidth / 4)}px Arial`
-		ctx.fillText('重来', com.width - 10 - withdrawBtnWidth + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.width * 1.34333  + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
+		ctx.fillText('重来', com.width - 10 - withdrawBtnWidth + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.width * 1.34333 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
 	}
 
 	this.touchEvent = function (e) {
@@ -834,6 +834,37 @@ com.class.Main = function (images, x, y) {
 						play.regret()
 					}, 300)
 				}
+			}, 300)
+		}
+
+		if (x >= com.width - 10 - staminaHeight + com.centreX + 5
+			&& x <= com.width - 10 - staminaHeight + com.centreX + 5 + staminaHeight * 1.1
+			&& y >= com.centreY - staminaHeight * 2.1
+			&& y <= com.centreY - staminaHeight * 2.1 + staminaHeight * 1.1) {
+			setTimeout(() => {
+				tt.showModal({
+					title: "获取体力",
+					content: "是否观看广告，获取体力值",
+					confirmText: "确定",
+					success(res) {
+						if (res.confirm) {
+							const rewardedVideoAd = tt.createRewardedVideoAd({
+								adUnitId: '21o0p96tp0u95im7qf'
+							})
+							rewardedVideoAd.show()
+							rewardedVideoAd.onClose((res) => {
+								if (res && res.isEnded) {
+									console.log(res)
+									play.stamina.staminaAdd(6)
+									play.stamina.setStorage()
+									updateStaminaText(com.ct)
+								}
+							})
+						} else if (res.cancel) {
+							// staminaBtn.addEventListener('touchend', startButtonHandler)
+						}
+					}
+				})
 			}, 300)
 		}
 	}

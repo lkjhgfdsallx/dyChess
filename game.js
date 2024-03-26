@@ -1,4 +1,3 @@
-import './js/libs/symbol'
 import './js/libs/weapp-adapter'
 import './js/libs/common'
 import './js/libs/play'

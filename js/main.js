@@ -97,6 +97,14 @@ export default class Main {
     const staminaBtn = new StaminaBtn(ctx)
 
     const startButtonHandler = function (e) {
+      if (this.lastCollisionTime2 === undefined) {
+        this.lastCollisionTime2 = Date.now()
+      } else {
+        if (Date.now() - this.lastCollisionTime2 < 500) {
+          return
+        }
+        this.lastCollisionTime2 = Date.now()
+      }
       e.preventDefault()
 
       const x = e.changedTouches[0].clientX
@@ -104,7 +112,8 @@ export default class Main {
 
       const buttonArea = staminaBtn.btnArea
 
-      if (x >= buttonArea.startX && x <= buttonArea.endX && y >= buttonArea.startY && y <= buttonArea.endY) {
+      if (x >= buttonArea.startX && x <= buttonArea.endX && y >= buttonArea.startY && y <= buttonArea.endY && play.isPlay !== true) {
+        console.log(play.isPlay)
         staminaBtn.removeEventListener('touchend', startButtonHandler)
         setTimeout(() => {
           tt.showModal({
@@ -123,10 +132,13 @@ export default class Main {
                     play.stamina.staminaAdd(6)
                     play.stamina.setStorage()
                     updateStaminaText(com.ct)
+                    staminaBtn.addEventListener('touchend', startButtonHandler)
                   }
                 })
+              } else if (res.cancel) {
+                staminaBtn.addEventListener('touchend', startButtonHandler)
               }
-            },
+            }
           })
         }, 300)
       }
