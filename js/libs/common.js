@@ -816,7 +816,6 @@ com.class.Main = function (images, x, y) {
 									rewardedVideoAd.show()
 									rewardedVideoAd.onClose((res) => {
 										if (res && res.isEnded) {
-											console.log(res)
 											play.stamina.staminaAdd(6)
 											play.stamina.setStorage()
 											updateStaminaText(com.ct)
@@ -829,9 +828,9 @@ com.class.Main = function (images, x, y) {
 				} else {
 					play.stamina.staminaLow(2)
 					play.stamina.setStorage()
-					updateStaminaText(com.ct)
 					setTimeout(() => {
 						play.regret()
+						updateStaminaText(com.ct)
 					}, 300)
 				}
 			}, 300)
@@ -842,29 +841,76 @@ com.class.Main = function (images, x, y) {
 			&& y >= com.centreY - staminaHeight * 2.1
 			&& y <= com.centreY - staminaHeight * 2.1 + staminaHeight * 1.1) {
 			setTimeout(() => {
-				tt.showModal({
-					title: "获取体力",
-					content: "是否观看广告，获取体力值",
-					confirmText: "确定",
-					success(res) {
-						if (res.confirm) {
-							const rewardedVideoAd = tt.createRewardedVideoAd({
-								adUnitId: '21o0p96tp0u95im7qf'
-							})
-							rewardedVideoAd.show()
-							rewardedVideoAd.onClose((res) => {
-								if (res && res.isEnded) {
-									console.log(res)
-									play.stamina.staminaAdd(6)
-									play.stamina.setStorage()
-									updateStaminaText(com.ct)
-								}
-							})
-						} else if (res.cancel) {
-							// staminaBtn.addEventListener('touchend', startButtonHandler)
+				// tt.showModal({
+				// 	title: "获取体力",
+				// 	content: "是否观看广告，获取体力值",
+				// 	confirmText: "确定",
+				// 	success(res) {
+				// 		if (res.confirm) {
+				// 			const rewardedVideoAd = tt.createRewardedVideoAd({
+				// 				adUnitId: '21o0p96tp0u95im7qf'
+				// 			})
+				// 			rewardedVideoAd.show()
+				// 			rewardedVideoAd.onClose((res) => {
+				// 				if (res && res.isEnded) {
+				// 					console.log(res)
+				// 					play.stamina.staminaAdd(6)
+				// 					play.stamina.setStorage()
+				// 					updateStaminaText(com.ct)
+				// 				}
+				// 			})
+				// 		} else if (res.cancel) {
+				// 			// staminaBtn.addEventListener('touchend', startButtonHandler)
+				// 		}
+				// 	}
+				// })
+				let params = {
+					type: "image",
+					image: "images/zhedangse.png",
+					style: {
+						left: 0,
+						top: 0,
+						width: tt.getSystemInfoSync().windowWidth,
+						height: tt.getSystemInfoSync().windowHeight
+					},
+					success(button) {
+						function button_tap(res) {
+							logger.log("1button_tap:" + res.buttonid)
+							button.hide();
+							button.offTap(button_tap);
+							button.destroy();
 						}
-					}
-				})
+						button.onTap(button_tap)
+					},
+					fail(res) {
+						console.log("创建失败", res.errMsg)
+					},
+				}
+				let params2 = {
+					type: "image",
+					image: "images/hdtl.png",
+					style: {
+						left: (tt.getSystemInfoSync().windowWidth - tt.getSystemInfoSync().windowWidth / 1.5) * 0.5,
+						top: (tt.getSystemInfoSync().windowHeight - tt.getSystemInfoSync().windowWidth / 1.5 * 0.589) * 0.5,
+						width: tt.getSystemInfoSync().windowWidth / 1.5,
+						height: tt.getSystemInfoSync().windowWidth / 1.5 * 0.589
+					},
+					success(button) {
+						function button_tap(res) {
+							logger.log("2button_tap:" + res.buttonid)
+							// button.hide();
+							// button.offTap(button_tap);
+							// button.destroy();
+						}
+						button.onTap(button_tap)
+					},
+					fail(res) {
+						console.log("创建失败", res.errMsg)
+					},
+				}
+				tt.createInteractiveButton(params)
+				tt.createInteractiveButton(params2)
+
 			}, 300)
 		}
 	}

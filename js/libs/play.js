@@ -1,12 +1,12 @@
-import Music from "../runtime/music";
-import Checkpoint from '../base/checkpoint';
-import Stamina from '../base/stamina';
-import Main from "../main";
+import Music from "../runtime/music"
+import Checkpoint from '../base/checkpoint'
+import Stamina from '../base/stamina'
+import Main from "../main"
 
-var play = play || {};
+var play = play || {}
 
-play.checkpoint1 = new Checkpoint();
-play.stamina = new Stamina();
+play.checkpoint1 = new Checkpoint()
+play.stamina = new Stamina()
 play.main = Object.create(Main)
 
 play.init = function (depth, map) {
@@ -62,6 +62,7 @@ play.regret = function () {
 		}
 		this.lastCollisionTime = Date.now()
 	}
+	var mansCopy = JSON.parse(JSON.stringify(com.mans))
 	var map = com.arr2Clone(com.clasli[play.checkpoint1.clasli].map);
 	//初始化所有棋子
 	for (var i = 0; i < map.length; i++) {
@@ -74,6 +75,17 @@ play.regret = function () {
 			}
 		}
 	}
+	var isEqual = JSON.stringify(com.mans) === JSON.stringify(mansCopy)
+	if (isEqual) {
+		play.stamina.staminaAdd(2)
+		play.stamina.setStorage()
+		tt.showModal({
+			title: "无需悔棋",
+			content: "没下呢，不必悔棋",
+			confirmText: "确定"
+		});
+	}
+
 	var pace = play.pace;
 	pace.pop();
 	pace.pop();
