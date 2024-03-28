@@ -116,12 +116,80 @@ export default class Main {
         console.log(play.isPlay)
         staminaBtn.removeEventListener('touchend', startButtonHandler)
         setTimeout(() => {
-          tt.showModal({
-            title: "获取体力",
-            content: "是否观看广告，获取体力值",
-            confirmText: "确定",
-            success(res) {
-              if (res.confirm) {
+          let paramsButton
+          let params2Button
+          let params3Button
+          let params = {
+            type: "image",
+            image: "images/zhedangse.png",
+            style: {
+              left: 0,
+              top: 0,
+              width: tt.getSystemInfoSync().windowWidth,
+              height: tt.getSystemInfoSync().windowHeight
+            },
+            success(button) {
+              paramsButton = button
+              function button_tap(res) {
+                logger.log("1button_tap:" + res.buttonid)
+                // button.hide();
+                // button.offTap(button_tap);
+                // button.destroy();
+              }
+              button.onTap(button_tap)
+            },
+            fail(res) {
+              console.log("创建失败", res.errMsg)
+            },
+          }
+          let params2 = {
+            type: "image",
+            image: "images/hdtl.png",
+            style: {
+              left: (tt.getSystemInfoSync().windowWidth - tt.getSystemInfoSync().windowWidth / 1.5) * 0.5,
+              top: (tt.getSystemInfoSync().windowHeight - tt.getSystemInfoSync().windowWidth / 1.5 * 0.589) * 0.5,
+              width: tt.getSystemInfoSync().windowWidth / 1.5,
+              height: tt.getSystemInfoSync().windowWidth / 1.5 * 0.589
+            },
+            success(button) {
+              params2Button = button
+              function button_tap(res) {
+                logger.log("2button_tap:" + res.buttonid)
+                button.hide()
+                button.offTap(button_tap)
+                button.destroy()
+                paramsButton.hide()
+                paramsButton.destroy()
+                params3Button.hide()
+                params3Button.destroy()
+                staminaBtn.addEventListener('touchend', startButtonHandler)
+              }
+              button.onTap(button_tap)
+            },
+            fail(res) {
+              console.log("创建失败", res.errMsg)
+            },
+          }
+          let params3 = {
+            type: "image",
+            image: "images/microapp.png",
+            style: {
+              left: (tt.getSystemInfoSync().windowWidth - tt.getSystemInfoSync().windowWidth / 1.5) * 0.5 + tt.getSystemInfoSync().windowWidth / 3,
+              top: (tt.getSystemInfoSync().windowHeight - tt.getSystemInfoSync().windowWidth / 1.5 * 0.589) * 0.5 + tt.getSystemInfoSync().windowWidth / 1.5 * 0.589 - tt.getSystemInfoSync().windowWidth / 6 * 0.589,
+              width: tt.getSystemInfoSync().windowWidth / 3,
+              height: tt.getSystemInfoSync().windowWidth / 6 * 0.589
+            },
+            success(button) {
+              params3Button = button
+              function button_tap(res) {
+                logger.log("2button_tap:" + res.buttonid)
+                button.hide()
+                button.offTap(button_tap)
+                button.destroy()
+                paramsButton.hide()
+                paramsButton.destroy()
+                params2Button.hide()
+                params2Button.destroy()
                 const rewardedVideoAd = tt.createRewardedVideoAd({
                   adUnitId: '21o0p96tp0u95im7qf'
                 })
@@ -132,14 +200,20 @@ export default class Main {
                     play.stamina.staminaAdd(6)
                     play.stamina.setStorage()
                     updateStaminaText(com.ct)
-                    staminaBtn.addEventListener('touchend', startButtonHandler)
                   }
                 })
-              } else if (res.cancel) {
-                staminaBtn.addEventListener('touchend', startButtonHandler)
               }
-            }
-          })
+              staminaBtn.addEventListener('touchend', startButtonHandler)
+              button.onTap(button_tap)
+            },
+            fail(res) {
+              console.log("创建失败", res.errMsg)
+            },
+          }
+          tt.createInteractiveButton(params)
+          tt.createInteractiveButton(params2)
+          tt.createInteractiveButton(params3)
+
         }, 300)
       }
     }

@@ -731,12 +731,79 @@ com.class.Main = function (images, x, y) {
 			&& y >= com.centreY + com.width * 1.34333 + 20
 			&& y <= com.centreY + com.width * 1.34333 + 20 + withdrawBtnHeight) {
 			if (play.stamina.stamina <= 1) {
-				tt.showModal({
-					title: "体力不足",
-					content: "是否观看广告，获取体力值",
-					confirmText: "确定",
-					success(res) {
-						if (res.confirm) {
+				let paramsButton
+				let params2Button
+				let params3Button
+				let params = {
+					type: "image",
+					image: "images/zhedangse.png",
+					style: {
+						left: 0,
+						top: 0,
+						width: tt.getSystemInfoSync().windowWidth,
+						height: tt.getSystemInfoSync().windowHeight
+					},
+					success(button) {
+						paramsButton = button
+						function button_tap(res) {
+							logger.log("1button_tap:" + res.buttonid)
+							// button.hide();
+							// button.offTap(button_tap);
+							// button.destroy();
+						}
+						button.onTap(button_tap)
+					},
+					fail(res) {
+						console.log("创建失败", res.errMsg)
+					},
+				}
+				let params2 = {
+					type: "image",
+					image: "images/hdtl.png",
+					style: {
+						left: (tt.getSystemInfoSync().windowWidth - tt.getSystemInfoSync().windowWidth / 1.5) * 0.5,
+						top: (tt.getSystemInfoSync().windowHeight - tt.getSystemInfoSync().windowWidth / 1.5 * 0.589) * 0.5,
+						width: tt.getSystemInfoSync().windowWidth / 1.5,
+						height: tt.getSystemInfoSync().windowWidth / 1.5 * 0.589
+					},
+					success(button) {
+						params2Button = button
+						function button_tap(res) {
+							logger.log("2button_tap:" + res.buttonid)
+							button.hide()
+							button.offTap(button_tap)
+							button.destroy()
+							paramsButton.hide()
+							paramsButton.destroy()
+							params3Button.hide()
+							params3Button.destroy()
+						}
+						button.onTap(button_tap)
+					},
+					fail(res) {
+						console.log("创建失败", res.errMsg)
+					},
+				}
+				let params3 = {
+					type: "image",
+					image: "images/microapp.png",
+					style: {
+						left: (tt.getSystemInfoSync().windowWidth - tt.getSystemInfoSync().windowWidth / 1.5) * 0.5 + tt.getSystemInfoSync().windowWidth / 3,
+						top: (tt.getSystemInfoSync().windowHeight - tt.getSystemInfoSync().windowWidth / 1.5 * 0.589) * 0.5 + tt.getSystemInfoSync().windowWidth / 1.5 * 0.589 - tt.getSystemInfoSync().windowWidth / 6 * 0.589,
+						width: tt.getSystemInfoSync().windowWidth / 3,
+						height: tt.getSystemInfoSync().windowWidth / 6 * 0.589
+					},
+					success(button) {
+						params3Button = button
+						function button_tap(res) {
+							logger.log("2button_tap:" + res.buttonid)
+							button.hide()
+							button.offTap(button_tap)
+							button.destroy()
+							paramsButton.hide()
+							paramsButton.destroy()
+							params2Button.hide()
+							params2Button.destroy()
 							const rewardedVideoAd = tt.createRewardedVideoAd({
 								adUnitId: '21o0p96tp0u95im7qf'
 							})
@@ -750,8 +817,15 @@ com.class.Main = function (images, x, y) {
 								}
 							})
 						}
+						button.onTap(button_tap)
 					},
-				});
+					fail(res) {
+						console.log("创建失败", res.errMsg)
+					},
+				}
+				tt.createInteractiveButton(params)
+				tt.createInteractiveButton(params2)
+				tt.createInteractiveButton(params3)
 			} else {
 				play.stamina.staminaLow(2)
 				play.stamina.setStorage()
@@ -803,28 +877,101 @@ com.class.Main = function (images, x, y) {
 			&& y <= com.centreY + com.width * 1.34333 + 20 + withdrawBtnHeight) {
 			setTimeout(() => {
 				if (play.stamina.stamina <= 1) {
-					tt.showModal({
-						title: "体力不足",
-						content: "是否观看广告，获取体力值",
-						confirmText: "确定",
-						success(res) {
-							if (res.confirm) {
-								if (res.confirm) {
-									const rewardedVideoAd = tt.createRewardedVideoAd({
-										adUnitId: '21o0p96tp0u95im7qf'
-									})
-									rewardedVideoAd.show()
-									rewardedVideoAd.onClose((res) => {
-										if (res && res.isEnded) {
-											play.stamina.staminaAdd(6)
-											play.stamina.setStorage()
-											updateStaminaText(com.ct)
-										}
-									})
-								}
-							}
+					let paramsButton
+					let params2Button
+					let params3Button
+					let params = {
+						type: "image",
+						image: "images/zhedangse.png",
+						style: {
+							left: 0,
+							top: 0,
+							width: tt.getSystemInfoSync().windowWidth,
+							height: tt.getSystemInfoSync().windowHeight
 						},
-					});
+						success(button) {
+							paramsButton = button
+							function button_tap(res) {
+								logger.log("1button_tap:" + res.buttonid)
+								// button.hide();
+								// button.offTap(button_tap);
+								// button.destroy();
+							}
+							button.onTap(button_tap)
+						},
+						fail(res) {
+							console.log("创建失败", res.errMsg)
+						},
+					}
+					let params2 = {
+						type: "image",
+						image: "images/hdtl.png",
+						style: {
+							left: (tt.getSystemInfoSync().windowWidth - tt.getSystemInfoSync().windowWidth / 1.5) * 0.5,
+							top: (tt.getSystemInfoSync().windowHeight - tt.getSystemInfoSync().windowWidth / 1.5 * 0.589) * 0.5,
+							width: tt.getSystemInfoSync().windowWidth / 1.5,
+							height: tt.getSystemInfoSync().windowWidth / 1.5 * 0.589
+						},
+						success(button) {
+							params2Button = button
+							function button_tap(res) {
+								logger.log("2button_tap:" + res.buttonid)
+								button.hide()
+								button.offTap(button_tap)
+								button.destroy()
+								paramsButton.hide()
+								paramsButton.destroy()
+								params3Button.hide()
+								params3Button.destroy()
+							}
+							button.onTap(button_tap)
+						},
+						fail(res) {
+							console.log("创建失败", res.errMsg)
+						},
+					}
+					let params3 = {
+						type: "image",
+						image: "images/microapp.png",
+						style: {
+							left: (tt.getSystemInfoSync().windowWidth - tt.getSystemInfoSync().windowWidth / 1.5) * 0.5 + tt.getSystemInfoSync().windowWidth / 3,
+							top: (tt.getSystemInfoSync().windowHeight - tt.getSystemInfoSync().windowWidth / 1.5 * 0.589) * 0.5 + tt.getSystemInfoSync().windowWidth / 1.5 * 0.589 - tt.getSystemInfoSync().windowWidth / 6 * 0.589,
+							width: tt.getSystemInfoSync().windowWidth / 3,
+							height: tt.getSystemInfoSync().windowWidth / 6 * 0.589
+						},
+						success(button) {
+							params3Button = button
+							function button_tap(res) {
+								logger.log("2button_tap:" + res.buttonid)
+								button.hide()
+								button.offTap(button_tap)
+								button.destroy()
+								paramsButton.hide()
+								paramsButton.destroy()
+								params2Button.hide()
+								params2Button.destroy()
+								const rewardedVideoAd = tt.createRewardedVideoAd({
+									adUnitId: '21o0p96tp0u95im7qf'
+								})
+								rewardedVideoAd.show()
+								rewardedVideoAd.onClose((res) => {
+									if (res && res.isEnded) {
+										console.log(res)
+										play.stamina.staminaAdd(6)
+										play.stamina.setStorage()
+										updateStaminaText(com.ct)
+									}
+								})
+							}
+							button.onTap(button_tap)
+						},
+						fail(res) {
+							console.log("创建失败", res.errMsg)
+						},
+					}
+					tt.createInteractiveButton(params)
+					tt.createInteractiveButton(params2)
+					tt.createInteractiveButton(params3)
 				} else {
 					play.stamina.staminaLow(2)
 					play.stamina.setStorage()
@@ -841,29 +988,9 @@ com.class.Main = function (images, x, y) {
 			&& y >= com.centreY - staminaHeight * 2.1
 			&& y <= com.centreY - staminaHeight * 2.1 + staminaHeight * 1.1) {
 			setTimeout(() => {
-				// tt.showModal({
-				// 	title: "获取体力",
-				// 	content: "是否观看广告，获取体力值",
-				// 	confirmText: "确定",
-				// 	success(res) {
-				// 		if (res.confirm) {
-				// 			const rewardedVideoAd = tt.createRewardedVideoAd({
-				// 				adUnitId: '21o0p96tp0u95im7qf'
-				// 			})
-				// 			rewardedVideoAd.show()
-				// 			rewardedVideoAd.onClose((res) => {
-				// 				if (res && res.isEnded) {
-				// 					console.log(res)
-				// 					play.stamina.staminaAdd(6)
-				// 					play.stamina.setStorage()
-				// 					updateStaminaText(com.ct)
-				// 				}
-				// 			})
-				// 		} else if (res.cancel) {
-				// 			// staminaBtn.addEventListener('touchend', startButtonHandler)
-				// 		}
-				// 	}
-				// })
+				let paramsButton
+				let params2Button
+				let params3Button
 				let params = {
 					type: "image",
 					image: "images/zhedangse.png",
@@ -874,11 +1001,12 @@ com.class.Main = function (images, x, y) {
 						height: tt.getSystemInfoSync().windowHeight
 					},
 					success(button) {
+						paramsButton = button
 						function button_tap(res) {
 							logger.log("1button_tap:" + res.buttonid)
-							button.hide();
-							button.offTap(button_tap);
-							button.destroy();
+							// button.hide();
+							// button.offTap(button_tap);
+							// button.destroy();
 						}
 						button.onTap(button_tap)
 					},
@@ -896,11 +1024,55 @@ com.class.Main = function (images, x, y) {
 						height: tt.getSystemInfoSync().windowWidth / 1.5 * 0.589
 					},
 					success(button) {
+						params2Button = button
 						function button_tap(res) {
 							logger.log("2button_tap:" + res.buttonid)
-							// button.hide();
-							// button.offTap(button_tap);
-							// button.destroy();
+							button.hide()
+							button.offTap(button_tap)
+							button.destroy()
+							paramsButton.hide()
+							paramsButton.destroy()
+							params3Button.hide()
+							params3Button.destroy()
+						}
+						button.onTap(button_tap)
+					},
+					fail(res) {
+						console.log("创建失败", res.errMsg)
+					},
+				}
+				let params3 = {
+					type: "image",
+					image: "images/microapp.png",
+					style: {
+						left: (tt.getSystemInfoSync().windowWidth - tt.getSystemInfoSync().windowWidth / 1.5) * 0.5 + tt.getSystemInfoSync().windowWidth / 3,
+						top: (tt.getSystemInfoSync().windowHeight - tt.getSystemInfoSync().windowWidth / 1.5 * 0.589) * 0.5 + tt.getSystemInfoSync().windowWidth / 1.5 * 0.589 - tt.getSystemInfoSync().windowWidth / 6 * 0.589,
+						width: tt.getSystemInfoSync().windowWidth / 3,
+						height: tt.getSystemInfoSync().windowWidth / 6 * 0.589
+					},
+					success(button) {
+						params3Button = button
+						function button_tap(res) {
+							logger.log("2button_tap:" + res.buttonid)
+							button.hide()
+							button.offTap(button_tap)
+							button.destroy()
+							paramsButton.hide()
+							paramsButton.destroy()
+							params2Button.hide()
+							params2Button.destroy()
+							const rewardedVideoAd = tt.createRewardedVideoAd({
+								adUnitId: '21o0p96tp0u95im7qf'
+							})
+							rewardedVideoAd.show()
+							rewardedVideoAd.onClose((res) => {
+								if (res && res.isEnded) {
+									console.log(res)
+									play.stamina.staminaAdd(6)
+									play.stamina.setStorage()
+									updateStaminaText(com.ct)
+								}
+							})
 						}
 						button.onTap(button_tap)
 					},
@@ -910,6 +1082,7 @@ com.class.Main = function (images, x, y) {
 				}
 				tt.createInteractiveButton(params)
 				tt.createInteractiveButton(params2)
+				tt.createInteractiveButton(params3)
 
 			}, 300)
 		}
