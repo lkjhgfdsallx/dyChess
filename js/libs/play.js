@@ -293,7 +293,9 @@ play.getClickMan = function (e) {
 play.showWin = function (my) {
 	play.isPlay = false;
 	if (my === 1) {
-		tt.setStorageSync("customsCleared", play.checkpoint1.clasli)
+		const customsCleared = tt.getStorageSync("customsCleared") || []
+		customsCleared.push(play.checkpoint1.clasli)
+		tt.setStorageSync("customsCleared", customsCleared)
 		tt.showModal({
 			title: "胜利",
 			content: "恭喜你，你赢了！",

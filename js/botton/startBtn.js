@@ -118,62 +118,114 @@ class StartButton {
     }
 
     checkpoint() {
+        const customsCleared = tt.getStorageSync("customsCleared") || []
         if (play.checkpoint1.clasli > 0) {
             const subArrayB = com.clasli.slice(0, play.checkpoint1.clasli).reverse()
             const listNumB = subArrayB.length > 12 ? 12 : subArrayB.length
             for (let i = 0; i < listNumB; i++) {
-                this.offscreenCtx.drawImage(this.img3, this.offscreenCanvas.width * 0.05, this.contentOffsetY - (i + 1) * this.offscreenCanvas.height / 5, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
-                this.offscreenCtx.fillStyle = '#DED1B4'
-                const text = `${subArrayB[i].name.split("：")[0]}`
-                let fontSize = parseInt(this.offscreenCanvas.height / 30)
-                let wordCount = text.length
-                if (wordCount > 3) {
-                    fontSize *= Math.pow(0.8, (wordCount - 3))
+                if (customsCleared.indexOf(play.checkpoint1.clasli - i - 1) !== -1) {
+                    this.offscreenCtx.drawImage(this.img2, this.offscreenCanvas.width * 0.05, this.contentOffsetY - (i + 1) * this.offscreenCanvas.height / 5, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
+                    this.offscreenCtx.fillStyle = '#DED1B4'
+                    const text = `${subArrayB[i].name.split("：")[0]}`
+                    let fontSize = parseInt(this.offscreenCanvas.height / 30)
+                    let wordCount = text.length
+                    if (wordCount > 3) {
+                        fontSize *= Math.pow(0.8, (wordCount - 3))
+                    }
+                    this.offscreenCtx.font = `${fontSize}px Arial`
+                    this.offscreenCtx.fillText(text, this.offscreenCanvas.width * 0.16, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 10) - (i + 1) * this.offscreenCanvas.height / 5)
+                    this.offscreenCtx.fillStyle = '#7C622D'
+                    this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 16)}px Arial`
+                    const text2 = `${subArrayB[i].name.split("：")[1]}`
+                    this.offscreenCtx.fillText(text2, this.offscreenCanvas.width * 0.34, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 9) - (i + 1) * this.offscreenCanvas.height / 5)
+                    this.offscreenCtx.drawImage(this.img4, this.offscreenCanvas.width * 0.73, this.offscreenCanvas.height / 30 + this.contentOffsetY - (i + 1) * this.offscreenCanvas.height / 5, this.offscreenCanvas.height / 8, this.offscreenCanvas.height / 8)
+                } else {
+                    this.offscreenCtx.drawImage(this.img3, this.offscreenCanvas.width * 0.05, this.contentOffsetY - (i + 1) * this.offscreenCanvas.height / 5, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
+                    this.offscreenCtx.fillStyle = '#DED1B4'
+                    const text = `${subArrayB[i].name.split("：")[0]}`
+                    let fontSize = parseInt(this.offscreenCanvas.height / 30)
+                    let wordCount = text.length
+                    if (wordCount > 3) {
+                        fontSize *= Math.pow(0.8, (wordCount - 3))
+                    }
+                    this.offscreenCtx.font = `${fontSize}px Arial`
+                    this.offscreenCtx.fillText(text, this.offscreenCanvas.width * 0.16, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 10) - (i + 1) * this.offscreenCanvas.height / 5)
+                    this.offscreenCtx.fillStyle = '#7C622D'
+                    this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 16)}px Arial`
+                    const text2 = `${subArrayB[i].name.split("：")[1]}`
+                    this.offscreenCtx.fillText(text2, this.offscreenCanvas.width * 0.38, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 9) - (i + 1) * this.offscreenCanvas.height / 5)
                 }
-                this.offscreenCtx.font = `${fontSize}px Arial`
-                this.offscreenCtx.fillText(text, this.offscreenCanvas.width * 0.16, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 10) - (i + 1) * this.offscreenCanvas.height / 5)
-                this.offscreenCtx.fillStyle = '#7C622D'
-                this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 16)}px Arial`
-                const text2 = `${subArrayB[i].name.split("：")[1]}`
-                this.offscreenCtx.fillText(text2, this.offscreenCanvas.width * 0.38, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 9) - (i + 1) * this.offscreenCanvas.height / 5)
             }
         }
 
-        this.offscreenCtx.drawImage(this.img2, this.offscreenCanvas.width * 0.05, this.contentOffsetY, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
-        this.offscreenCtx.fillStyle = '#DED1B4'
-        const text = `${com.clasli[play.checkpoint1.clasli].name.split("：")[0]}`
-        let fontSize = parseInt(this.offscreenCanvas.height / 30)
-        let wordCount = text.length
-        if (wordCount > 3) {
-            fontSize *= Math.pow(0.8, (wordCount - 3))
-        }
-        this.offscreenCtx.font = `${fontSize}px Arial`
-        this.offscreenCtx.fillText(text, this.offscreenCanvas.width * 0.16, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 10))
-        this.offscreenCtx.fillStyle = '#7C622D'
-        this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 16)}px Arial`
-        const text2 = `${com.clasli[play.checkpoint1.clasli].name.split("：")[1]}`
-        this.offscreenCtx.fillText(text2, this.offscreenCanvas.width * 0.34, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 9))
-
-        this.offscreenCtx.drawImage(this.img4, this.offscreenCanvas.width * 0.73, this.offscreenCanvas.height / 30 + this.contentOffsetY, this.offscreenCanvas.height / 8, this.offscreenCanvas.height / 8)
-
-
-        const subArray = com.clasli.slice(play.checkpoint1.clasli)
-        const listNum = subArray.length > 55 ? 55 : subArray.length
-        for (let i = 1; i < listNum; i++) {
-            this.offscreenCtx.drawImage(this.img3, this.offscreenCanvas.width * 0.05, this.contentOffsetY + i * this.offscreenCanvas.height / 5, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
+        if (customsCleared.indexOf(play.checkpoint1.clasli) !== -1) {
+            this.offscreenCtx.drawImage(this.img2, this.offscreenCanvas.width * 0.05, this.contentOffsetY, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
             this.offscreenCtx.fillStyle = '#DED1B4'
-            const text = `${subArray[i].name.split("：")[0]}`
+            const text = `${com.clasli[play.checkpoint1.clasli].name.split("：")[0]}`
             let fontSize = parseInt(this.offscreenCanvas.height / 30)
             let wordCount = text.length
             if (wordCount > 3) {
                 fontSize *= Math.pow(0.8, (wordCount - 3))
             }
             this.offscreenCtx.font = `${fontSize}px Arial`
-            this.offscreenCtx.fillText(text, this.offscreenCanvas.width * 0.16, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 10) + i * this.offscreenCanvas.height / 5)
+            this.offscreenCtx.fillText(text, this.offscreenCanvas.width * 0.16, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 10))
             this.offscreenCtx.fillStyle = '#7C622D'
             this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 16)}px Arial`
-            const text2 = `${subArray[i].name.split("：")[1]}`
-            this.offscreenCtx.fillText(text2, this.offscreenCanvas.width * 0.38, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 9) + i * this.offscreenCanvas.height / 5)
+            const text2 = `${com.clasli[play.checkpoint1.clasli].name.split("：")[1]}`
+            this.offscreenCtx.fillText(text2, this.offscreenCanvas.width * 0.34, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 9))
+            this.offscreenCtx.drawImage(this.img4, this.offscreenCanvas.width * 0.73, this.offscreenCanvas.height / 30 + this.contentOffsetY, this.offscreenCanvas.height / 8, this.offscreenCanvas.height / 8)
+        } else {
+            this.offscreenCtx.drawImage(this.img3, this.offscreenCanvas.width * 0.05, this.contentOffsetY, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
+            this.offscreenCtx.fillStyle = '#DED1B4'
+            const text = `${com.clasli[play.checkpoint1.clasli].name.split("：")[0]}`
+            let fontSize = parseInt(this.offscreenCanvas.height / 30)
+            let wordCount = text.length
+            if (wordCount > 3) {
+                fontSize *= Math.pow(0.8, (wordCount - 3))
+            }
+            this.offscreenCtx.font = `${fontSize}px Arial`
+            this.offscreenCtx.fillText(text, this.offscreenCanvas.width * 0.16, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 10))
+            this.offscreenCtx.fillStyle = '#7C622D'
+            this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 16)}px Arial`
+            const text2 = `${com.clasli[play.checkpoint1.clasli].name.split("：")[1]}`
+            this.offscreenCtx.fillText(text2, this.offscreenCanvas.width * 0.34, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 9))
+        }
+
+        const subArray = com.clasli.slice(play.checkpoint1.clasli)
+        const listNum = subArray.length > 55 ? 55 : subArray.length
+        for (let i = 1; i < listNum; i++) {
+            if (customsCleared.indexOf(i + play.checkpoint1.clasli) !== -1) {
+                this.offscreenCtx.drawImage(this.img2, this.offscreenCanvas.width * 0.05, this.contentOffsetY + i * this.offscreenCanvas.height / 5, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
+                this.offscreenCtx.fillStyle = '#DED1B4'
+                const text = `${subArray[i].name.split("：")[0]}`
+                let fontSize = parseInt(this.offscreenCanvas.height / 30)
+                let wordCount = text.length
+                if (wordCount > 3) {
+                    fontSize *= Math.pow(0.8, (wordCount - 3))
+                }
+                this.offscreenCtx.font = `${fontSize}px Arial`
+                this.offscreenCtx.fillText(text, this.offscreenCanvas.width * 0.16, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 10) + i * this.offscreenCanvas.height / 5)
+                this.offscreenCtx.fillStyle = '#7C622D'
+                this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 16)}px Arial`
+                const text2 = `${subArray[i].name.split("：")[1]}`
+                this.offscreenCtx.fillText(text2, this.offscreenCanvas.width * 0.34, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 9) + i * this.offscreenCanvas.height / 5)
+                this.offscreenCtx.drawImage(this.img4, this.offscreenCanvas.width * 0.73, this.offscreenCanvas.height / 30 + this.contentOffsetY + i * this.offscreenCanvas.height / 5, this.offscreenCanvas.height / 8, this.offscreenCanvas.height / 8)
+            } else {
+                this.offscreenCtx.drawImage(this.img3, this.offscreenCanvas.width * 0.05, this.contentOffsetY + i * this.offscreenCanvas.height / 5, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
+                this.offscreenCtx.fillStyle = '#DED1B4'
+                const text = `${subArray[i].name.split("：")[0]}`
+                let fontSize = parseInt(this.offscreenCanvas.height / 30)
+                let wordCount = text.length
+                if (wordCount > 3) {
+                    fontSize *= Math.pow(0.8, (wordCount - 3))
+                }
+                this.offscreenCtx.font = `${fontSize}px Arial`
+                this.offscreenCtx.fillText(text, this.offscreenCanvas.width * 0.16, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 10) + i * this.offscreenCanvas.height / 5)
+                this.offscreenCtx.fillStyle = '#7C622D'
+                this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 16)}px Arial`
+                const text2 = `${subArray[i].name.split("：")[1]}`
+                this.offscreenCtx.fillText(text2, this.offscreenCanvas.width * 0.38, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 9) + i * this.offscreenCanvas.height / 5)
+            }
         }
 
     }
