@@ -199,7 +199,6 @@ export default class Main {
                     console.log(res)
                     play.stamina.staminaAdd(6)
                     play.stamina.setStorage()
-                    updateStaminaText(com.ct)
                   }
                 })
               }
