@@ -45,9 +45,15 @@ com.loadImages = function (stype) {
 	com.background = new Image();
 	com.background.src = "images/" + stype + "/bg.jpg";
 
-	//悔棋按钮
+	//支招按钮
 	com.withdrawBtn = new Image();
 	com.withdrawBtn.src = "images/withdrawBtn.png";
+	//悔棋按钮
+	com.withdrawBtn1 = new Image();
+	com.withdrawBtn1.src = "images/withdrawBtn1.png";
+	//重来按钮
+	com.withdrawBtn2 = new Image();
+	com.withdrawBtn2.src = "images/withdrawBtn2.png";
 
 	//体力图标
 	com.staminaIcon = new Image();
@@ -660,8 +666,8 @@ com.class.Main = function (images, x, y) {
 			com.ct.drawImage(com.background, 0, 0, tt.getSystemInfoSync().windowWidth, tt.getSystemInfoSync().windowHeight)
 			com.ct.drawImage(com.bgImg, 0, com.spaceY * this.y + com.centreY, com.width, com.width * 1.34333)
 			com.ct.drawImage(com.withdrawBtn, com.centreX + 5, com.centreY + com.width * 1.34333 + 20, withdrawBtnWidth, withdrawBtnHeight)
-			com.ct.drawImage(com.withdrawBtn, com.centreX + 10 + (com.withdrawBtn.width) * 0.5, com.centreY + com.width * 1.34333 + 20, withdrawBtnWidth, withdrawBtnHeight)
-			com.ct.drawImage(com.withdrawBtn, com.width - 10 - withdrawBtnWidth + com.centreX + 5, com.centreY + com.width * 1.34333 + 20, withdrawBtnWidth, withdrawBtnHeight)
+			com.ct.drawImage(com.withdrawBtn1, com.centreX + 10 + (com.withdrawBtn.width) * 0.5, com.centreY + com.width * 1.34333 + 20, withdrawBtnWidth, withdrawBtnHeight)
+			com.ct.drawImage(com.withdrawBtn2, com.width - 10 - withdrawBtnWidth + com.centreX + 5, com.centreY + com.width * 1.34333 + 20, withdrawBtnWidth, withdrawBtnHeight)
 			com.ct.drawImage(com.checkpoint, com.centreX + 5, com.centreY - staminaHeight * 2.25, staminaWidth * 0.75, staminaHeight)
 			com.ct.drawImage(com.backToHomepage, com.centreX - 5, com.centreY - staminaHeight * 4, staminaWidth * 0.55, staminaWidth * 0.55)
 
@@ -698,19 +704,19 @@ com.class.Main = function (images, x, y) {
 	this.withdrawText = function (ctx) {
 		ctx.fillStyle = '#F9D195'
 		ctx.font = `${parseInt(withdrawBtnWidth / 4)}px Arial`
-		ctx.fillText('悔棋', com.centreX + 10 + (com.withdrawBtn.width) * 0.5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.spaceY * this.y + com.centreY + com.width * 1.34333 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
+		ctx.fillText('悔棋', com.centreX + 10 + (com.withdrawBtn.width) * 0.5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.width * 1.34333 + 20 + withdrawBtnHeight + parseInt(withdrawBtnWidth / 4))
 	}
 
 	this.promptText = function (ctx) {
 		ctx.fillStyle = '#F9D195'
 		ctx.font = `${parseInt(withdrawBtnWidth / 4)}px Arial`
-		ctx.fillText('支招', com.spaceX * this.x + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.width * 1.34333 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
+		ctx.fillText('支招', com.spaceX * this.x + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.width * 1.34333 + 20 + withdrawBtnHeight + parseInt(withdrawBtnWidth / 4))
 	}
 
 	this.revisitText = function (ctx) {
 		ctx.fillStyle = '#F9D195'
 		ctx.font = `${parseInt(withdrawBtnWidth / 4)}px Arial`
-		ctx.fillText('重来', com.width - 10 - withdrawBtnWidth + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.width * 1.34333 + withdrawBtnHeight - parseInt(withdrawBtnWidth / 12))
+		ctx.fillText('重来', com.width - 10 - withdrawBtnWidth + com.centreX + 5 + (withdrawBtnWidth - parseInt(withdrawBtnWidth / 2)) / 2, com.centreY + com.width * 1.34333 + 20 + withdrawBtnHeight + parseInt(withdrawBtnWidth / 4))
 	}
 
 	this.touchEvent = function (e) {
