@@ -74,10 +74,10 @@ class StartButton {
 
         // 添加限制，防止内容偏移过多
         if (play.checkpoint1.clasli > 0) {
-            this.contentOffsetY = Math.max(this.contentOffsetY, -(this.offscreenCanvas.height * 10))
+            this.contentOffsetY = Math.max(this.contentOffsetY, -(this.offscreenCanvas.height * 4))
             this.contentOffsetY = Math.min(this.contentOffsetY, listNumB * this.offscreenCanvas.height / 5)
         } else {
-            this.contentOffsetY = Math.max(this.contentOffsetY, -(this.offscreenCanvas.height * 10))
+            this.contentOffsetY = Math.max(this.contentOffsetY, -(this.offscreenCanvas.height * 4))
             this.contentOffsetY = Math.min(this.contentOffsetY, 0)
         }
 
@@ -192,7 +192,7 @@ class StartButton {
         }
 
         const subArray = com.clasli.slice(play.checkpoint1.clasli)
-        const listNum = subArray.length > 55 ? 55 : subArray.length
+        const listNum = subArray.length > 27 ? 27 : subArray.length
         for (let i = 1; i < listNum; i++) {
             if (customsCleared.indexOf(i + play.checkpoint1.clasli) !== -1) {
                 this.offscreenCtx.drawImage(this.img2, this.offscreenCanvas.width * 0.05, this.contentOffsetY + i * this.offscreenCanvas.height / 5, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
