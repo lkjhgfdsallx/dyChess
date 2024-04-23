@@ -32,10 +32,10 @@ AI.init = function (pace) {
 	AI.setHistoryTable.lenght = 0
 
 	var val = AI.getAlphaBeta(-99999, 99999, AI.treeDepth, com.arr2Clone(play.map), play.my);
-	if (!val || val.value == -8888) {
-		AI.treeDepth = 2;
-		val = AI.getAlphaBeta(-99999, 99999, AI.treeDepth, com.arr2Clone(play.map), play.my);
-	}
+	// if (!val || val.value == -8888) {
+	// 	AI.treeDepth = 2;
+	// 	val = AI.getAlphaBeta(-99999, 99999, AI.treeDepth, com.arr2Clone(play.map), play.my);
+	// }
 	if (val && val.value != -8888) {
 		var man = play.mans[val.key];
 		var nowTime = new Date().getTime();
