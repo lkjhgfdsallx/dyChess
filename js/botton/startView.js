@@ -1,4 +1,4 @@
-class StartButton {
+class StartView {
     constructor(ctx, clasli) {
         this.ctx = ctx
         this.clasli = clasli
@@ -266,4 +266,4 @@ class StartButton {
     }
 }
 
-window.StartBtn = StartButton
+window.StartView = StartView

@@ -14,7 +14,7 @@ export default class Main {
     this.isExist = false
     this.login()
     this.navigateToScene()
-    this.startPage()
+    this.startView()
   }
   login() {
     tt.checkSession({
@@ -71,6 +71,35 @@ export default class Main {
         this.isExist = false
       }
     })
+  }
+  startView() {
+    const that = this
+
+    that.bg = new BackGround(ctx)
+    const startView = new StartView(ctx)
+
+    // 清除上一局的动画
+    window.cancelAnimationFrame(this.aniId)
+
+    // 清除事件监听
+    canvas.removeEventListener('touchstart', this.touchHandler)
+
+    const renderStartPage = function () {
+      ctx.clearRect(0, 0, tt.getSystemInfoSync().windowWidth, tt.getSystemInfoSync().windowHeight)
+      that.bg.render(ctx)
+      startView.drawToCanvas(ctx)
+    }
+
+    const startPageLoop = function () {
+      if (play.isPlay === true) {
+        window.cancelAnimationFrame(that.aniId)
+      } else {
+        renderStartPage()
+        that.aniId = window.requestAnimationFrame(startPageLoop, canvas)
+      }
+    }
+    startPageLoop()
+
   }
   startPage() {
     const that = this

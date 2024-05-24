@@ -5,6 +5,7 @@ import './js/libs/AI'
 import './js/libs/gambit'
 import './js/libs/clasli'
 import '/js/botton/startBtn'
+import '/js/botton/startView'
 
 import Main from './js/main'
 
