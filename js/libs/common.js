@@ -872,7 +872,8 @@ com.class.Main = function (images, x, y) {
 			&& y <= com.centreY - staminaHeight * 4 + staminaWidth * 0.55) {
 			setTimeout(() => {
 				play.isPlay = false
-				play.main.prototype.startPage()
+				play.isView = true
+				play.main.prototype.startView()
 			}, 300)
 		}
 

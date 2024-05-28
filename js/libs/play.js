@@ -19,6 +19,7 @@ play.init = function (depth, map) {
 	play.nowManKey = false;			//现在要操作的棋子
 	play.pace = [];				//记录每一步
 	play.isPlay = true;			//是否能走棋
+	play.isView = true
 
 	play.bylaw = com.bylaw;
 	play.show = com.show;

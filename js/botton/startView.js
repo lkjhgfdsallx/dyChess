@@ -19,8 +19,8 @@ class StartView {
         this.img2 = new Image()
         this.img2.src = 'images/biankuang.png'
 
-        this.img4 = new Image()
-        this.img4.src = 'images/levelSelectedduigou.png'
+        this.img3 = new Image()
+        this.img3.src = 'images/shuangdao.png'
 
         // 定义按钮的点击区域
         this.btnAreas = []
@@ -35,6 +35,17 @@ class StartView {
         this.currentTouchY = 0
         this.isDragging = false
         this.dragThreshold = 15
+
+        this.viewElement = [
+            { text: '网红残局', num: '4513' },
+            { text: '初入棋坛', num: '3245' },
+            { text: '大众棋手', num: '6543' },
+            { text: '小区棋王', num: '3132' },
+            { text: '棋摊中坚', num: '7745' },
+            { text: '路边枭雄', num: '2926' },
+            { text: '嘎嘎乱杀', num: '1327' },
+            { text: '各局复盘', num: '143' }
+        ]
 
         this.updateOffscreenCanvas()
     }
@@ -74,10 +85,15 @@ class StartView {
             // 判断触摸位置是否在按钮区域内
             for (let i = 0; i < this.btnAreas.length; i++) {
                 const area = this.btnAreas[i]
-                if (offsetX >= area.startX && offsetX <= area.endX && offsetY >= area.startY && offsetY <= area.endY && this.isDragging === false) {
+                if (offsetX >= area.startX && offsetX <= area.endX && offsetY >= area.startY && offsetY <= area.endY && this.isDragging === false && play.isView !== false) {
                     const checkpointInfo = this.getCheckpointInfo(i)
                     if (checkpointInfo != null) {
-                        console.log(checkpointInfo)
+                        // console.log(checkpointInfo)
+                        setTimeout(() => {
+                            play.isPlay = false
+                            play.isView = false
+                            play.main.prototype.startPage(com.clasli)
+                        }, 300)
                         // this.touchEndHandled = true
                         // play.isPlay = true
                         // play.checkpoint1.playGame(checkpointInfo)
@@ -88,11 +104,26 @@ class StartView {
         }
     }
 
-    checkpoint() {
+    loadImage(src) {
+        return new Promise((resolve, reject) => {
+            const img = new Image()
+            img.src = src
+            img.onload = () => resolve(img)
+            img.onerror = reject
+        })
+    }
+
+    async checkpoint() {
         const customsCleared = tt.getStorageSync("customsCleared") || []
         this.btnAreas = []
 
-        const subArray = com.clasli.slice(play.checkpoint1.clasli)
+        const promises = []
+        for (let i = 0; i < 8; i++) {
+            const imgPromise = this.loadImage(this.viewImg(i))
+            promises.push(imgPromise)
+        }
+
+        const loadedImages = await Promise.all(promises)
 
         for (let i = 0; i < 8; i++) {
             const img = this.img2
@@ -111,31 +142,19 @@ class StartView {
                 endY: startY + imgHeight,
             })
 
-            // this.offscreenCtx.fillStyle = '#DED1B4'
-            // const text = `${subArray[i].name.split("：")[0]}`
-            // let fontSize = parseInt(this.offscreenCanvas.height / 30)
-            // let wordCount = text.length
-            // if (wordCount > 3) {
-            //     fontSize *= Math.pow(0.8, (wordCount - 3))
-            // }
-            // this.offscreenCtx.font = `${fontSize}px Arial`
-            // this.offscreenCtx.fillText(text, startX + imgWidth * 0.11, startY + imgHeight * 0.4)
+            const img4 = loadedImages[i]
+            this.offscreenCtx.drawImage(img4, startX + imgWidth * 0.08, startY + imgHeight * 0.2, imgWidth * 0.21, imgHeight * 0.6)
 
-            if (i === 0) {
-                this.img4.src = 'images/view/0.png'
-            } else if (i === 1) {
-                this.img4.src = 'images/view/1.png'
-            }
+            this.offscreenCtx.fillStyle = '#000000'
+            this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 17)}px Arial`
+            const text = `${this.viewElement[i].text}`
+            this.offscreenCtx.fillText(text, startX + imgWidth * 0.32, startY + imgHeight * 0.4)
 
-            this.offscreenCtx.drawImage(this.img4, startX + imgWidth * 0.11, startY + imgHeight * 0.3, imgWidth * 0.11, imgHeight * 0.4)
+            this.offscreenCtx.drawImage(this.img3, startX + imgWidth * 0.32, startY + imgHeight * 0.5, imgWidth * 0.2, imgHeight * 0.3)
 
-            this.offscreenCtx.fillStyle = '#7C622D'
-            this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 16)}px Arial`
-            const text2 = `${subArray[i].name.split("：")[1]}`
-            this.offscreenCtx.fillText(text2, startX + imgWidth * 0.26, startY + imgHeight * 0.6)
-            if (customsCleared.indexOf(i + play.checkpoint1.clasli) !== -1) {
-                this.offscreenCtx.drawImage(this.img4, startX + imgWidth * 0.68, startY + imgHeight * 0.1, imgHeight / 4, imgHeight / 4)
-            }
+            this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 24)}px Arial`
+            const text2 = `${this.viewElement[i].num}`
+            this.offscreenCtx.fillText(text2, startX + imgWidth * 0.6, startY + imgHeight * 0.7)
         }
     }
 
@@ -163,12 +182,14 @@ class StartView {
         this.offscreenCtx.clearRect(0, 0, this.offscreenCanvas.width, this.offscreenCanvas.height)
 
         // 重新绘制或更新内容
-        this.checkpoint()
+        this.checkpoint().then(() => {
+            // 绘制到主画布
+            this.drawToCanvas(this.ctx)
+        })
     }
 
     // 将按钮绘制到 Canvas 上
     drawToCanvas(ctx) {
-        this.checkpoint()
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
         ctx.drawImage(this.offscreenCanvas, this.x + (this.width - this.offscreenCanvas.width) * 0.5, this.y + (this.height - this.offscreenCanvas.height) * 0.55)
     }

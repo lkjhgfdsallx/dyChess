@@ -296,7 +296,7 @@ export default class Main {
     startPageLoop()
 
   }
-  startPage() {
+  startPage(clasli) {
     const that = this
 
     that.bg = new BackGround(ctx)
@@ -316,7 +316,7 @@ export default class Main {
     canvas.removeEventListener('touchstart', this.touchHandler)
 
     // 绘制开始页面
-    const startButton = new StartBtn(ctx)
+    const startButton = new StartBtn(ctx, clasli)
     const avatarTags = new AvatarTags(ctx)
     const staminaBtn = new StaminaBtn(ctx)
 

@@ -59,7 +59,7 @@ class StartButton {
 
     handleTouchMove(event) {
         event.preventDefault() // 阻止默认滚动行为
-        const subArrayB = com.clasli.slice(0, play.checkpoint1.clasli).reverse()
+        const subArrayB = this.clasli.slice(0, play.checkpoint1.clasli).reverse()
         const listNumB = subArrayB.length > 12 ? 12 : subArrayB.length
 
         const touchY = event.touches[0].clientY
@@ -121,7 +121,7 @@ class StartButton {
     checkpoint() {
         const customsCleared = tt.getStorageSync("customsCleared") || []
         if (play.checkpoint1.clasli > 0) {
-            const subArrayB = com.clasli.slice(0, play.checkpoint1.clasli).reverse()
+            const subArrayB = this.clasli.slice(0, play.checkpoint1.clasli).reverse()
             const listNumB = subArrayB.length > 12 ? 12 : subArrayB.length
             for (let i = 0; i < listNumB; i++) {
                 if (customsCleared.indexOf(play.checkpoint1.clasli - i - 1) !== -1) {
@@ -162,7 +162,7 @@ class StartButton {
         if (customsCleared.indexOf(play.checkpoint1.clasli) !== -1) {
             this.offscreenCtx.drawImage(this.img2, this.offscreenCanvas.width * 0.05, this.contentOffsetY, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
             this.offscreenCtx.fillStyle = '#DED1B4'
-            const text = `${com.clasli[play.checkpoint1.clasli].name.split("：")[0]}`
+            const text = `${this.clasli[play.checkpoint1.clasli].name.split("：")[0]}`
             let fontSize = parseInt(this.offscreenCanvas.height / 30)
             let wordCount = text.length
             if (wordCount > 3) {
@@ -172,13 +172,13 @@ class StartButton {
             this.offscreenCtx.fillText(text, this.offscreenCanvas.width * 0.16, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 10))
             this.offscreenCtx.fillStyle = '#7C622D'
             this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 16)}px Arial`
-            const text2 = `${com.clasli[play.checkpoint1.clasli].name.split("：")[1]}`
+            const text2 = `${this.clasli[play.checkpoint1.clasli].name.split("：")[1]}`
             this.offscreenCtx.fillText(text2, this.offscreenCanvas.width * 0.34, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 9))
             this.offscreenCtx.drawImage(this.img4, this.offscreenCanvas.width * 0.73, this.offscreenCanvas.height / 30 + this.contentOffsetY, this.offscreenCanvas.height / 8, this.offscreenCanvas.height / 8)
         } else {
             this.offscreenCtx.drawImage(this.img3, this.offscreenCanvas.width * 0.05, this.contentOffsetY, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
             this.offscreenCtx.fillStyle = '#DED1B4'
-            const text = `${com.clasli[play.checkpoint1.clasli].name.split("：")[0]}`
+            const text = `${this.clasli[play.checkpoint1.clasli].name.split("：")[0]}`
             let fontSize = parseInt(this.offscreenCanvas.height / 30)
             let wordCount = text.length
             if (wordCount > 3) {
@@ -188,11 +188,11 @@ class StartButton {
             this.offscreenCtx.fillText(text, this.offscreenCanvas.width * 0.16, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 10))
             this.offscreenCtx.fillStyle = '#7C622D'
             this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 16)}px Arial`
-            const text2 = `${com.clasli[play.checkpoint1.clasli].name.split("：")[1]}`
+            const text2 = `${this.clasli[play.checkpoint1.clasli].name.split("：")[1]}`
             this.offscreenCtx.fillText(text2, this.offscreenCanvas.width * 0.34, this.contentOffsetY + parseInt(this.offscreenCanvas.height / 9))
         }
 
-        const subArray = com.clasli.slice(play.checkpoint1.clasli)
+        const subArray = this.clasli.slice(play.checkpoint1.clasli)
         const listNum = subArray.length > 27 ? 27 : subArray.length
         for (let i = 1; i < listNum; i++) {
             if (customsCleared.indexOf(i + play.checkpoint1.clasli) !== -1) {
@@ -232,7 +232,7 @@ class StartButton {
     }
 
     getCheckpointInfo(index) {
-        const checkpoint = com.clasli[parseInt(play.checkpoint1.clasli) + index]
+        const checkpoint = this.clasli[parseInt(play.checkpoint1.clasli) + index]
         if (checkpoint) {
             return parseInt(play.checkpoint1.clasli) + index
         } else {
