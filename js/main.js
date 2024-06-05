@@ -112,7 +112,6 @@ export default class Main {
       const buttonArea = staminaBtn.btnArea
 
       if (x >= buttonArea.startX && x <= buttonArea.endX && y >= buttonArea.startY && y <= buttonArea.endY && play.isPlay !== true) {
-        console.log(play.isPlay)
         staminaBtn.removeEventListener('touchend', startButtonHandler)
         setTimeout(() => {
           let paramsButton

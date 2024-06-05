@@ -92,7 +92,7 @@ class StartView {
                         setTimeout(() => {
                             play.isPlay = false
                             play.isView = false
-                            play.main.prototype.startPage(com.clasli)
+                            play.main.prototype.startPage(com.clasli[0])
                         }, 300)
                         // this.touchEndHandled = true
                         // play.isPlay = true
