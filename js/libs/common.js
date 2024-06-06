@@ -681,7 +681,8 @@ com.class.Main = function (images, x, y) {
 	}
 
 	this.levelName = function (ctx) {
-		const levelNameText = com.clasli[play.checkpoint1.clasli].name
+		const clasliNum = parseInt(tt.getStorageSync("clasliNum"))
+		const levelNameText = com.clasli[clasliNum][play.checkpoint1.clasli].name
 		const firstPart = levelNameText.split("：")[0]
 		const secondPart = levelNameText.split("：")[1]
 		ctx.fillStyle = '#DED1B4'

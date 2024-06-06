@@ -85,14 +85,14 @@ class StartView {
             // 判断触摸位置是否在按钮区域内
             for (let i = 0; i < this.btnAreas.length; i++) {
                 const area = this.btnAreas[i]
-                if (offsetX >= area.startX && offsetX <= area.endX && offsetY >= area.startY && offsetY <= area.endY && this.isDragging === false && play.isView !== false) {
+                if (offsetX >= area.startX && offsetX <= area.endX && offsetY >= area.startY && offsetY <= area.endY && this.isDragging !== true && play.isView !== false) {
                     const checkpointInfo = this.getCheckpointInfo(i)
                     if (checkpointInfo != null) {
-                        // console.log(checkpointInfo)
                         setTimeout(() => {
                             play.isPlay = false
                             play.isView = false
-                            play.main.prototype.startPage(com.clasli[0])
+                            play.main.prototype.startPage(com.clasli[i])
+                            tt.setStorageSync("clasliNum", i) // 存储当前关卡的索引值到本地存储中
                         }, 300)
                         // this.touchEndHandled = true
                         // play.isPlay = true
@@ -159,9 +159,9 @@ class StartView {
     }
 
     getCheckpointInfo(index) {
-        const checkpoint = com.clasli[parseInt(play.checkpoint1.clasli) + index]
+        const checkpoint = com.clasli[index]
         if (checkpoint) {
-            return parseInt(play.checkpoint1.clasli) + index
+            return index
         } else {
             return null
         }
