@@ -19,7 +19,7 @@ play.init = function (depth, map) {
 	play.nowManKey = false;			//现在要操作的棋子
 	play.pace = [];				//记录每一步
 	play.isPlay = true;			//是否能走棋
-	play.isView = true
+	play.isView = false
 
 	play.bylaw = com.bylaw;
 	play.show = com.show;
@@ -294,9 +294,9 @@ play.getClickMan = function (e) {
 play.showWin = function (my) {
 	play.isPlay = false;
 	if (my === 1) {
-		const customsCleared = tt.getStorageSync("customsCleared") || []
+		const customsCleared = tt.getStorageSync("customsCleared1") || []
 		customsCleared.push(play.checkpoint1.clasli)
-		tt.setStorageSync("customsCleared", customsCleared)
+		tt.setStorageSync("customsCleared1", customsCleared)
 		tt.showModal({
 			title: "胜利",
 			content: "恭喜你，你赢了！",

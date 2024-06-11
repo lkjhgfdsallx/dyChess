@@ -88,6 +88,7 @@ class StartView {
                 if (offsetX >= area.startX && offsetX <= area.endX && offsetY >= area.startY && offsetY <= area.endY && this.isDragging !== true && play.isView !== false) {
                     const checkpointInfo = this.getCheckpointInfo(i)
                     if (checkpointInfo != null) {
+                        console.log(play.isView)
                         setTimeout(() => {
                             play.isPlay = false
                             play.isView = false
@@ -114,7 +115,7 @@ class StartView {
     }
 
     async checkpoint() {
-        const customsCleared = tt.getStorageSync("customsCleared") || []
+        const customsCleared = tt.getStorageSync("customsCleared1") || []
         this.btnAreas = []
 
         const promises = []

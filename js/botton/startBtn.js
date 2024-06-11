@@ -119,11 +119,10 @@ class StartButton {
     }
 
     checkpoint() {
-        const customsCleared = tt.getStorageSync("customsCleared") || []
+        const customsCleared = tt.getStorageSync("customsCleared1") || []
         if (play.checkpoint1.clasli > 0) {
             const subArrayB = this.clasli.slice(0, play.checkpoint1.clasli).reverse()
             const listNumB = subArrayB.length > 9 ? 9 : subArrayB.length
-            console.log(play.checkpoint1.clasli)
             for (let i = 0; i < listNumB; i++) {
                 if (customsCleared.indexOf(play.checkpoint1.clasli - i - 1) !== -1) {
                     this.offscreenCtx.drawImage(this.img2, this.offscreenCanvas.width * 0.05, this.contentOffsetY - (i + 1) * this.offscreenCanvas.height / 5, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
