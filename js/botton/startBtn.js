@@ -233,7 +233,7 @@ class StartButton {
         for (let i = 1; i < listNum; i++) {
             if (customsCleared.indexOf(i + play.checkpoint1.clasli) !== -1) {
                 this.offscreenCtx.drawImage(this.img2, this.offscreenCanvas.width * 0.05, this.contentOffsetY + i * this.offscreenCanvas.height / 5, this.offscreenCanvas.width * 0.9, this.offscreenCanvas.height / 5)
-                this.offscreenCtx.drawImage(this.img5, this.offscreenCanvas.width * 0.15, this.contentOffsetY + i * this.offscreenCanvas.height / 5 + this.offscreenCanvas.height / 15,this.offscreenCanvas.width * 0.15, this.offscreenCanvas.height / 5)
+                this.offscreenCtx.drawImage(this.img5, this.offscreenCanvas.width * 0.15, this.contentOffsetY + i * this.offscreenCanvas.height / 5 + this.offscreenCanvas.height / 15,this.offscreenCanvas.width * 0.15, this.offscreenCanvas.height / 15)
 
                 this.offscreenCtx.fillStyle = '#FFFFFF'
                 const text = `${subArray[i].name.split("：")[0]}`
