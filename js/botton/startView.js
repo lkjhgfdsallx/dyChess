@@ -164,11 +164,11 @@ class StartView {
             // const text = `${this.viewElement[i].text}`
             // this.offscreenCtx.fillText(text, startX + imgWidth * 0.32, startY + imgHeight * 0.4)
 
-            this.offscreenCtx.drawImage(this.img3, startX + imgWidth * 0.62, startY + imgHeight * 0.9, imgWidth * 0.2, imgWidth * 0.2)
+            // this.offscreenCtx.drawImage(this.img3, startX + imgWidth * 0.62, startY + imgHeight * 0.9, imgWidth * 0.2, imgWidth * 0.2)
 
-            this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 24)}px Arial`
-            const text2 = `x${this.viewElement[i].num}`
-            this.offscreenCtx.fillText(text2, startX + imgWidth * 0.85, startY + imgHeight * 1.1)
+            // this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 24)}px Arial`
+            // const text2 = `x${this.viewElement[i].num}`
+            // this.offscreenCtx.fillText(text2, startX + imgWidth * 0.85, startY + imgHeight * 1.1)
         }
     }
 
