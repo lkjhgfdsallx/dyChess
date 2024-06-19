@@ -143,8 +143,8 @@ class StartView {
             // const img = this.img2
             const row = Math.floor(i / 2)
             const col = i % 2
-            const imgWidth = this.offscreenCanvas.width * 0.4
-            const imgHeight = this.offscreenCanvas.height / 5
+            const imgWidth = this.offscreenCanvas.width * 0.38
+            const imgHeight = this.offscreenCanvas.height / 5.0
             const startX = col * (imgWidth + this.offscreenCanvas.width * 0.05) + (this.width - 2 * imgWidth - 2 * this.offscreenCanvas.width * 0.05) / 2
             const startY = row * (imgHeight + this.offscreenCanvas.height / 20)
 
@@ -164,7 +164,7 @@ class StartView {
             // const text = `${this.viewElement[i].text}`
             // this.offscreenCtx.fillText(text, startX + imgWidth * 0.32, startY + imgHeight * 0.4)
 
-            this.offscreenCtx.drawImage(this.img3, startX + imgWidth * 0.62, startY + imgHeight * 0.9, imgWidth * 0.2, imgHeight * 0.3)
+            this.offscreenCtx.drawImage(this.img3, startX + imgWidth * 0.62, startY + imgHeight * 0.9, imgWidth * 0.2, imgWidth * 0.2)
 
             this.offscreenCtx.font = `${parseInt(this.offscreenCanvas.width / 24)}px Arial`
             const text2 = `x${this.viewElement[i].num}`
@@ -212,9 +212,9 @@ class StartView {
         const imgWidth = this.width * 0.6
         const imgHeight = this.height / 15
         const startX = (this.width - imgWidth) / 2
-        const startY = (imgHeight + this.height /5)
-        ctx.drawImage(this.img_t_bg, startX - imgWidth * 0.08, startY + imgHeight * 0.2 - 10, imgWidth +imgWidth * 0.24, imgHeight +20)
-        ctx.drawImage(this.img,  startX + imgWidth * 0.08, startY + imgHeight * 0.2, imgWidth, imgHeight)
+        const startY = (imgHeight + this.height /6)
+        ctx.drawImage(this.img_t_bg, startX, startY + imgHeight * 0.2 - 10, imgWidth + imgWidth * 0.24, imgHeight +20)
+        ctx.drawImage(this.img,  startX + imgWidth * 0.12, startY + imgHeight * 0.2, imgWidth, imgHeight)
         ctx.drawImage(this.offscreenCanvas, this.x + (this.width - this.offscreenCanvas.width) * 0.5, this.y + (this.height - this.offscreenCanvas.height) * 0.45)
     }
 }

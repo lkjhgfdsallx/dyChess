@@ -15,9 +15,6 @@ export default class Main {
     this.isExist = false
     this.login()
     this.navigateToScene()
-    this.startView2 = new StartView(ctx)
-    this.avatarTags2 = new AvatarTags(ctx)
-    this.staminaBtn2 = new StaminaBtn(ctx)
     this.startView()
   }
   login() {
@@ -95,12 +92,9 @@ export default class Main {
     // 清除事件监听
     canvas.removeEventListener('touchstart', this.touchHandler)
 
-    let startView = this.startView2
-    let avatarTags = this.avatarTags2
-    let staminaBtn = this.staminaBtn2
-    if(startView){
-      startView.clearAll()
-    }
+    const startView = new StartView(ctx)
+    const avatarTags = new AvatarTags(ctx)
+    const staminaBtn = new StaminaBtn(ctx)
 
     const startButtonHandler = function (e) {
       if (this.lastCollisionTime2 === undefined) {
