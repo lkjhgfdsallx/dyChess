@@ -82,7 +82,7 @@ export default class avatarTags {
 
     // 绘制侧边栏领奖
     drawRuKoYouJiang(ctx) {
-        ctx.drawImage(this.img5, this.x + this.width * 0.06, this.y + this.height * 1.1, this.width * 0.23, this.width * 0.23)
+        ctx.drawImage(this.img5, this.x + this.width * 1.92, this.y + this.height * 1.2, this.width * 0.33, this.width * 0.33)
     }
   }
   

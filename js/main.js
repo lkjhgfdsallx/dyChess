@@ -2,6 +2,7 @@ import BackGround from './runtime/background'
 import Popup from './base/popup'
 import AvatarTags from './botton/avatarTags'
 import StaminaBtn from './botton/staminaBtn'
+import BackTag from './botton/backTag'
 
 const ctx = canvas.getContext('2d')
 ctx.imageSmoothingQuality = 'high'
@@ -160,6 +161,7 @@ export default class Main {
                 paramsButton.destroy()
                 params3Button.hide()
                 params3Button.destroy()
+                console.log(staminaBtn)
                 staminaBtn.addEventListener('touchend', startButtonHandler)
               }
               button.onTap(button_tap)
@@ -200,6 +202,7 @@ export default class Main {
                   }
                 })
               }
+              console.log(staminaBtn)
               staminaBtn.addEventListener('touchend', startButtonHandler)
               button.onTap(button_tap)
             },
@@ -214,7 +217,7 @@ export default class Main {
         }, 300)
       }
     }
-
+    console.log(staminaBtn)
     staminaBtn.addEventListener('touchend', startButtonHandler)
 
     const renderStartPage = function () {
@@ -253,11 +256,13 @@ export default class Main {
           if (that.isExist === true && that.popup.visible && !that.popup.isInside(x, y)) {
             that.popup.hide()
             startView.touchEndHandled = false
+            console.log(staminaBtn)
             staminaBtn.addEventListener('touchend', startButtonHandler)
           }
 
           if (that.isExist === true && that.popup.visible && that.popup.isInside(x, y)) {
             that.popup.hide()
+            console.log(staminaBtn)
             staminaBtn.addEventListener('touchend', startButtonHandler)
             tt.navigateToScene({
               scene: "sidebar",
@@ -295,7 +300,7 @@ export default class Main {
     startPageLoop()
 
   }
-  startPage(clasli) {
+  startPage(clasli,clasliNum) {
     const that = this
 
     that.bg = new BackGround(ctx)
@@ -313,10 +318,12 @@ export default class Main {
 
     // 清除事件监听
     canvas.removeEventListener('touchstart', this.touchHandler)
+    canvas.removeEventListener('touchmove', this.touchHandler)
+    canvas.removeEventListener('touchend', this.touchHandler)
 
     // 绘制开始页面
-    const startButton = new StartBtn(ctx, clasli)
-    const avatarTags = new AvatarTags(ctx)
+    const startButton = new StartBtn(ctx, clasli,clasliNum)
+    const backTag = new BackTag(ctx)
     const staminaBtn = new StaminaBtn(ctx)
 
     const startButtonHandler = function (e) {
@@ -385,6 +392,7 @@ export default class Main {
                 paramsButton.destroy()
                 params3Button.hide()
                 params3Button.destroy()
+                console.log(staminaBtn)
                 staminaBtn.addEventListener('touchend', startButtonHandler)
               }
               button.onTap(button_tap)
@@ -425,6 +433,7 @@ export default class Main {
                   }
                 })
               }
+              console.log(staminaBtn)
               staminaBtn.addEventListener('touchend', startButtonHandler)
               button.onTap(button_tap)
             },
@@ -439,8 +448,40 @@ export default class Main {
         }, 300)
       }
     }
+    console.log(staminaBtn)
 
     staminaBtn.addEventListener('touchend', startButtonHandler)
+
+    const backToSceneHandler = function (e) {
+      if (this.lastCollisionTime3 === undefined) {
+        this.lastCollisionTime3 = Date.now()
+      } else {
+        if (Date.now() - this.lastCollisionTime3 < 500) {
+          return
+        }
+        this.lastCollisionTime3 = Date.now()
+      }
+      e.preventDefault()
+
+      const x = e.changedTouches[0].clientX
+      const y = e.changedTouches[0].clientY
+
+      const buttonArea = backTag.btnArea
+      if (x >= buttonArea.startX && x <= buttonArea.endX && y >= buttonArea.startY && y <= buttonArea.endY) {
+        staminaBtn.removeEventListener('touchend', startButtonHandler)
+        backTag.removeEventListener('touchend', backToSceneHandler)
+        startButton.clearAll()
+        startButton.touchEndHandled = true
+        setTimeout(() => {
+          play.isPlay = false
+          play.isView = true
+          play.main.prototype.startView()
+        }, 500)
+        return
+      }
+    }
+
+    backTag.addEventListener('touchend', backToSceneHandler)
 
     // 渲染开始页面
     const renderStartPage = function () {
@@ -448,61 +489,10 @@ export default class Main {
 
       that.bg.render(ctx)
       startButton.drawToCanvas(ctx)
-      avatarTags.drawToCanvas(ctx)
+      backTag.drawToCanvas(ctx)
       staminaBtn.drawToCanvas(ctx)
       that.popup.renderOnCanvas(ctx)
-      if (that.isExist === true) {
-        avatarTags.drawRuKoYouJiang(ctx)
-        const navigateToSceneHandler = function (e) {
-          if (this.lastCollisionTime === undefined) {
-            this.lastCollisionTime = Date.now()
-          } else {
-            if (Date.now() - this.lastCollisionTime < 500) {
-              return
-            }
-            this.lastCollisionTime = Date.now()
-          }
-          e.preventDefault()
 
-          const x = e.changedTouches[0].clientX
-          const y = e.changedTouches[0].clientY
-
-          const buttonArea = avatarTags.btnArea
-
-          if (that.isExist === true && !that.popup.visible && x >= buttonArea.startX && x <= buttonArea.endX && y >= buttonArea.startY && y <= buttonArea.endY) {
-            avatarTags.removeEventListener('touchend', navigateToSceneHandler)
-            staminaBtn.removeEventListener('touchend', startButtonHandler)
-
-            that.popup.show()
-            return
-          }
-
-          if (that.isExist === true && that.popup.visible && !that.popup.isInside(x, y)) {
-            that.popup.hide()
-            startButton.touchEndHandled = false
-            staminaBtn.addEventListener('touchend', startButtonHandler)
-          }
-
-          if (that.isExist === true && that.popup.visible && that.popup.isInside(x, y)) {
-            that.popup.hide()
-            staminaBtn.addEventListener('touchend', startButtonHandler)
-            tt.navigateToScene({
-              scene: "sidebar",
-              success: (res) => {
-                play.stamina.staminaAdd(10)
-                play.stamina.setStorage()
-                startButton.touchEndHandled = false
-              },
-              fail: (res) => {
-                console.log("navigate to scene fail: ", res)
-                // 跳转失败回调逻辑
-              },
-            })
-          }
-        }
-
-        avatarTags.addEventListener('touchend', navigateToSceneHandler)
-      }
       if (that.isExist === true && that.popup.visible) {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
         ctx.fillRect(0, 0, tt.getSystemInfoSync().windowWidth, tt.getSystemInfoSync().windowHeight)
