@@ -104,7 +104,6 @@ class StartButton {
     }
 
     handleTouchEnd(event) {
-        console.log(event)
         event.preventDefault() // 阻止默认滚动行为
 
         if (this.lastCollisionTime === undefined) {

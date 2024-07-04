@@ -217,7 +217,6 @@ export default class Main {
         }, 300)
       }
     }
-    console.log(staminaBtn)
     staminaBtn.addEventListener('touchend', startButtonHandler)
 
     const renderStartPage = function () {

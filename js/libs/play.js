@@ -64,7 +64,9 @@ play.regret = function () {
 		this.lastCollisionTime = Date.now()
 	}
 	var mansCopy = JSON.parse(JSON.stringify(com.mans))
-	var map = com.arr2Clone(com.clasli[play.checkpoint1.clasli].map);
+	const clasliNum = parseInt(tt.getStorageSync("clasliNum"))
+	const level = com.clasli[clasliNum][play.checkpoint1.clasli]
+	var map = com.arr2Clone(level.map);
 	//初始化所有棋子
 	for (var i = 0; i < map.length; i++) {
 		for (var n = 0; n < map[i].length; n++) {
